@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Food Discovery - PikFreshFood</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; color: #333; padding-bottom: 100px; }
+        
+        .header { background: white; padding: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; }
+        .back-btn { cursor: pointer; font-size: 24px; }
+        .logo { font-weight: bold; font-size: 18px; color: #27ae60; }
+        .location-display { text-align: center; font-size: 13px; color: #7f8c8d; margin-top: 8px; }
+        
+        .hero-section { background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%); color: white; padding: 30px 15px; text-align: center; }
+        .hero-title { font-size: 22px; font-weight: bold; margin-bottom: 8px; }
+        .hero-subtitle { font-size: 13px; opacity: 0.9; margin-bottom: 15px; }
+        
+        .category-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 15px; background: white; margin-bottom: 10px; }
+        .food-tile { background: linear-gradient(135deg, #fff5e1 0%, #ffe0b2 100%); border-radius: 8px; padding: 20px; text-align: center; cursor: pointer; transition: transform 0.2s; }
+        .food-tile:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .food-icon { font-size: 40px; margin-bottom: 10px; }
+        .food-name { font-weight: bold; font-size: 14px; margin-bottom: 8px; }
+        .food-desc { font-size: 11px; color: #666; line-height: 1.4; }
+        .food-price { color: #27ae60; font-weight: bold; font-size: 12px; margin-top: 8px; }
+        
+        .vendor-tile { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); }
+        .vendor-tile .food-icon { font-size: 30px; }
+        
+        .featured-section { background: white; padding: 15px; margin-bottom: 10px; }
+        .section-title { font-size: 16px; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .section-title-badge { background: #ff6b35; color: white; padding: 4px 10px; border-radius: 12px; font-size: 11px; }
+        
+        .vendor-card { background: white; border-radius: 8px; padding: 12px; margin-bottom: 10px; border-left: 4px solid #ff6b35; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+        .vendor-header { display: flex; gap: 12px; align-items: flex-start; }
+        .vendor-avatar { font-size: 40px; }
+        .vendor-info { flex: 1; }
+        .vendor-name { font-weight: bold; font-size: 13px; }
+        .vendor-food { font-size: 11px; color: #27ae60; margin: 4px 0; }
+        .vendor-distance { font-size: 11px; color: #7f8c8d; }
+        .vendor-available { display: inline-block; background: #27ae60; color: white; padding: 3px 8px; border-radius: 12px; font-size: 10px; margin-top: 4px; }
+        .vendor-unavailable { display: inline-block; background: #95a5a6; color: white; padding: 3px 8px; border-radius: 12px; font-size: 10px; margin-top: 4px; }
+        
+        .time-badge { background: #fff3cd; color: #856404; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; }
+        
+        .action-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+        .btn-small { padding: 8px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; }
+        .btn-order { background: #ff6b35; color: white; }
+        .btn-vendor { background: #ecf0f1; color: #333; }
+        
+        .recruitment-card { background: linear-gradient(135deg, #fff3cd 0%, #ffd699 100%); padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107; margin: 10px 15px; }
+        .recruitment-title { font-weight: bold; margin-bottom: 8px; }
+        .recruitment-text { font-size: 13px; line-height: 1.5; margin-bottom: 10px; color: #666; }
+        .recruitment-btn { background: #ffc107; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; }
+        
+        .food-details-modal { display: none; position: fixed; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 200; }
+        .modal-content { position: absolute; bottom: 0; width: 100%; background: white; border-radius: 16px 16px 0 0; padding: 20px; max-height: 80vh; overflow-y: auto; }
+        .modal-close { text-align: right; font-size: 24px; cursor: pointer; margin-bottom: 10px; }
+        .modal-title { font-size: 20px; font-weight: bold; margin-bottom: 10px; }
+        .modal-description { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 15px; }
+        .modal-price-range { font-size: 14px; font-weight: bold; color: #27ae60; margin-bottom: 15px; }
+        
+        .price-comparison { margin-top: 15px; }
+        .price-item { display: flex; justify-content: space-between; padding: 10px; background: #f8f9fa; border-radius: 6px; margin-bottom: 8px; }
+        .price-vendor { font-weight: 500; font-size: 12px; }
+        .price-value { color: #27ae60; font-weight: bold; font-size: 13px; }
+        
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; border-top: 1px solid #ddd; display: flex; justify-content: space-around; padding: 8px 0; }
+        .nav-item { text-align: center; padding: 8px; cursor: pointer; flex: 1; font-size: 12px; color: #95a5a6; }
+        .nav-item.active { color: #ff6b35; font-weight: bold; }
+        .nav-icon { font-size: 20px; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-top">
+            <div class="back-btn">←</div>
+            <div style="font-weight: bold;">Street Food Near You</div>
+            <div style="width: 24px;"></div>
+        </div>
+        <div class="location-display">📍 Showing vendors in: Yaba, Lagos</div>
+    </div>
+    
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="hero-title">Popular Nigerian Street Food</div>
+        <div class="hero-subtitle">Discover vendors selling near you</div>
+    </div>
+    
+    <!-- Food Categories Grid -->
+    <div class="category-grid">
+        <div class="food-tile">
+            <div class="food-icon">🌯</div>
+            <div class="food-name">Suya</div>
+            <div class="food-desc">Grilled spiced meat strips</div>
+            <div class="food-price">From ₦500</div>
+        </div>
+        <div class="food-tile">
+            <div class="food-icon">🟤</div>
+            <div class="food-name">Akara</div>
+            <div class="food-desc">Deep-fried bean balls</div>
+            <div class="food-price">From ₦200</div>
+        </div>
+        <div class="food-tile">
+            <div class="food-icon">🍌</div>
+            <div class="food-name">Puff Puff</div>
+            <div class="food-desc">Sweet fried dough balls</div>
+            <div class="food-price">From ₦100</div>
+        </div>
+        <div class="food-tile">
+            <div class="food-icon">🥟</div>
+            <div class="food-name">Ewa Aganyin</div>
+            <div class="food-desc">Beans with fried peppers</div>
+            <div class="food-price">From ₦300</div>
+        </div>
+        <div class="food-tile">
+            <div class="food-icon">🧃</div>
+            <div class="food-name">Zobo</div>
+            <div class="food-desc">Hibiscus juice drink</div>
+            <div class="food-price">From ₦200</div>
+        </div>
+        <div class="food-tile">
+            <div class="food-icon">🍲</div>
+            <div class="food-name">Rice & Sauce</div>
+            <div class="food-desc">Quick-serve meals</div>
+            <div class="food-price">From ₦800</div>
+        </div>
+    </div>
+    
+    <!-- Featured Vendors Selling Now -->
+    <div class="featured-section">
+        <div class="section-title">
+            🔴 <span style="flex: 1;">Live & Selling Now</span> 
+            <span class="section-title-badge">4 Vendors</span>
+        </div>
+        
+        <div class="vendor-card">
+            <div class="vendor-header">
+                <div class="vendor-avatar">👩</div>
+                <div class="vendor-info">
+                    <div class="vendor-name">Mama Tayo's Suya Stand</div>
+                    <div class="vendor-food">🌯 Suya • 🟤 Akara</div>
+                    <div class="vendor-distance">150m from you</div>
+                    <div class="vendor-available">✓ Available Now</div>
+                    <span class="time-badge">20-30 mins</span>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn-small btn-order">🛒 Order Now</button>
+                <button class="btn-small btn-vendor">👀 View Vendor</button>
+            </div>
+        </div>
+        
+        <div class="vendor-card">
+            <div class="vendor-header">
+                <div class="vendor-avatar">👨</div>
+                <div class="vendor-info">
+                    <div class="vendor-name">Uncle Emeka's Puff Puff</div>
+                    <div class="vendor-food">🍌 Puff Puff • 🥟 Ewa Aganyin</div>
+                    <div class="vendor-distance">280m from you</div>
+                    <div class="vendor-available">✓ Available Now</div>
+                    <span class="time-badge">25-35 mins</span>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn-small btn-order">🛒 Order Now</button>
+                <button class="btn-small btn-vendor">👀 View Vendor</button>
+            </div>
+        </div>
+        
+        <div class="vendor-card">
+            <div class="vendor-header">
+                <div class="vendor-avatar">👩</div>
+                <div class="vendor-info">
+                    <div class="vendor-name">Sister Ada's Zobo Bar</div>
+                    <div class="vendor-food">🧃 Zobo • 🥤 Juice</div>
+                    <div class="vendor-distance">350m from you</div>
+                    <div class="vendor-available">✓ Available Now</div>
+                    <span class="time-badge">15-20 mins</span>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn-small btn-order">🛒 Order Now</button>
+                <button class="btn-small btn-vendor">👀 View Vendor</button>
+            </div>
+        </div>
+        
+        <div class="vendor-card">
+            <div class="vendor-header">
+                <div class="vendor-avatar">👨</div>
+                <div class="vendor-info">
+                    <div class="vendor-name">Brother Tunde's Rice Stop</div>
+                    <div class="vendor-food">🍲 Rice & Sauce • 🥘 Meals</div>
+                    <div class="vendor-distance">420m from you</div>
+                    <div class="vendor-unavailable">Closed - Opens 5PM</div>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn-small btn-order" style="opacity: 0.5; cursor: not-allowed;">🛒 Coming Soon</button>
+                <button class="btn-small btn-vendor">👀 View Vendor</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Recruitment CTA -->
+    <div class="recruitment-card">
+        <div class="recruitment-title">🎯 Want to Sell Street Food?</div>
+        <div class="recruitment-text">
+            Become a PikFreshFood vendor and reach thousands of hungry customers in your area. Set your own hours and manage your business.
+        </div>
+        <button class="recruitment-btn">Become a Vendor</button>
+    </div>
+    
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="nav-item">
+            <div class="nav-icon">🏠</div>
+            <div>Home</div>
+        </div>
+        <div class="nav-item active">
+            <div class="nav-icon">🌯</div>
+            <div>Street Food</div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">📖</div>
+            <div>Recipes</div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">❤️</div>
+            <div>Wishlist</div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">👤</div>
+            <div>Profile</div>
+        </div>
+    </div>
+    
+    <div style="height: 70px;"></div>
+</body>
+</html>

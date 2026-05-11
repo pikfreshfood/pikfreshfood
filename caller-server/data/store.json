@@ -1,0 +1,312 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "david ay",
+      "email": "david@gmail.com",
+      "passwordHash": "f280e8f8e3bd1ad2262818bb7f2bdd69:b4dd823e5f111fbc8783efc2dbad755f1343c32e648c35336bce1b00b3454aafff4d20e0ece584116b35210222220cf7a32c58ddc6bc5ac43a46368066f5cd8a",
+      "createdAt": "2026-04-16T16:28:22.491Z"
+    },
+    {
+      "id": 2,
+      "name": "ddav",
+      "email": "david3@gmail.com",
+      "passwordHash": "6257b2de686f2f513d31336c7e8afdc2:1c77200f6846b044f370f9b9b858bec96f57c6dceba34aa98c191813aee8be6cd96d086b2e466b36f3a15c06b25b7ecac50bc4612948c574865466b4fcca7097",
+      "createdAt": "2026-04-16T16:29:36.171Z"
+    }
+  ],
+  "calls": [
+    {
+      "id": 1,
+      "callerId": 2,
+      "calleeId": 1,
+      "roomName": "node-peer-2-1-1776356989539",
+      "callType": "audio",
+      "status": "ended",
+      "offerSdp": {
+        "type": "offer",
+        "sdp": "v=0\r\no=- 6774613931951443714 2 IN IP4 127.0.0.1\r\ns=-\r\nt=0 0\r\na=group:BUNDLE 0\r\na=extmap-allow-mixed\r\na=msid-semantic: WMS a4507b53-2909-46d3-942d-d4f1ef7d004a\r\nm=audio 9 UDP/TLS/RTP/SAVPF 111 63 9 0 8 13 110 126\r\nc=IN IP4 0.0.0.0\r\na=rtcp:9 IN IP4 0.0.0.0\r\na=ice-ufrag:WLMV\r\na=ice-pwd:inHUdiUaoOK6P4tloVks0qgr\r\na=ice-options:trickle\r\na=fingerprint:sha-256 2C:E6:3B:3F:1C:D2:3C:1F:B8:7D:EC:34:48:E1:48:6A:E8:BF:47:9A:83:26:86:F1:49:47:F0:8F:EE:32:A9:F0\r\na=setup:actpass\r\na=mid:0\r\na=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level\r\na=extmap:2 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\r\na=extmap:3 http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01\r\na=extmap:4 urn:ietf:params:rtp-hdrext:sdes:mid\r\na=sendrecv\r\na=msid:a4507b53-2909-46d3-942d-d4f1ef7d004a 7b04fa8b-2617-4834-9094-bba7121dfbd7\r\na=rtcp-mux\r\na=rtcp-rsize\r\na=rtpmap:111 opus/48000/2\r\na=rtcp-fb:111 transport-cc\r\na=fmtp:111 minptime=10;useinbandfec=1\r\na=rtpmap:63 red/48000/2\r\na=fmtp:63 111/111\r\na=rtpmap:9 G722/8000\r\na=rtpmap:0 PCMU/8000\r\na=rtpmap:8 PCMA/8000\r\na=rtpmap:13 CN/8000\r\na=rtpmap:110 telephone-event/48000\r\na=rtpmap:126 telephone-event/8000\r\na=ssrc:353838062 cname:staFw8j2d6AqgLWD\r\na=ssrc:353838062 msid:a4507b53-2909-46d3-942d-d4f1ef7d004a 7b04fa8b-2617-4834-9094-bba7121dfbd7\r\n"
+      },
+      "answerSdp": null,
+      "callerCandidates": [],
+      "calleeCandidates": [],
+      "acceptedAt": "2026-04-16T16:29:58.710Z",
+      "endedAt": "2026-04-16T16:42:42.190Z",
+      "createdAt": "2026-04-16T16:29:49.539Z"
+    },
+    {
+      "id": 2,
+      "callerId": 2,
+      "calleeId": 1,
+      "roomName": "node-peer-2-1-1776357762190",
+      "callType": "audio",
+      "status": "ended",
+      "offerSdp": {
+        "type": "offer",
+        "sdp": "v=0\r\no=- 474713686003038262 8 IN IP4 127.0.0.1\r\ns=-\r\nt=0 0\r\na=group:BUNDLE 0\r\na=extmap-allow-mixed\r\na=msid-semantic: WMS dc0bb129-8955-4a39-8fd5-9db0b8d610ab\r\nm=audio 7049 UDP/TLS/RTP/SAVPF 111 63 9 0 8 13 110 126\r\nc=IN IP4 105.117.128.193\r\na=rtcp:9 IN IP4 0.0.0.0\r\na=candidate:2637208491 1 udp 2122260223 192.168.18.5 52727 typ host generation 0 network-id 1 network-cost 10\r\na=candidate:846887573 1 udp 1686052607 105.117.128.193 7049 typ srflx raddr 192.168.18.5 rport 52727 generation 0 network-id 1 network-cost 10\r\na=candidate:1671057215 1 tcp 1518280447 192.168.18.5 9 typ host tcptype active generation 0 network-id 1 network-cost 10\r\na=ice-ufrag:RGjb\r\na=ice-pwd:88sdoce0pZaZnlPyW2ucxgQf\r\na=ice-options:trickle\r\na=fingerprint:sha-256 FA:BA:00:11:FC:EA:C9:8B:2C:A0:B8:3B:A5:78:04:9A:06:AA:BE:BD:B8:B5:90:35:58:91:B6:DD:D9:07:E6:F1\r\na=setup:actpass\r\na=mid:0\r\na=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level\r\na=extmap:2 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\r\na=extmap:3 http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01\r\na=extmap:4 urn:ietf:params:rtp-hdrext:sdes:mid\r\na=sendrecv\r\na=msid:dc0bb129-8955-4a39-8fd5-9db0b8d610ab 28ea18c1-d879-4c1d-817e-7c57d18417d2\r\na=rtcp-mux\r\na=rtcp-rsize\r\na=rtpmap:111 opus/48000/2\r\na=rtcp-fb:111 transport-cc\r\na=fmtp:111 minptime=10;useinbandfec=1\r\na=rtpmap:63 red/48000/2\r\na=fmtp:63 111/111\r\na=rtpmap:9 G722/8000\r\na=rtpmap:0 PCMU/8000\r\na=rtpmap:8 PCMA/8000\r\na=rtpmap:13 CN/8000\r\na=rtpmap:110 telephone-event/48000\r\na=rtpmap:126 telephone-event/8000\r\na=ssrc:3227803630 cname:cTr9lYqz1A9kwIjr\r\na=ssrc:3227803630 msid:dc0bb129-8955-4a39-8fd5-9db0b8d610ab 28ea18c1-d879-4c1d-817e-7c57d18417d2\r\n"
+      },
+      "answerSdp": {
+        "type": "answer",
+        "sdp": "v=0\r\no=- 8785550870366247975 2 IN IP4 127.0.0.1\r\ns=-\r\nt=0 0\r\na=group:BUNDLE 0\r\na=extmap-allow-mixed\r\na=msid-semantic: WMS d7557d89-527a-41e1-a75e-0c27de2a9453\r\nm=audio 9 UDP/TLS/RTP/SAVPF 111 63 9 0 8 13 110 126\r\nc=IN IP4 0.0.0.0\r\na=rtcp:9 IN IP4 0.0.0.0\r\na=ice-ufrag:DtZS\r\na=ice-pwd:KT6E1oEMSPYxDq+/y+CDu6an\r\na=ice-options:trickle\r\na=fingerprint:sha-256 79:00:A0:30:04:A6:87:33:01:F8:92:A9:23:48:A1:50:D3:A7:5B:06:9F:74:97:40:1C:94:BD:15:11:A9:ED:2B\r\na=setup:active\r\na=mid:0\r\na=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level\r\na=extmap:2 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\r\na=extmap:3 http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01\r\na=extmap:4 urn:ietf:params:rtp-hdrext:sdes:mid\r\na=sendrecv\r\na=msid:d7557d89-527a-41e1-a75e-0c27de2a9453 a844ddf1-b803-495e-9b7c-278f83f7b0e5\r\na=rtcp-mux\r\na=rtcp-rsize\r\na=rtpmap:111 opus/48000/2\r\na=rtcp-fb:111 transport-cc\r\na=fmtp:111 minptime=10;useinbandfec=1\r\na=rtpmap:63 red/48000/2\r\na=fmtp:63 111/111\r\na=rtpmap:9 G722/8000\r\na=rtpmap:0 PCMU/8000\r\na=rtpmap:8 PCMA/8000\r\na=rtpmap:13 CN/8000\r\na=rtpmap:110 telephone-event/48000\r\na=rtpmap:126 telephone-event/8000\r\na=ssrc:3100100465 cname:nBuMBU4Qlb7GOAiv\r\n"
+      },
+      "callerCandidates": [
+        {
+          "candidate": "candidate:2637208491 1 udp 2122260223 192.168.18.5 52727 typ host generation 0 ufrag RGjb network-id 1 network-cost 10",
+          "sdpMid": "0",
+          "sdpMLineIndex": 0,
+          "usernameFragment": "RGjb"
+        },
+        {
+          "candidate": "candidate:846887573 1 udp 1686052607 105.117.128.193 7049 typ srflx raddr 192.168.18.5 rport 52727 generation 0 ufrag RGjb network-id 1 network-cost 10",
+          "sdpMid": "0",
+          "sdpMLineIndex": 0,
+          "usernameFragment": "RGjb"
+        },
+        {
+          "candidate": "candidate:1671057215 1 tcp 1518280447 192.168.18.5 9 typ host tcptype active generation 0 ufrag RGjb network-id 1 network-cost 10",
+          "sdpMid": "0",
+          "sdpMLineIndex": 0,
+          "usernameFragment": "RGjb"
+        }
+      ],
+      "calleeCandidates": [
+        {
+          "candidate": "candidate:3487740175 1 udp 2122260223 192.168.18.5 60994 typ host generation 0 ufrag DtZS network-id 1 network-cost 10",
+          "sdpMid": "0",
+          "sdpMLineIndex": 0,
+          "usernameFragment": "DtZS"
+        },
+        {
+          "candidate": "candidate:2400764838 1 udp 1686052607 105.117.128.193 7298 typ srflx raddr 192.168.18.5 rport 60994 generation 0 ufrag DtZS network-id 1 network-cost 10",
+          "sdpMid": "0",
+          "sdpMLineIndex": 0,
+          "usernameFragment": "DtZS"
+        },
+        {
+          "candidate": "candidate:2972537751 1 tcp 1518280447 192.168.18.5 9 typ host tcptype active generation 0 ufrag DtZS network-id 1 network-cost 10",
+          "sdpMid": "0",
+          "sdpMLineIndex": 0,
+          "usernameFragment": "DtZS"
+        }
+      ],
+      "acceptedAt": "2026-04-16T16:42:48.888Z",
+      "endedAt": "2026-04-16T17:06:47.509Z",
+      "createdAt": "2026-04-16T16:42:42.190Z"
+    },
+    {
+      "id": 3,
+      "callerId": 2,
+      "calleeId": 1,
+      "roomName": "node-peer-2-1-1776359207509",
+      "callType": "audio",
+      "status": "ended",
+      "offerSdp": {
+        "type": "offer",
+        "sdp": "v=0\r\no=- 2689958209333774886 2 IN IP4 127.0.0.1\r\ns=-\r\nt=0 0\r\na=group:BUNDLE 0\r\na=extmap-allow-mixed\r\na=msid-semantic: WMS 872a308f-8fb2-476a-9298-b62424759119\r\nm=audio 9 UDP/TLS/RTP/SAVPF 111 63 9 0 8 13 110 126\r\nc=IN IP4 0.0.0.0\r\na=rtcp:9 IN IP4 0.0.0.0\r\na=ice-ufrag:c2fr\r\na=ice-pwd:rfzW9IGxm+cZjdMqLxpf51cJ\r\na=ice-options:trickle\r\na=fingerprint:sha-256 6E:8E:06:DD:3C:8A:8C:2B:36:CA:35:E4:9B:FE:80:40:BC:0C:7F:8F:63:7D:D3:81:41:75:D6:FF:0B:ED:6D:CB\r\na=setup:actpass\r\na=mid:0\r\na=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level\r\na=extmap:2 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\r\na=extmap:3 http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01\r\na=extmap:4 urn:ietf:params:rtp-hdrext:sdes:mid\r\na=sendrecv\r\na=msid:872a308f-8fb2-476a-9298-b62424759119 d4acfec2-3f44-449c-8a8d-cf5ea610f9be\r\na=rtcp-mux\r\na=rtcp-rsize\r\na=rtpmap:111 opus/48000/2\r\na=rtcp-fb:111 transport-cc\r\na=fmtp:111 minptime=10;useinbandfec=1\r\na=rtpmap:63 red/48000/2\r\na=fmtp:63 111/111\r\na=rtpmap:9 G722/8000\r\na=rtpmap:0 PCMU/8000\r\na=rtpmap:8 PCMA/8000\r\na=rtpmap:13 CN/8000\r\na=rtpmap:110 telephone-event/48000\r\na=rtpmap:126 telephone-event/8000\r\na=ssrc:1504507692 cname:MKRnFvqh+Y4sHN7S\r\na=ssrc:1504507692 msid:872a308f-8fb2-476a-9298-b62424759119 d4acfec2-3f44-449c-8a8d-cf5ea610f9be\r\n"
+      },
+      "answerSdp": {
+        "type": "answer",
+        "sdp": "v=0\r\no=- 1354172339027817548 2 IN IP4 127.0.0.1\r\ns=-\r\nt=0 0\r\na=group:BUNDLE 0\r\na=extmap-allow-mixed\r\na=msid-semantic: WMS 28b57317-0d0f-446a-bfaf-06614cebeeaa\r\nm=audio 9 UDP/TLS/RTP/SAVPF 111 63 9 0 8 13 110 126\r\nc=IN IP4 0.0.0.0\r\na=rtcp:9 IN IP4 0.0.0.0\r\na=ice-ufrag:yV2Y\r\na=ice-pwd:Ci0uCwdgFA5MpYUD5KE0KQ9f\r\na=ice-options:trickle\r\na=fingerprint:sha-256 EB:DE:0A:37:1C:83:89:F6:B7:08:3C:AA:47:11:CA:E2:4B:5B:BF:A6:91:50:19:4A:FC:5E:05:D1:D4:2F:0C:6C\r\na=setup:active\r\na=mid:0\r\na=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level\r\na=extmap:2 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\r\na=extmap:3 http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01\r\na=extmap:4 urn:ietf:params:rtp-hdrext:sdes:mid\r\na=sendrecv\r\na=msid:28b57317-0d0f-446a-bfaf-06614cebeeaa 55be1f6a-1e34-4ec0-b289-b96a5eaa4a00\r\na=rtcp-mux\r\na=rtcp-rsize\r\na=rtpmap:111 opus/48000/2\r\na=rtcp-fb:111 transport-cc\r\na=fmtp:111 minptime=10;useinbandfec=1\r\na=rtpmap:63 red/48000/2\r\na=fmtp:63 111/111\r\na=rtpmap:9 G722/8000\r\na=rtpmap:0 PCMU/8000\r\na=rtpmap:8 PCMA/8000\r\na=rtpmap:13 CN/8000\r\na=rtpmap:110 telephone-event/48000\r\na=rtpmap:126 telephone-event/8000\r\na=ssrc:2926950945 cname:iZmaZ0OgdFB8MvQG\r\n"
+      },
+      "callerCandidates": [
+        {
+          "candidate": "candidate:1493204861 1 udp 2122260223 192.168.18.3 63148 typ host generation 0 ufrag c2fr network-id 1 network-cost 10",
+          "sdpMid": "0",
+          "sdpMLineIndex": 0,
+          "usernameFragment": "c2fr"
+        },
+        {
+          "candidate": "candidate:2088349847 1 udp 1686052607 105.117.128.193 50664 typ srflx raddr 192.168.18.3 rport 63148 generation 0 ufrag c2fr network-id 1 network-cost 10",
+          "sdpMid": "0",
+          "sdpMLineIndex": 0,
+          "usernameFragment": "c2fr"
+        },
+        {
+          "candidate": "candidate:664689264 1 tcp 1518280447 192.168.18.3 9 typ host tcptype active generation 0 ufrag c2fr network-id 1 network-cost 10",
+          "sdpMid": "0",
+          "sdpMLineIndex": 0,
+          "usernameFragment": "c2fr"
+        }
+      ],
+      "calleeCandidates": [
+        {
+          "candidate": "candidate:1515140167 1 udp 2122260223 192.168.18.3 52244 typ host generation 0 ufrag yV2Y network-id 1 network-cost 10",
+          "sdpMid": "0",
+          "sdpMLineIndex": 0,
+          "usernameFragment": "yV2Y"
+        },
+        {
+          "candidate": "candidate:612423391 1 tcp 1518280447 192.168.18.3 9 typ host tcptype active generation 0 ufrag yV2Y network-id 1 network-cost 10",
+          "sdpMid": "0",
+          "sdpMLineIndex": 0,
+          "usernameFragment": "yV2Y"
+        },
+        {
+          "candidate": "candidate:448087790 1 udp 1686052607 105.117.128.193 53164 typ srflx raddr 192.168.18.3 rport 52244 generation 0 ufrag yV2Y network-id 1 network-cost 10",
+          "sdpMid": "0",
+          "sdpMLineIndex": 0,
+          "usernameFragment": "yV2Y"
+        }
+      ],
+      "acceptedAt": "2026-04-16T17:06:56.780Z",
+      "endedAt": "2026-04-16T17:08:12.482Z",
+      "createdAt": "2026-04-16T17:06:47.509Z"
+    },
+    {
+      "id": 4,
+      "callerId": 2,
+      "calleeId": 1,
+      "roomName": "node-peer-2-1-1776359303359",
+      "callType": "video",
+      "status": "ended",
+      "offerSdp": {
+        "type": "offer",
+        "sdp": "v=0\r\no=- 4661966402217617338 3 IN IP4 127.0.0.1\r\ns=-\r\nt=0 0\r\na=group:BUNDLE 0 1\r\na=extmap-allow-mixed\r\na=msid-semantic: WMS c95caef9-7414-4827-959e-ee826013ed19\r\nm=audio 8548 UDP/TLS/RTP/SAVPF 111 63 9 0 8 13 110 126\r\nc=IN IP4 105.117.128.193\r\na=rtcp:9 IN IP4 0.0.0.0\r\na=candidate:1967515087 1 udp 2122260223 192.168.18.3 51189 typ host generation 0 network-id 1 network-cost 10\r\na=candidate:198951106 1 tcp 1518280447 192.168.18.3 9 typ host tcptype active generation 0 network-id 1 network-cost 10\r\na=candidate:1346120229 1 udp 1686052607 105.117.128.193 8548 typ srflx raddr 192.168.18.3 rport 51189 generation 0 network-id 1 network-cost 10\r\na=ice-ufrag:wsOU\r\na=ice-pwd:UFCgsg/bylE0/O2XrQXX1957\r\na=ice-options:trickle\r\na=fingerprint:sha-256 44:C4:B6:4D:6D:37:D1:60:B7:E6:AC:51:C3:3B:4E:3E:00:DC:FF:34:56:C9:E6:66:5A:F6:08:05:E2:28:CC:35\r\na=setup:actpass\r\na=mid:0\r\na=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level\r\na=extmap:2 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\r\na=extmap:3 http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01\r\na=extmap:4 urn:ietf:params:rtp-hdrext:sdes:mid\r\na=sendrecv\r\na=msid:c95caef9-7414-4827-959e-ee826013ed19 bee861c6-3241-415c-be6d-ef5b92a9feb5\r\na=rtcp-mux\r\na=rtcp-rsize\r\na=rtpmap:111 opus/48000/2\r\na=rtcp-fb:111 transport-cc\r\na=fmtp:111 minptime=10;useinbandfec=1\r\na=rtpmap:63 red/48000/2\r\na=fmtp:63 111/111\r\na=rtpmap:9 G722/8000\r\na=rtpmap:0 PCMU/8000\r\na=rtpmap:8 PCMA/8000\r\na=rtpmap:13 CN/8000\r\na=rtpmap:110 telephone-event/48000\r\na=rtpmap:126 telephone-event/8000\r\na=ssrc:1311024174 cname:DPfW+f3VcGuBZNTt\r\na=ssrc:1311024174 msid:c95caef9-7414-4827-959e-ee826013ed19 bee861c6-3241-415c-be6d-ef5b92a9feb5\r\nm=video 8298 UDP/TLS/RTP/SAVPF 96 97 103 104 107 108 109 114 115 116 117 118 39 40 45 46 98 99 100 101 123 124 125\r\nc=IN IP4 105.117.128.193\r\na=rtcp:9 IN IP4 0.0.0.0\r\na=candidate:1967515087 1 udp 2122260223 192.168.18.3 51190 typ host generation 0 network-id 1 network-cost 10\r\na=candidate:198951106 1 tcp 1518280447 192.168.18.3 9 typ host tcptype active generation 0 network-id 1 network-cost 10\r\na=candidate:1346120229 1 udp 1686052607 105.117.128.193 8298 typ srflx raddr 192.168.18.3 rport 51190 generation 0 network-id 1 network-cost 10\r\na=ice-ufrag:wsOU\r\na=ice-pwd:UFCgsg/bylE0/O2XrQXX1957\r\na=ice-options:trickle\r\na=fingerprint:sha-256 44:C4:B6:4D:6D:37:D1:60:B7:E6:AC:51:C3:3B:4E:3E:00:DC:FF:34:56:C9:E6:66:5A:F6:08:05:E2:28:CC:35\r\na=setup:actpass\r\na=mid:1\r\na=extmap:14 urn:ietf:params:rtp-hdrext:toffset\r\na=extmap:2 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\r\na=extmap:13 urn:3gpp:video-orientation\r\na=extmap:3 http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01\r\na=extmap:5 http://www.webrtc.org/experiments/rtp-hdrext/playout-delay\r\na=extmap:6 http://www.webrtc.org/experiments/rtp-hdrext/video-content-type\r\na=extmap:7 http://www.webrtc.org/experiments/rtp-hdrext/video-timing\r\na=extmap:8 http://www.webrtc.org/experiments/rtp-hdrext/color-space\r\na=extmap:4 urn:ietf:params:rtp-hdrext:sdes:mid\r\na=extmap:10 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id\r\na=extmap:11 urn:ietf:params:rtp-hdrext:sdes:repaired-rtp-stream-id\r\na=sendrecv\r\na=msid:c95caef9-7414-4827-959e-ee826013ed19 23c31163-730a-4b12-94b4-09652e34ed0d\r\na=rtcp-mux\r\na=rtcp-rsize\r\na=rtpmap:96 VP8/90000\r\na=rtcp-fb:96 goog-remb\r\na=rtcp-fb:96 transport-cc\r\na=rtcp-fb:96 ccm fir\r\na=rtcp-fb:96 nack\r\na=rtcp-fb:96 nack pli\r\na=rtpmap:97 rtx/90000\r\na=fmtp:97 apt=96\r\na=rtpmap:103 H264/90000\r\na=rtcp-fb:103 goog-remb\r\na=rtcp-fb:103 transport-cc\r\na=rtcp-fb:103 ccm fir\r\na=rtcp-fb:103 nack\r\na=rtcp-fb:103 nack pli\r\na=fmtp:103 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42001f\r\na=rtpmap:104 rtx/90000\r\na=fmtp:104 apt=103\r\na=rtpmap:107 H264/90000\r\na=rtcp-fb:107 goog-remb\r\na=rtcp-fb:107 transport-cc\r\na=rtcp-fb:107 ccm fir\r\na=rtcp-fb:107 nack\r\na=rtcp-fb:107 nack pli\r\na=fmtp:107 level-asymmetry-allowed=1;packetization-mode=0;profile-level-id=42001f\r\na=rtpmap:108 rtx/90000\r\na=fmtp:108 apt=107\r\na=rtpmap:109 H264/90000\r\na=rtcp-fb:109 goog-remb\r\na=rtcp-fb:109 transport-cc\r\na=rtcp-fb:109 ccm fir\r\na=rtcp-fb:109 nack\r\na=rtcp-fb:109 nack pli\r\na=fmtp:109 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42e01f\r\na=rtpmap:114 rtx/90000\r\na=fmtp:114 apt=109\r\na=rtpmap:115 H264/90000\r\na=rtcp-fb:115 goog-remb\r\na=rtcp-fb:115 transport-cc\r\na=rtcp-fb:115 ccm fir\r\na=rtcp-fb:115 nack\r\na=rtcp-fb:115 nack pli\r\na=fmtp:115 level-asymmetry-allowed=1;packetization-mode=0;profile-level-id=42e01f\r\na=rtpmap:116 rtx/90000\r\na=fmtp:116 apt=115\r\na=rtpmap:117 H264/90000\r\na=rtcp-fb:117 goog-remb\r\na=rtcp-fb:117 transport-cc\r\na=rtcp-fb:117 ccm fir\r\na=rtcp-fb:117 nack\r\na=rtcp-fb:117 nack pli\r\na=fmtp:117 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=4d001f\r\na=rtpmap:118 rtx/90000\r\na=fmtp:118 apt=117\r\na=rtpmap:39 H264/90000\r\na=rtcp-fb:39 goog-remb\r\na=rtcp-fb:39 transport-cc\r\na=rtcp-fb:39 ccm fir\r\na=rtcp-fb:39 nack\r\na=rtcp-fb:39 nack pli\r\na=fmtp:39 level-asymmetry-allowed=1;packetization-mode=0;profile-level-id=4d001f\r\na=rtpmap:40 rtx/90000\r\na=fmtp:40 apt=39\r\na=rtpmap:45 AV1/90000\r\na=rtcp-fb:45 goog-remb\r\na=rtcp-fb:45 transport-cc\r\na=rtcp-fb:45 ccm fir\r\na=rtcp-fb:45 nack\r\na=rtcp-fb:45 nack pli\r\na=fmtp:45 level-idx=5;profile=0;tier=0\r\na=rtpmap:46 rtx/90000\r\na=fmtp:46 apt=45\r\na=rtpmap:98 VP9/90000\r\na=rtcp-fb:98 goog-remb\r\na=rtcp-fb:98 transport-cc\r\na=rtcp-fb:98 ccm fir\r\na=rtcp-fb:98 nack\r\na=rtcp-fb:98 nack pli\r\na=fmtp:98 profile-id=0\r\na=rtpmap:99 rtx/90000\r\na=fmtp:99 apt=98\r\na=rtpmap:100 VP9/90000\r\na=rtcp-fb:100 goog-remb\r\na=rtcp-fb:100 transport-cc\r\na=rtcp-fb:100 ccm fir\r\na=rtcp-fb:100 nack\r\na=rtcp-fb:100 nack pli\r\na=fmtp:100 profile-id=2\r\na=rtpmap:101 rtx/90000\r\na=fmtp:101 apt=100\r\na=rtpmap:123 red/90000\r\na=rtpmap:124 rtx/90000\r\na=fmtp:124 apt=123\r\na=rtpmap:125 ulpfec/90000\r\na=ssrc-group:FID 3902955939 3930338297\r\na=ssrc:3902955939 cname:DPfW+f3VcGuBZNTt\r\na=ssrc:3902955939 msid:c95caef9-7414-4827-959e-ee826013ed19 23c31163-730a-4b12-94b4-09652e34ed0d\r\na=ssrc:3930338297 cname:DPfW+f3VcGuBZNTt\r\na=ssrc:3930338297 msid:c95caef9-7414-4827-959e-ee826013ed19 23c31163-730a-4b12-94b4-09652e34ed0d\r\n"
+      },
+      "answerSdp": null,
+      "callerCandidates": [
+        {
+          "candidate": "candidate:1967515087 1 udp 2122260223 192.168.18.3 51189 typ host generation 0 ufrag wsOU network-id 1 network-cost 10",
+          "sdpMid": "0",
+          "sdpMLineIndex": 0,
+          "usernameFragment": "wsOU"
+        },
+        {
+          "candidate": "candidate:1967515087 1 udp 2122260223 192.168.18.3 51190 typ host generation 0 ufrag wsOU network-id 1 network-cost 10",
+          "sdpMid": "1",
+          "sdpMLineIndex": 1,
+          "usernameFragment": "wsOU"
+        },
+        {
+          "candidate": "candidate:198951106 1 tcp 1518280447 192.168.18.3 9 typ host tcptype active generation 0 ufrag wsOU network-id 1 network-cost 10",
+          "sdpMid": "0",
+          "sdpMLineIndex": 0,
+          "usernameFragment": "wsOU"
+        },
+        {
+          "candidate": "candidate:198951106 1 tcp 1518280447 192.168.18.3 9 typ host tcptype active generation 0 ufrag wsOU network-id 1 network-cost 10",
+          "sdpMid": "1",
+          "sdpMLineIndex": 1,
+          "usernameFragment": "wsOU"
+        },
+        {
+          "candidate": "candidate:1346120229 1 udp 1686052607 105.117.128.193 8298 typ srflx raddr 192.168.18.3 rport 51190 generation 0 ufrag wsOU network-id 1 network-cost 10",
+          "sdpMid": "1",
+          "sdpMLineIndex": 1,
+          "usernameFragment": "wsOU"
+        },
+        {
+          "candidate": "candidate:1346120229 1 udp 1686052607 105.117.128.193 8548 typ srflx raddr 192.168.18.3 rport 51189 generation 0 ufrag wsOU network-id 1 network-cost 10",
+          "sdpMid": "0",
+          "sdpMLineIndex": 0,
+          "usernameFragment": "wsOU"
+        }
+      ],
+      "calleeCandidates": [],
+      "acceptedAt": "2026-04-16T17:08:32.920Z",
+      "endedAt": "2026-04-16T17:10:11.130Z",
+      "createdAt": "2026-04-16T17:08:23.359Z"
+    },
+    {
+      "id": 5,
+      "callerId": 2,
+      "calleeId": 1,
+      "roomName": "node-peer-2-1-1776359447442",
+      "callType": "audio",
+      "status": "ended",
+      "offerSdp": null,
+      "answerSdp": null,
+      "callerCandidates": [],
+      "calleeCandidates": [],
+      "acceptedAt": null,
+      "endedAt": "2026-04-16T17:11:22.642Z",
+      "createdAt": "2026-04-16T17:10:47.442Z"
+    },
+    {
+      "id": 6,
+      "callerId": 2,
+      "calleeId": 1,
+      "roomName": "node-peer-2-1-1776359494953",
+      "callType": "audio",
+      "status": "ended",
+      "offerSdp": null,
+      "answerSdp": null,
+      "callerCandidates": [],
+      "calleeCandidates": [],
+      "acceptedAt": null,
+      "endedAt": "2026-04-16T17:11:48.501Z",
+      "createdAt": "2026-04-16T17:11:34.953Z"
+    },
+    {
+      "id": 7,
+      "callerId": 1,
+      "calleeId": 2,
+      "roomName": "node-peer-1-2-1776359512228",
+      "callType": "audio",
+      "status": "connected",
+      "offerSdp": {
+        "type": "offer",
+        "sdp": "v=0\r\no=- 1475446744794258324 5 IN IP4 127.0.0.1\r\ns=-\r\nt=0 0\r\na=group:BUNDLE 0\r\na=extmap-allow-mixed\r\na=msid-semantic: WMS 835d45ac-d432-45e3-8afb-cea99d100388\r\nm=audio 32998 UDP/TLS/RTP/SAVPF 111 63 9 0 8 13 110 126\r\nc=IN IP4 102.91.93.65\r\na=rtcp:9 IN IP4 0.0.0.0\r\na=candidate:2270444177 1 udp 2122260223 10.34.156.223 48836 typ host generation 0 network-id 1 network-cost 900\r\na=candidate:2046750213 1 tcp 1518280447 10.34.156.223 9 typ host tcptype active generation 0 network-id 1 network-cost 900\r\na=candidate:1184525787 1 udp 1686052607 102.91.93.65 32998 typ srflx raddr 10.34.156.223 rport 48836 generation 0 network-id 1 network-cost 900\r\na=ice-ufrag:+lWG\r\na=ice-pwd:qzLXvQwx4AwPF3DvruPxPLEJ\r\na=ice-options:trickle\r\na=fingerprint:sha-256 68:95:08:53:59:E4:28:F6:E0:55:56:0A:B5:40:12:58:C0:23:A0:79:EE:C7:5A:A6:4F:84:6B:8E:55:11:35:CD\r\na=setup:actpass\r\na=mid:0\r\na=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level\r\na=extmap:2 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\r\na=extmap:3 http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01\r\na=extmap:4 urn:ietf:params:rtp-hdrext:sdes:mid\r\na=sendrecv\r\na=msid:835d45ac-d432-45e3-8afb-cea99d100388 c31deac6-78b5-4805-87f4-21ae323dc041\r\na=rtcp-mux\r\na=rtcp-rsize\r\na=rtpmap:111 opus/48000/2\r\na=rtcp-fb:111 transport-cc\r\na=fmtp:111 minptime=10;useinbandfec=1\r\na=rtpmap:63 red/48000/2\r\na=fmtp:63 111/111\r\na=rtpmap:9 G722/8000\r\na=rtpmap:0 PCMU/8000\r\na=rtpmap:8 PCMA/8000\r\na=rtpmap:13 CN/8000\r\na=rtpmap:110 telephone-event/48000\r\na=rtpmap:126 telephone-event/8000\r\na=ssrc:2201055404 cname:93m6pNONOR31qAkY\r\na=ssrc:2201055404 msid:835d45ac-d432-45e3-8afb-cea99d100388 c31deac6-78b5-4805-87f4-21ae323dc041\r\n"
+      },
+      "answerSdp": {
+        "type": "answer",
+        "sdp": "v=0\r\no=- 4869697929784019794 2 IN IP4 127.0.0.1\r\ns=-\r\nt=0 0\r\na=group:BUNDLE 0\r\na=extmap-allow-mixed\r\na=msid-semantic: WMS dd5ad83d-b581-48c3-b078-821fd5fc72e7\r\nm=audio 9 UDP/TLS/RTP/SAVPF 111 63 9 0 8 13 110 126\r\nc=IN IP4 0.0.0.0\r\na=rtcp:9 IN IP4 0.0.0.0\r\na=ice-ufrag:xRdN\r\na=ice-pwd:NM63Gk0oov48Q/G9ES1CRHsg\r\na=ice-options:trickle\r\na=fingerprint:sha-256 F9:93:C1:5F:1A:96:51:3B:BE:5C:EE:3E:A7:46:07:A6:EC:1D:28:53:C9:70:16:F4:9F:3B:A2:C6:9A:51:8E:AC\r\na=setup:active\r\na=mid:0\r\na=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level\r\na=extmap:2 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time\r\na=extmap:3 http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01\r\na=extmap:4 urn:ietf:params:rtp-hdrext:sdes:mid\r\na=sendrecv\r\na=msid:dd5ad83d-b581-48c3-b078-821fd5fc72e7 9b0b2eb4-a218-49ea-9207-014926266405\r\na=rtcp-mux\r\na=rtcp-rsize\r\na=rtpmap:111 opus/48000/2\r\na=rtcp-fb:111 transport-cc\r\na=fmtp:111 minptime=10;useinbandfec=1\r\na=rtpmap:63 red/48000/2\r\na=fmtp:63 111/111\r\na=rtpmap:9 G722/8000\r\na=rtpmap:0 PCMU/8000\r\na=rtpmap:8 PCMA/8000\r\na=rtpmap:13 CN/8000\r\na=rtpmap:110 telephone-event/48000\r\na=rtpmap:126 telephone-event/8000\r\na=ssrc:3876753682 cname:hktE1/VrF2BAMNPg\r\n"
+      },
+      "callerCandidates": [
+        {
+          "candidate": "candidate:2270444177 1 udp 2122260223 10.34.156.223 48836 typ host generation 0 ufrag +lWG network-id 1 network-cost 900",
+          "sdpMid": "0",
+          "sdpMLineIndex": 0,
+          "usernameFragment": "+lWG"
+        },
+        {
+          "candidate": "candidate:1184525787 1 udp 1686052607 102.91.93.65 32998 typ srflx raddr 10.34.156.223 rport 48836 generation 0 ufrag +lWG network-id 1 network-cost 900",
+          "sdpMid": "0",
+          "sdpMLineIndex": 0,
+          "usernameFragment": "+lWG"
+        },
+        {
+          "candidate": "candidate:2046750213 1 tcp 1518280447 10.34.156.223 9 typ host tcptype active generation 0 ufrag +lWG network-id 1 network-cost 900",
+          "sdpMid": "0",
+          "sdpMLineIndex": 0,
+          "usernameFragment": "+lWG"
+        }
+      ],
+      "calleeCandidates": [
+        {
+          "candidate": "candidate:2900214662 1 udp 2122260223 192.168.18.3 53605 typ host generation 0 ufrag xRdN network-id 1 network-cost 10",
+          "sdpMid": "0",
+          "sdpMLineIndex": 0,
+          "usernameFragment": "xRdN"
+        },
+        {
+          "candidate": "candidate:3524403486 1 tcp 1518280447 192.168.18.3 9 typ host tcptype active generation 0 ufrag xRdN network-id 1 network-cost 10",
+          "sdpMid": "0",
+          "sdpMLineIndex": 0,
+          "usernameFragment": "xRdN"
+        },
+        {
+          "candidate": "candidate:3962024239 1 udp 1686052607 105.117.128.193 43979 typ srflx raddr 192.168.18.3 rport 53605 generation 0 ufrag xRdN network-id 1 network-cost 10",
+          "sdpMid": "0",
+          "sdpMLineIndex": 0,
+          "usernameFragment": "xRdN"
+        }
+      ],
+      "acceptedAt": "2026-04-16T17:11:56.987Z",
+      "endedAt": null,
+      "createdAt": "2026-04-16T17:11:52.228Z"
+    }
+  ],
+  "tokens": [
+    {
+      "token": "ee6fc23dabb5ba9be07f27ea8ae3aacb02ff4561d3b79313",
+      "userId": 2,
+      "createdAt": "2026-04-16T17:10:28.856Z"
+    },
+    {
+      "token": "4920d1c0fdfb2ef7c49468e521fc63d406f5c05e49108858",
+      "userId": 1,
+      "createdAt": "2026-04-16T17:11:08.283Z"
+    }
+  ]
+}

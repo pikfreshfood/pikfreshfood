@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map View - PikFreshFood</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary-color: #27ae60;
+            --header-bg: white;
+            --text-color: #333;
+            --map-gradient-1: #e0f7fa;
+            --map-gradient-2: #b3e5fc;
+            --bottom-sheet-bg: white;
+            --vendor-bg: #f8f9fa;
+        }
+        
+        body.safplace-theme {
+            --primary-color: #ffc107;
+            --header-bg: #ffd700;
+            --text-color: #1a3a2a;
+            --map-gradient-1: #2d5a4a;
+            --map-gradient-2: #1a3a2a;
+            --bottom-sheet-bg: #f5f5f5;
+            --vendor-bg: #e8e8e8;
+        }
+        
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: var(--text-color); overflow: hidden; }
+        
+        .header { background: var(--header-bg); padding: 12px 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: relative; z-index: 100; display: flex; justify-content: space-between; align-items: center; }
+        .search-section { display: flex; gap: 8px; align-items: center; flex: 1; }
+        .search-input { flex: 1; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; }
+        .filter-btn { padding: 8px 12px; background: var(--primary-color); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; }
+        
+        .theme-toggle { display: flex; align-items: center; gap: 8px; }
+        .toggle-label { font-size: 11px; font-weight: bold; color: var(--text-color); }
+        .toggle-switch { width: 45px; height: 24px; background: #ccc; border-radius: 12px; position: relative; cursor: pointer; transition: background 0.3s; border: none; }
+        .toggle-switch.active { background: var(--primary-color); }
+        .toggle-slider { position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background: white; border-radius: 10px; transition: left 0.3s; }
+        .toggle-switch.active .toggle-slider { left: 23px; }
+        
+        .map-container { width: 100%; height: 60vh; background: linear-gradient(135deg, var(--map-gradient-1) 0%, var(--map-gradient-2) 100%); position: relative; }
+        .map-marker { position: absolute; width: 40px; height: 40px; background: white; border: 3px solid var(--primary-color); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); cursor: pointer; }
+        .user-marker { position: absolute; width: 30px; height: 30px; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--primary-color); border: 3px solid white; border-radius: 50%; box-shadow: 0 0 0 4px var(--primary-color); }
+        .user-marker::after { content: ''; position: absolute; width: 100%; height: 100%; border: 2px solid var(--primary-color); border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { width: 100%; height: 100%; opacity: 1; } 100% { width: 200%; height: 200%; opacity: 0; } }
+        
+        .map-label { position: absolute; background: white; padding: 6px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; box-shadow: 0 2px 6px rgba(0,0,0,0.1); white-space: nowrap; }
+        
+        body.safplace-theme .map-label { background: #ffc107; color: #1a3a2a; }
+        
+        .bottom-sheet { position: fixed; bottom: 0; width: 100%; background: var(--bottom-sheet-bg); border-radius: 16px 16px 0 0; box-shadow: 0 -2px 16px rgba(0,0,0,0.1); max-height: 40vh; overflow-y: auto; z-index: 50; }
+        .bottom-sheet-handle { width: 40px; height: 4px; background: #ddd; border-radius: 2px; margin: 10px auto 15px; }
+        .bottom-sheet-header { padding: 0 15px 10px; font-size: 14px; font-weight: bold; color: var(--text-color); }
+        
+        .vendor-list { display: flex; flex-direction: column; gap: 10px; padding: 10px 15px; }
+        .vendor-item { background: var(--vendor-bg); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s; border: 2px solid transparent; }
+        .vendor-item:hover { border-color: var(--primary-color); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .vendor-item-header { display: flex; gap: 10px; align-items: flex-start; }
+        .vendor-icon { font-size: 30px; }
+        .vendor-item-info { flex: 1; }
+        .vendor-name { font-weight: bold; font-size: 13px; color: var(--text-color); }
+        .vendor-distance { font-size: 11px; color: #7f8c8d; }
+        .vendor-rating { font-size: 11px; color: #f39c12; }
+        .vendor-products { font-size: 11px; color: #555; margin-top: 4px; }
+        
+        body.safplace-theme .vendor-distance { color: #666; }
+        body.safplace-theme .vendor-products { color: #333; }
+        .vendor-action { text-align: right; }
+        .action-btn { background: var(--primary-color); color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; }
+        
+        .filter-panel { position: fixed; bottom: 0; width: 100%; background: var(--bottom-sheet-bg); border-radius: 16px 16px 0 0; padding: 20px 15px; z-index: 100; max-height: 80vh; overflow-y: auto; }
+        .filter-panel-hidden { display: none; }
+        .filter-title { font-weight: bold; margin-bottom: 15px; }
+        .filter-group { margin-bottom: 20px; }
+        .filter-label { font-size: 12px; font-weight: bold; color: #7f8c8d; margin-bottom: 8px; display: block; }
+        .filter-checkbox { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 13px; cursor: pointer; }
+        .checkbox { width: 16px; height: 16px; border: 2px solid #ddd; border-radius: 3px; cursor: pointer; }
+        .checkbox.checked { background: #27ae60; border-color: #27ae60; }
+        .price-slider { width: 100%; }
+        .filter-btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .btn { padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .btn-reset { background: #ecf0f1; }
+        .btn-apply { background: var(--primary-color); color: white; }
+        
+        .map-controls { position: absolute; right: 15px; top: 100px; display: flex; flex-direction: column; gap: 8px; z-index: 10; }
+        .control-btn { width: 40px; height: 40px; background: white; border: 1px solid #ddd; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="search-section">
+            <input type="text" class="search-input" placeholder="Search location or vendor...">
+            <button class="filter-btn">⚙️ Filter</button>
+        </div>
+        <div class="theme-toggle">
+            <span class="toggle-label">Safplace</span>
+            <button class="toggle-switch" id="themeToggle" onclick="toggleTheme()">
+                <div class="toggle-slider"></div>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Map Container -->
+    <div class="map-container">
+        <!-- User Location -->
+        <div class="user-marker"></div>
+        
+        <!-- Vendor Markers -->
+        <div class="map-marker" style="top: 20%; left: 25%;">👩</div>
+        <div class="map-label" style="top: 18%; left: 27%;">Mama Chidi</div>
+        
+        <div class="map-marker" style="top: 35%; left: 65%;">👨</div>
+        <div class="map-label" style="top: 33%; left: 67%;">Uncle Emeka</div>
+        
+        <div class="map-marker" style="top: 60%; left: 40%;">👩</div>
+        <div class="map-label" style="top: 58%; left: 42%;">Sister Blessing</div>
+        
+        <div class="map-marker" style="top: 70%; left: 75%;">👨</div>
+        <div class="map-label" style="top: 68%; left: 77%;">Brother Tunde</div>
+        
+        <!-- Map Controls -->
+        <div class="map-controls">
+            <div class="control-btn">+</div>
+            <div class="control-btn">−</div>
+            <div class="control-btn">🎯</div>
+        </div>
+    </div>
+    
+    <!-- Bottom Sheet - Vendor List -->
+    <div class="bottom-sheet">
+        <div class="bottom-sheet-handle"></div>
+        <div class="bottom-sheet-header">⭐ Nearby Vendors (4 found)</div>
+        <div class="vendor-list">
+            <div class="vendor-item">
+                <div class="vendor-item-header">
+                    <div class="vendor-icon">👩</div>
+                    <div class="vendor-item-info">
+                        <div class="vendor-name">Mama Chidi's Farm Fresh</div>
+                        <div class="vendor-distance">300m away • 20 mins</div>
+                        <div class="vendor-rating">⭐ 4.9 (1200 reviews)</div>
+                        <div class="vendor-products">🍅 Tomatoes • 🥬 Vegetables • 🍆 Garden Eggs</div>
+                    </div>
+                    <div class="vendor-action">
+                        <button class="action-btn">View</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="vendor-item">
+                <div class="vendor-item-header">
+                    <div class="vendor-icon">👨</div>
+                    <div class="vendor-item-info">
+                        <div class="vendor-name">Uncle Emeka's Organic</div>
+                        <div class="vendor-distance">550m away • 25 mins</div>
+                        <div class="vendor-rating">⭐ 4.7 (890 reviews)</div>
+                        <div class="vendor-products">🌾 Grains • 🥜 Nuts • 🍚 Rice</div>
+                    </div>
+                    <div class="vendor-action">
+                        <button class="action-btn">View</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="vendor-item">
+                <div class="vendor-item-header">
+                    <div class="vendor-icon">👩</div>
+                    <div class="vendor-item-info">
+                        <div class="vendor-name">Sister Blessing's Fresh Foods</div>
+                        <div class="vendor-distance">420m away • 22 mins</div>
+                        <div class="vendor-rating">⭐ 4.8 (1050 reviews)</div>
+                        <div class="vendor-products">🥦 All Vegetables • 🍎 Fruits • 🧅 Condiments</div>
+                    </div>
+                    <div class="vendor-action">
+                        <button class="action-btn">View</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="vendor-item">
+                <div class="vendor-item-header">
+                    <div class="vendor-icon">👨</div>
+                    <div class="vendor-item-info">
+                        <div class="vendor-name">Brother Tunde - Premium</div>
+                        <div class="vendor-distance">650m away • 30 mins</div>
+                        <div class="vendor-rating">⭐ 4.6 (756 reviews)</div>
+                        <div class="vendor-products">🐟 Seafood • 🍗 Poultry • 🥩 Meat</div>
+                    </div>
+                    <div class="vendor-action">
+                        <button class="action-btn">View</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function toggleTheme() {
+            const toggle = document.getElementById('themeToggle');
+            const body = document.body;
+            
+            if (body.classList.contains('safplace-theme')) {
+                body.classList.remove('safplace-theme');
+                toggle.classList.remove('active');
+                localStorage.setItem('theme', 'pikfresh');
+            } else {
+                body.classList.add('safplace-theme');
+                toggle.classList.add('active');
+                localStorage.setItem('theme', 'safplace');
+            }
+        }
+        
+        // Load saved theme on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            const toggle = document.getElementById('themeToggle');
+            
+            if (savedTheme === 'safplace') {
+                document.body.classList.add('safplace-theme');
+                toggle.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

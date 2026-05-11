@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Page - How to Make Jollof Rice</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; color: #333; padding-bottom: 100px; }
+        
+        .header { background: white; padding: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .back-btn { cursor: pointer; font-size: 24px; }
+        
+        .hero { background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%); color: white; padding: 30px 15px; text-align: center; }
+        .hero h1 { font-size: 24px; margin-bottom: 10px; }
+        .hero-meta { font-size: 13px; opacity: 0.9; margin-bottom: 15px; }
+        .cta-primary { background: white; color: #ff6b35; padding: 12px 30px; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; }
+        
+        .content-section { background: white; margin: 15px; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .section-title { font-size: 18px; font-weight: bold; margin-bottom: 15px; color: #2c3e50; border-left: 4px solid #ff6b35; padding-left: 10px; }
+        
+        .recipe-image { width: 100%; height: 200px; background: linear-gradient(135deg, #ffe5cc 0%, #ffd699 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 80px; margin-bottom: 15px; }
+        
+        .ingredients-list { list-style: none; }
+        .ingredient-item { padding: 12px; border: 1px solid #ecf0f1; border-radius: 6px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s; }
+        .ingredient-item:hover { background: #f8f9fa; }
+        .ingredient-name { font-weight: 500; }
+        .ingredient-action { color: #27ae60; font-weight: bold; }
+        
+        .vendor-badge { display: inline-block; background: #27ae60; color: white; padding: 4px 8px; font-size: 11px; border-radius: 4px; margin-right: 5px; }
+        
+        .steps { counter-reset: step-counter; }
+        .step { counter-increment: step-counter; padding: 15px; background: #f8f9fa; border-radius: 6px; margin-bottom: 10px; padding-left: 50px; position: relative; }
+        .step::before { content: counter(step-counter); position: absolute; left: 15px; top: 15px; background: #ff6b35; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        
+        .vendor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-top: 15px; }
+        .vendor-card { background: white; border: 1px solid #ecf0f1; border-radius: 8px; padding: 12px; text-align: center; cursor: pointer; transition: transform 0.2s; }
+        .vendor-card:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .vendor-avatar { font-size: 40px; margin-bottom: 8px; }
+        .vendor-name { font-weight: bold; font-size: 12px; margin-bottom: 4px; }
+        .vendor-distance { font-size: 11px; color: #95a5a6; margin-bottom: 4px; }
+        .vendor-price { color: #27ae60; font-weight: bold; font-size: 12px; margin-bottom: 8px; }
+        .add-btn { background: #27ae60; color: white; padding: 6px 12px; border: none; border-radius: 4px; font-size: 11px; cursor: pointer; }
+        
+        .sticky-basket { position: fixed; bottom: 0; width: 100%; background: white; border-top: 2px solid #ff6b35; padding: 15px; box-shadow: 0 -2px 8px rgba(0,0,0,0.1); }
+        .basket-content { display: flex; justify-content: space-between; align-items: center; }
+        .basket-info { flex: 1; }
+        .basket-title { font-weight: bold; font-size: 14px; }
+        .basket-meta { font-size: 12px; color: #7f8c8d; }
+        .checkout-btn { background: #ff6b35; color: white; padding: 12px 25px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        
+        .review-card { background: #f8f9fa; border-radius: 6px; padding: 12px; margin-bottom: 10px; border-left: 3px solid #27ae60; }
+        .review-author { font-weight: bold; font-size: 13px; }
+        .review-rating { color: #f39c12; font-size: 12px; }
+        .review-text { font-size: 13px; margin-top: 5px; color: #555; }
+        
+        .sponsored-banner { background: linear-gradient(135deg, #fff3cd 0%, #ffd699 100%); padding: 15px; border-radius: 6px; margin-bottom: 15px; border: 1px solid #ffc107; }
+        .sponsored-label { font-size: 11px; color: #856404; font-weight: bold; margin-bottom: 5px; }
+        .sponsored-vendor { display: flex; gap: 12px; align-items: center; }
+        .sponsored-avatar { font-size: 40px; }
+        .sponsored-info { flex: 1; }
+        .sponsored-name { font-weight: bold; }
+        .sponsored-desc { font-size: 12px; color: #666; }
+        
+        .related-recipes { }
+        .recipe-link { display: inline-block; background: #ecf0f1; padding: 8px 12px; border-radius: 6px; margin: 5px 5px 5px 0; font-size: 13px; color: #2c3e50; text-decoration: none; }
+        .recipe-link:hover { background: #bdc3c7; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="back-btn">← Back</div>
+    </div>
+    
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>How to Make Nigerian Jollof Rice</h1>
+        <div class="hero-meta">📍 Showing vendors near: Yaba, Lagos</div>
+        <button class="cta-primary">🛒 Buy Ingredients Near You</button>
+    </div>
+    
+    <!-- Ingredients Section -->
+    <div class="content-section">
+        <div class="section-title">📋 Ingredients You'll Need</div>
+        <ul class="ingredients-list">
+            <li class="ingredient-item">
+                <span class="ingredient-name">🍚 2 cups Long-grain Rice</span>
+                <span class="ingredient-action">+ Add</span>
+            </li>
+            <li class="ingredient-item">
+                <span class="ingredient-name">🍅 4 Large Tomatoes</span>
+                <span class="ingredient-action">+ Add</span>
+            </li>
+            <li class="ingredient-item">
+                <span class="ingredient-name">🧅 2 Onions</span>
+                <span class="ingredient-action">+ Add</span>
+            </li>
+            <li class="ingredient-item">
+                <span class="ingredient-name">🥦 1 Red Bell Pepper</span>
+                <span class="ingredient-action">+ Add</span>
+            </li>
+            <li class="ingredient-item">
+                <span class="ingredient-name">🌶️ Scotch Bonnet Pepper</span>
+                <span class="ingredient-action">+ Add</span>
+            </li>
+            <li class="ingredient-item">
+                <span class="ingredient-name">🧈 2 tbsp Vegetable Oil</span>
+                <span class="ingredient-action">+ Add</span>
+            </li>
+            <li class="ingredient-item">
+                <span class="ingredient-name">🧂 Salt & Seasoning to taste</span>
+                <span class="ingredient-action">+ Add</span>
+            </li>
+        </ul>
+    </div>
+    
+    <!-- Recipe Image & Intro -->
+    <div class="content-section">
+        <div class="recipe-image">🍚</div>
+        <p style="line-height: 1.6; color: #555; margin-bottom: 10px;">
+            Jollof Rice is one of West Africa's most beloved dishes. This Nigerian version features perfectly seasoned rice cooked in a rich tomato base until each grain is infused with flavour. Here's how to make authentic Nigerian Jollof Rice that will impress your family!
+        </p>
+    </div>
+    
+    <!-- Cooking Steps -->
+    <div class="content-section">
+        <div class="section-title">👨‍🍳 Cooking Steps</div>
+        <div class="steps">
+            <div class="step">Wash rice 2-3 times under running water until water runs clear. Set aside to drain.</div>
+            <div class="step">Blend tomatoes, peppers, and onions together (save some onions sliced). Sieve for smooth sauce.</div>
+            <div class="step">Heat oil in pot and fry onions until golden brown. This adds depth to the rice.</div>
+            <div class="step">Add tomato blended mixture to the pot and cook for 5-8 mins until it reduces by half.</div>
+            <div class="step">Add stock cubes, salt, and seasoning. Taste and adjust as needed.</div>
+            <div class="step">Add washed rice, coat with sauce, and stir. Add 4 cups of stock or water.</div>
+            <div class="step">Bring to boil, then reduce heat low. Cover and cook for 20-25 minutes until rice is tender.</div>
+            <div class="step">Fluff with fork and let rest for 2 minutes. Your Jollof Rice is ready!</div>
+        </div>
+    </div>
+    
+    <!-- Sponsored Vendor -->
+    <div class="content-section">
+        <div class="sponsored-label">🌟 FEATURED VENDOR</div>
+        <div class="sponsored-banner">
+            <div class="sponsored-vendor">
+                <div class="sponsored-avatar">👨‍🌾</div>
+                <div class="sponsored-info">
+                    <div class="sponsored-name">Uncle Emeka's Farm Fresh</div>
+                    <div class="sponsored-desc">Fresh tomatoes, peppers & organic rice - same day delivery</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Nearby Vendors for Ingredients -->
+    <div class="content-section">
+        <div class="section-title">👥 Vendors Selling These Ingredients</div>
+        <div class="vendor-grid">
+            <div class="vendor-card">
+                <div class="vendor-avatar">👩‍🌾</div>
+                <div class="vendor-name">Mama Chidi</div>
+                <div class="vendor-distance">200m away</div>
+                <div class="vendor-price">Best prices</div>
+                <button class="add-btn">Add Items</button>
+            </div>
+            <div class="vendor-card">
+                <div class="vendor-avatar">🧑‍🌾</div>
+                <div class="vendor-name">Brother Tunde</div>
+                <div class="vendor-distance">500m away</div>
+                <div class="vendor-price">₦200-500</div>
+                <button class="add-btn">Add Items</button>
+            </div>
+            <div class="vendor-card">
+                <div class="vendor-avatar">👨‍🍳</div>
+                <div class="vendor-name">Mama Blessing</div>
+                <div class="vendor-distance">300m away</div>
+                <div class="vendor-price">Fresh daily</div>
+                <button class="add-btn">Add Items</button>
+            </div>
+            <div class="vendor-card">
+                <div class="vendor-avatar">👩‍🌾</div>
+                <div class="vendor-name">Sister Adora</div>
+                <div class="vendor-distance">400m away</div>
+                <div class="vendor-price">Express 30min</div>
+                <button class="add-btn">Add Items</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Reviews Section -->
+    <div class="content-section">
+        <div class="section-title">⭐ Reviews (People Who Made This)</div>
+        <div class="review-card">
+            <div class="review-author">Chioma O. ⭐⭐⭐⭐⭐</div>
+            <div class="review-text">"Perfect recipe! My family loved the rice. Got all ingredients from Mama Chidi in 30 mins!"</div>
+        </div>
+        <div class="review-card">
+            <div class="review-author">Tunde A. ⭐⭐⭐⭐</div>
+            <div class="review-text">"Great guide! One tip: fry the onions more for better taste. Second time was even better!"</div>
+        </div>
+        <div class="review-card">
+            <div class="review-author">Folake D. ⭐⭐⭐⭐⭐</div>
+            <div class="review-text">"Best Jollof recipe ever. The vendor suggestions saved me from going to 3 different markets!"</div>
+        </div>
+    </div>
+    
+    <!-- Related Recipes -->
+    <div class="content-section">
+        <div class="section-title">🍽️ People Also Made</div>
+        <div class="related-recipes">
+            <a href="#" class="recipe-link">Fried Rice Guide</a>
+            <a href="#" class="recipe-link">Nigerian Soups</a>
+            <a href="#" class="recipe-link">Party Jollof Tips</a>
+            <a href="#" class="recipe-link">Side Dishes</a>
+        </div>
+    </div>
+    
+    <!-- Sticky Basket -->
+    <div class="sticky-basket">
+        <div class="basket-content">
+            <div class="basket-info">
+                <div class="basket-title">🛒 7 items added</div>
+                <div class="basket-meta">Only ₦3,500 • 20 mins delivery</div>
+            </div>
+            <button class="checkout-btn">Checkout</button>
+        </div>
+    </div>
+</body>
+</html>

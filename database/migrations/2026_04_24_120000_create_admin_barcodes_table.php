@@ -1,0 +1,27 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('admin_barcodes', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->string('barcode_value')->unique();
+            $table->text('background_information');
+            $table->string('barcode_path');
+            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('admin_barcodes');
+    }
+};
+
