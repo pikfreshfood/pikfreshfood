@@ -1178,7 +1178,9 @@
                 }
             } catch (error) {
                 console.error('Call initiation error:', error);
-                window.alert('Microphone or camera permission is required before the call can start.');
+                window.alert(window.PikFreshCallLauncher
+                    ? window.PikFreshCallLauncher.callErrorMessage(error, 'start the call')
+                    : 'Could not start the call. Please try again.');
             } finally {
                 button.disabled = false;
                 button.innerHTML = originalHtml;

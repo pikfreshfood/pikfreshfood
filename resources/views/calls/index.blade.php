@@ -315,7 +315,9 @@
                 } catch (error) {
                     button.disabled = false;
                     button.textContent = defaultLabel;
-                    window.alert('Microphone or camera permission is required before the call can start.');
+                    window.alert(window.PikFreshCallLauncher
+                        ? window.PikFreshCallLauncher.callErrorMessage(error, 'start the call')
+                        : 'Could not start the call. Please try again.');
                 }
             });
         });
@@ -335,7 +337,9 @@
                         title: 'Active call',
                     });
                 } catch (error) {
-                    window.alert('Microphone or camera permission is required before the call can open.');
+                    window.alert(window.PikFreshCallLauncher
+                        ? window.PikFreshCallLauncher.callErrorMessage(error, 'open the call')
+                        : 'Could not open the call. Please try again.');
                 }
             });
         });

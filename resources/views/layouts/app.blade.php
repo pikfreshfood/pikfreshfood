@@ -2289,39 +2289,108 @@
             async function prepareMedia(options) {
                 const details = options || {};
                 const type = details.type || 'audio';
-                
+
                 if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
                     throw new Error('This browser does not support camera and microphone access. Please ensure you are using HTTPS.');
                 }
 
-                // Try to check permission status first if the browser supports it
-                try {
-                    if (navigator.permissions && navigator.permissions.query) {
-                        const micStatus = await navigator.permissions.query({ name: 'microphone' });
-                        const camStatus = type === 'video' ? await navigator.permissions.query({ name: 'camera' }) : { state: 'granted' };
-                        
-                        if (micStatus.state === 'granted' && camStatus.state === 'granted') {
-                            return true;
-                        }
+                function stopStream(stream) {
+                    if (!stream) {
+                        return;
                     }
-                } catch (e) {
-                    // Ignore permission query failures and proceed to request
+
+                    stream.getTracks().forEach(function (track) {
+                        track.stop();
+                    });
                 }
 
-                // Explicitly request media access to force the browser permission prompt
-                try {
-                    const constraints = {
-                        audio: true,
-                        video: type === 'video' ? { facingMode: 'user' } : false
-                    };
-                    const stream = await navigator.mediaDevices.getUserMedia(constraints);
-                    // If we got the stream, permissions are granted. Stop the tracks immediately.
-                    stream.getTracks().forEach(function(track) { track.stop(); });
-                    return true;
-                } catch (error) {
-                    console.error('Permission denied or media error:', error);
-                    throw error;
+                async function requestAudioPreview() {
+                    try {
+                        return await navigator.mediaDevices.getUserMedia({
+                            video: false,
+                            audio: { echoCancellation: true, noiseSuppression: true },
+                        });
+                    } catch (error) {
+                        return navigator.mediaDevices.getUserMedia({
+                            video: false,
+                            audio: true,
+                        });
+                    }
                 }
+
+                async function requestCameraPreview() {
+                    try {
+                        return await navigator.mediaDevices.getUserMedia({
+                            video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' },
+                            audio: false,
+                        });
+                    } catch (error) {
+                        return navigator.mediaDevices.getUserMedia({
+                            video: true,
+                            audio: false,
+                        });
+                    }
+                }
+
+                if (type === 'video') {
+                    let cameraStream = null;
+                    let audioStream = null;
+
+                    try {
+                        cameraStream = await requestCameraPreview();
+                    } catch (error) {
+                        console.error('Camera permission or device error:', error);
+                        throw error;
+                    }
+
+                    try {
+                        audioStream = await requestAudioPreview();
+                    } catch (error) {
+                        console.warn('Microphone unavailable for video preview. Opening video call with camera only:', error);
+                    } finally {
+                        stopStream(cameraStream);
+                        stopStream(audioStream);
+                    }
+
+                    return true;
+                }
+
+                const audioStream = await requestAudioPreview();
+                stopStream(audioStream);
+                return true;
+            }
+
+            function isMediaAccessError(error) {
+                return Boolean(error && [
+                    'AbortError',
+                    'NotAllowedError',
+                    'NotFoundError',
+                    'NotReadableError',
+                    'OverconstrainedError',
+                    'SecurityError',
+                ].includes(error.name));
+            }
+
+            function callErrorMessage(error, action) {
+                const fallback = action || 'start the call';
+
+                if (isMediaAccessError(error)) {
+                    if (error.name === 'NotAllowedError' || error.name === 'SecurityError') {
+                        return 'Please allow microphone or camera access in your browser, then try again.';
+                    }
+
+                    if (error.name === 'NotFoundError') {
+                        return 'No microphone or camera was found on this device.';
+                    }
+
+                    if (error.name === 'NotReadableError') {
+                        return 'Your microphone or camera is already in use by another app or browser tab.';
+                    }
+
+                    return 'Could not access your microphone or camera. Please check browser permissions and try again.';
+                }
+
+                return 'Could not ' + fallback + '. Please try again.';
             }
 
             function openCall(url, options) {
@@ -2405,6 +2474,7 @@
                 open: openCall,
                 close: closeCall,
                 prepareMedia: prepareMedia,
+                callErrorMessage: callErrorMessage,
             };
             })();
 
@@ -2595,7 +2665,9 @@
                         } catch (error) {
                             acceptIncomingCallButton.disabled = false;
                             acceptIncomingCallButton.textContent = 'Accept Call';
-                            window.alert('Microphone or camera permission is required before the call can open.');
+                            window.alert(window.PikFreshCallLauncher
+                                ? window.PikFreshCallLauncher.callErrorMessage(error, 'open the call')
+                                : 'Could not open the call. Please try again.');
                         }
                     });
 

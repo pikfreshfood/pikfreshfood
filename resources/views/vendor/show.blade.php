@@ -575,10 +575,12 @@
                         }
                     }
                 })
-                .catch(function () {
+                .catch(function (error) {
                     onlineButton.disabled = false;
                     onlineButton.textContent = selectedCallType === 'video' ? 'Online Video Call' : 'Online Call';
-                    window.alert('Microphone or camera permission is required before the call can start.');
+                    window.alert(window.PikFreshCallLauncher
+                        ? window.PikFreshCallLauncher.callErrorMessage(error, 'start the call')
+                        : 'Could not start the call. Please try again.');
                 })
                 .finally(function () {
                     closeModal();
