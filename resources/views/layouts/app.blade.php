@@ -2398,9 +2398,18 @@
             }
 
             async function parseJsonResponse(response, fallback) {
-                const payload = await response.json().catch(function () {
-                    return {};
+                const rawBody = await response.text().catch(function () {
+                    return '';
                 });
+                let payload = {};
+
+                if (rawBody.trim() !== '') {
+                    try {
+                        payload = JSON.parse(rawBody);
+                    } catch (error) {
+                        payload = {};
+                    }
+                }
 
                 if (!response.ok) {
                     let message = payload.message || payload.error || fallback || 'The server could not process this call.';
@@ -2413,6 +2422,22 @@
                             message = firstError[0];
                         }
                     }
+
+                    if ((message === fallback || message === 'The server could not process this call.') && rawBody.trim() !== '') {
+                        const titleMatch = rawBody.match(/<title[^>]*>(.*?)<\/title>/i);
+                        const bodyText = rawBody
+                            .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+                            .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+                            .replace(/<[^>]+>/g, ' ')
+                            .replace(/\s+/g, ' ')
+                            .trim();
+
+                        message = titleMatch && titleMatch[1]
+                            ? titleMatch[1].replace(/\s+/g, ' ').trim()
+                            : bodyText.slice(0, 180);
+                    }
+
+                    message = 'HTTP ' + response.status + ': ' + message;
 
                     throw new Error(message);
                 }

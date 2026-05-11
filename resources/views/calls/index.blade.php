@@ -289,6 +289,7 @@
                         body: JSON.stringify({
                             type: callType,
                         }),
+                        credentials: 'same-origin',
                     })
                         .then(function (response) {
                             return window.PikFreshCallLauncher

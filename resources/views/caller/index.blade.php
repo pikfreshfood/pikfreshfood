@@ -258,6 +258,7 @@
                             'Accept': 'application/json',
                         },
                         body: JSON.stringify({ type: button.dataset.type || 'audio' }),
+                        credentials: 'same-origin',
                     });
 
                     const payload = window.PikFreshCallLauncher
@@ -297,6 +298,7 @@
                             'X-Requested-With': 'XMLHttpRequest',
                             'Accept': 'application/json',
                         },
+                        credentials: 'same-origin',
                     });
 
                     const payload = window.PikFreshCallLauncher

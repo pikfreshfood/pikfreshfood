@@ -555,6 +555,7 @@
                         body: JSON.stringify({
                             type: selectedCallType,
                         }),
+                        credentials: 'same-origin',
                     });
                 })
                 .then(function (response) {
