@@ -1864,9 +1864,9 @@
         <div class="desktop-footer-inner">
             <div class="desktop-footer-top">
                 <div class="desktop-footer-news">
-                    <h4>New to Jumia?</h4>
+                    <h4>Stay updated</h4>
                     <p>Subscribe to our newsletter to get updates on our latest offers, you can unsubscribe at any time as described in Privacy Policy.</p>
-                    <p>To subscribe to our newsletter, you must first read and agree to Jumia's Privacy Policy and Cookie Notice</p>
+                    <p>To subscribe to our newsletter, you must first read and agree to our Privacy Policy and Cookie Notice</p>
                     <label class="desktop-footer-checkline">
                         <input type="checkbox" name="footer_terms" value="1">
                         <span>I agree Our Privacy and Cookie Policy.</span>
@@ -3036,4 +3036,3 @@
     @yield('scripts')
 </body>
 </html>
-
