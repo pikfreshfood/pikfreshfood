@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\CallInvite;
 use App\Models\Vendor;
+use Throwable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CallController extends Controller
 {
@@ -114,8 +116,23 @@ class CallController extends Controller
 
     public function start(Request $request, Vendor $vendor)
     {
-        abort_unless(Auth::check() && Auth::user()->isBuyer(), 403);
-        abort_if(Auth::id() === $vendor->user_id, 403);
+        if (! Auth::check()) {
+            return $request->expectsJson()
+                ? response()->json(['message' => 'Please log in before starting a call.'], 401)
+                : redirect()->route('login');
+        }
+
+        if (! Auth::user()->isBuyer()) {
+            return $request->expectsJson()
+                ? response()->json(['message' => 'Only buyer accounts can start calls to vendors.'], 403)
+                : abort(403, 'Only buyer accounts can start calls to vendors.');
+        }
+
+        if (Auth::id() === $vendor->user_id) {
+            return $request->expectsJson()
+                ? response()->json(['message' => 'You cannot call your own vendor account.'], 403)
+                : abort(403, 'You cannot call your own vendor account.');
+        }
 
         $validated = $request->validate([
             'type' => 'nullable|in:audio,video',
@@ -123,30 +140,47 @@ class CallController extends Controller
 
         $callType = $validated['type'] ?? 'audio';
 
-        $callInvite = DB::transaction(function () use ($vendor, $callType) {
-            CallInvite::query()
-                ->where('vendor_id', $vendor->id)
-                ->where('buyer_id', Auth::id())
-                ->whereIn('status', ['ringing', 'accepted', 'connected'])
-                ->update([
-                    'status' => 'ended',
-                    'ended_at' => now(),
-                ]);
+        try {
+            $callInvite = DB::transaction(function () use ($vendor, $callType) {
+                CallInvite::query()
+                    ->where('vendor_id', $vendor->id)
+                    ->where('buyer_id', Auth::id())
+                    ->whereIn('status', ['ringing', 'accepted', 'connected'])
+                    ->update([
+                        'status' => 'ended',
+                        'ended_at' => now(),
+                    ]);
 
-            return CallInvite::query()->create([
+                return CallInvite::query()->create([
+                    'vendor_id' => $vendor->id,
+                    'buyer_id' => Auth::id(),
+                    'room_name' => sprintf('pikfresh-vendor-%d-buyer-%d-%s', $vendor->id, Auth::id(), now()->timestamp),
+                    'call_type' => $callType,
+                    'status' => 'ringing',
+                    'offer_sdp' => null,
+                    'answer_sdp' => null,
+                    'buyer_candidates' => [],
+                    'vendor_candidates' => [],
+                    'accepted_at' => null,
+                    'ended_at' => null,
+                ]);
+            });
+        } catch (Throwable $exception) {
+            Log::error('Unable to start vendor call.', [
                 'vendor_id' => $vendor->id,
                 'buyer_id' => Auth::id(),
-                'room_name' => sprintf('pikfresh-vendor-%d-buyer-%d-%s', $vendor->id, Auth::id(), now()->timestamp),
                 'call_type' => $callType,
-                'status' => 'ringing',
-                'offer_sdp' => null,
-                'answer_sdp' => null,
-                'buyer_candidates' => [],
-                'vendor_candidates' => [],
-                'accepted_at' => null,
-                'ended_at' => null,
+                'exception' => $exception,
             ]);
-        });
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => 'The call could not be created on the server. Please check the Laravel log and database migrations.',
+                ], 500);
+            }
+
+            throw $exception;
+        }
 
         $callUrl = route('calls.show', ['callInvite' => $callInvite], false);
 

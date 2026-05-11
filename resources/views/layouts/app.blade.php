@@ -2390,7 +2390,34 @@
                     return 'Could not access your microphone or camera. Please check browser permissions and try again.';
                 }
 
+                if (error && error.message) {
+                    return error.message;
+                }
+
                 return 'Could not ' + fallback + '. Please try again.';
+            }
+
+            async function parseJsonResponse(response, fallback) {
+                const payload = await response.json().catch(function () {
+                    return {};
+                });
+
+                if (!response.ok) {
+                    let message = payload.message || payload.error || fallback || 'The server could not process this call.';
+
+                    if (payload.errors && typeof payload.errors === 'object') {
+                        const firstKey = Object.keys(payload.errors)[0];
+                        const firstError = firstKey ? payload.errors[firstKey] : null;
+
+                        if (Array.isArray(firstError) && firstError.length > 0) {
+                            message = firstError[0];
+                        }
+                    }
+
+                    throw new Error(message);
+                }
+
+                return payload;
             }
 
             function openCall(url, options) {
@@ -2475,6 +2502,7 @@
                 close: closeCall,
                 prepareMedia: prepareMedia,
                 callErrorMessage: callErrorMessage,
+                parseJsonResponse: parseJsonResponse,
             };
             })();
 
@@ -2598,11 +2626,7 @@
                                 },
                             });
 
-                            if (!response.ok) {
-                                return;
-                            }
-
-                            const payload = await response.json();
+                            const payload = await window.PikFreshCallLauncher.parseJsonResponse(response, 'Unable to accept call.');
 
                             if (payload.incoming && payload.invite) {
                                 activeInviteId = payload.invite.id;

@@ -558,11 +558,9 @@
                     });
                 })
                 .then(function (response) {
-                    if (!response.ok) {
-                        throw new Error('Unable to start call.');
-                    }
-
-                    return response.json();
+                    return window.PikFreshCallLauncher
+                        ? window.PikFreshCallLauncher.parseJsonResponse(response, 'Unable to start call.')
+                        : response.json();
                 })
                 .then(function (payload) {
                     if (payload.call_url) {

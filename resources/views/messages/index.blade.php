@@ -1161,11 +1161,9 @@
                     credentials: 'same-origin'
                 });
 
-                if (!response.ok) {
-                    throw new Error('Unable to start call.');
-                }
-
-                const payload = await response.json();
+                const payload = window.PikFreshCallLauncher
+                    ? await window.PikFreshCallLauncher.parseJsonResponse(response, 'Unable to start call.')
+                    : await response.json();
 
                 if (payload.call_url) {
                     if (window.PikFreshCallLauncher) {

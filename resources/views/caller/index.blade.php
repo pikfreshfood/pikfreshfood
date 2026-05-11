@@ -260,7 +260,9 @@
                         body: JSON.stringify({ type: button.dataset.type || 'audio' }),
                     });
 
-                    const payload = await response.json().catch(function () { return {}; });
+                    const payload = window.PikFreshCallLauncher
+                        ? await window.PikFreshCallLauncher.parseJsonResponse(response, 'Unable to start call.')
+                        : await response.json().catch(function () { return {}; });
 
                     if (payload.call_url) {
                         if (window.PikFreshCallLauncher) {
@@ -297,7 +299,9 @@
                         },
                     });
 
-                    const payload = await response.json().catch(function () { return {}; });
+                    const payload = window.PikFreshCallLauncher
+                        ? await window.PikFreshCallLauncher.parseJsonResponse(response, 'Unable to accept call.')
+                        : await response.json().catch(function () { return {}; });
 
                     if (payload.call_url) {
                         if (window.PikFreshCallLauncher) {
