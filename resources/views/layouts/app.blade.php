@@ -1864,7 +1864,6 @@
         <div class="desktop-footer-inner">
             <div class="desktop-footer-top">
                 <div class="desktop-footer-news">
-                    <h4>Stay updated</h4>
                     <p>Subscribe to our newsletter to get updates on our latest offers, you can unsubscribe at any time as described in Privacy Policy.</p>
                     <p>To subscribe to our newsletter, you must first read and agree to our Privacy Policy and Cookie Notice</p>
                     <label class="desktop-footer-checkline">
