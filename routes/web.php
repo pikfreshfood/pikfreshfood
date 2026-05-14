@@ -91,6 +91,10 @@ Route::middleware('guest')->group(function () {
         return view('auth.login');
     })->name('login');
 
+    Route::get('/auth/login', function () {
+        return redirect()->route('login');
+    })->name('auth.login.form');
+
     Route::get('/auth/register', function () {
         return view('auth.login');
     })->name('register');
