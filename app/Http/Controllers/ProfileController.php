@@ -46,8 +46,8 @@ class ProfileController extends Controller
             $preview[] = [
                 'label' => 'Incoming calls',
                 'message' => $incomingCalls === 1
-                    ? 'A call is waiting for your response.'
-                    : "{$incomingCalls} calls are waiting for your response.",
+                    ? 'A buyer call is waiting for your response.'
+                    : "{$incomingCalls} buyer calls are waiting for your response.",
             ];
         }
 
