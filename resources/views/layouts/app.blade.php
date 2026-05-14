@@ -2335,18 +2335,22 @@
                 if (type === 'video') {
                     let cameraStream = null;
                     let audioStream = null;
+                    let cameraError = null;
 
                     try {
                         cameraStream = await requestCameraPreview();
                     } catch (error) {
                         console.error('Camera permission or device error:', error);
-                        throw error;
+                        cameraError = error;
                     }
 
                     try {
                         audioStream = await requestAudioPreview();
                     } catch (error) {
-                        console.warn('Microphone unavailable for video preview. Opening video call with camera only:', error);
+                        console.warn('Microphone unavailable for video preview:', error);
+                        if (!cameraStream) {
+                            throw cameraError || error;
+                        }
                     } finally {
                         stopStream(cameraStream);
                         stopStream(audioStream);

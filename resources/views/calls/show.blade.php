@@ -703,15 +703,22 @@
 
             try {
                 if (config.callType === 'video') {
-                    const videoOnlyStream = await navigator.mediaDevices.getUserMedia({
-                        video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' },
-                        audio: false,
-                    });
                     localStream = new MediaStream();
-                    videoOnlyStream.getVideoTracks().forEach(function (track) { 
-                        console.log('Video track acquired.');
-                        localStream.addTrack(track); 
-                    });
+                    let videoError = null;
+
+                    try {
+                        const videoOnlyStream = await navigator.mediaDevices.getUserMedia({
+                            video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' },
+                            audio: false,
+                        });
+                        videoOnlyStream.getVideoTracks().forEach(function (track) {
+                            console.log('Video track acquired.');
+                            localStream.addTrack(track);
+                        });
+                    } catch (error) {
+                        videoError = error;
+                        console.warn('Camera unavailable, trying video call with microphone only:', error);
+                    }
 
                     try {
                         const audioOnlyStream = await navigator.mediaDevices.getUserMedia({
@@ -723,7 +730,14 @@
                             localStream.addTrack(track); 
                         });
                     } catch (audioError) {
-                        console.warn('Audio unavailable, continuing with video only:', audioError);
+                        console.warn('Audio unavailable for video call:', audioError);
+                        if (localStream.getTracks().length === 0) {
+                            throw videoError || audioError;
+                        }
+                    }
+
+                    if (localStream.getTracks().length === 0) {
+                        throw videoError || new Error('No camera or microphone was found on this device.');
                     }
                 } else {
                     localStream = await navigator.mediaDevices.getUserMedia({
@@ -746,7 +760,14 @@
             }
 
             muteButton.disabled = false;
-            if (cameraButton) cameraButton.disabled = config.callType !== 'video';
+            if (cameraButton) {
+                const hasCamera = localStream.getVideoTracks().length > 0;
+                cameraButton.disabled = !hasCamera;
+                if (!hasCamera) {
+                    cameraButton.textContent = 'No Camera';
+                    updateDebug('Camera unavailable.', 'The call will continue with microphone audio only.');
+                }
+            }
             return localStream;
         }
 
