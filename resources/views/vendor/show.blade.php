@@ -336,7 +336,7 @@
                                 type="button"
                                 class="vendor-action"
                                 id="voiceCallButton"
-                                data-online-url="{{ route('vendor.call.online', $vendor, false) }}"
+                                data-online-url="{{ route('vendor.call.online', $vendor) }}"
                                 data-offline-url="tel:{{ $cleanPhone }}"
                             >
                                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -349,7 +349,7 @@
                                 type="button"
                                 class="vendor-action"
                                 id="voiceCallButton"
-                                data-online-url="{{ route('vendor.call.online', $vendor, false) }}"
+                                data-online-url="{{ route('vendor.call.online', $vendor) }}"
                                 data-offline-url=""
                             >
                                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -363,7 +363,7 @@
                             type="button"
                             class="vendor-action secondary"
                             id="videoCallButton"
-                            data-online-url="{{ route('vendor.call.online', $vendor, false) }}"
+                            data-online-url="{{ route('vendor.call.online', $vendor) }}"
                         >
                                 <svg viewBox="0 0 24 24" aria-hidden="true">
                                     <rect x="3" y="6" width="13" height="12" rx="2"></rect>

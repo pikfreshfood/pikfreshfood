@@ -236,7 +236,7 @@
                             <button
                                 type="button"
                                 class="call-history-btn primary js-call-back"
-                                data-call-url="{{ route('vendor.call.online', $call->vendor, false) }}"
+                                data-call-url="{{ route('vendor.call.online', $call->vendor) }}"
                                 data-call-type="{{ $call->call_type ?? 'audio' }}"
                                 data-call-label="{{ ucfirst($call->call_type ?? 'audio') }} Call Back"
                             >
@@ -246,7 +246,7 @@
                             <button
                                 type="button"
                                 class="call-history-btn primary js-call-back"
-                                data-call-url="{{ route('vendor.call.online', $call->buyer->vendor, false) }}"
+                                data-call-url="{{ route('vendor.call.online', $call->buyer->vendor) }}"
                                 data-call-type="{{ $call->call_type ?? 'audio' }}"
                                 data-call-label="{{ ucfirst($call->call_type ?? 'audio') }} Call Back"
                             >

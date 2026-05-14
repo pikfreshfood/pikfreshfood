@@ -539,7 +539,7 @@
                         <button
                             type="button"
                             class="icon-button js-message-call"
-                            data-call-url="{{ route('vendor.call.online', $selectedUser->vendor, false) }}"
+                            data-call-url="{{ route('vendor.call.online', $selectedUser->vendor) }}"
                             data-call-type="audio"
                             data-peer-name="{{ addslashes($selectedUser->name) }}"
                             aria-label="Audio Call"
@@ -551,7 +551,7 @@
                         <button
                             type="button"
                             class="icon-button js-message-call"
-                            data-call-url="{{ route('vendor.call.online', $selectedUser->vendor, false) }}"
+                            data-call-url="{{ route('vendor.call.online', $selectedUser->vendor) }}"
                             data-call-type="video"
                             data-peer-name="{{ addslashes($selectedUser->name) }}"
                             aria-label="Video Call"

@@ -117,8 +117,8 @@ class CallerController extends Controller
                     'shop_name' => $vendor->shop_name,
                     'address' => $vendor->address,
                     'is_live' => (bool) $vendor->is_live,
-                    'call_url' => route('vendor.call.online', ['vendor' => $vendor], false),
-                    'vendor_url' => route('vendor.show', ['vendor' => $vendor], false),
+                    'call_url' => route('vendor.call.online', ['vendor' => $vendor]),
+                    'vendor_url' => route('vendor.show', ['vendor' => $vendor]),
                 ];
             })->values(),
             'incomingCalls' => $payload['incomingCalls']->map(function (CallInvite $call) {
@@ -128,8 +128,8 @@ class CallerController extends Controller
                     'caller_name' => $this->participantName($call->buyer, 'Caller'),
                     'call_type' => $call->call_type ?? 'audio',
                     'status' => $call->status,
-                    'accept_url' => route('vendor.call.accept', ['callInvite' => $call], false),
-                    'call_url' => route('calls.show', ['callInvite' => $call], false),
+                    'accept_url' => route('vendor.call.accept', ['callInvite' => $call]),
+                    'call_url' => route('calls.show', ['callInvite' => $call]),
                 ];
             })->values(),
             'recentCalls' => $payload['recentCalls']->map(function (CallInvite $call) use ($viewer) {
@@ -143,7 +143,7 @@ class CallerController extends Controller
                     'call_type' => $call->call_type ?? 'audio',
                     'status' => $call->status,
                     'created_at_human' => $call->created_at?->diffForHumans(),
-                    'call_url' => route('calls.show', ['callInvite' => $call], false),
+                    'call_url' => route('calls.show', ['callInvite' => $call]),
                 ];
             })->values(),
             'csrf_token' => csrf_token(),

@@ -198,7 +198,7 @@ class CallController extends Controller
             throw $exception;
         }
 
-        $callUrl = route('calls.show', ['callInvite' => $callInvite], false);
+        $callUrl = route('calls.show', ['callInvite' => $callInvite]);
 
         if ($request->expectsJson()) {
             return response()->json([
@@ -324,7 +324,7 @@ class CallController extends Controller
                 'buyer_name' => $this->participantName($invite->buyer, 'Caller'),
                 'caller_name' => $this->participantName($invite->buyer, 'Caller'),
                 'call_type' => $invite->call_type ?: 'audio',
-                'call_url' => route('calls.show', ['callInvite' => $invite], false),
+                'call_url' => route('calls.show', ['callInvite' => $invite]),
             ],
         ]);
     }
@@ -340,7 +340,7 @@ class CallController extends Controller
         ]);
 
         return response()->json([
-            'call_url' => route('calls.show', ['callInvite' => $callInvite], false),
+            'call_url' => route('calls.show', ['callInvite' => $callInvite]),
             'call_type' => $callInvite->call_type ?: 'audio',
         ]);
     }

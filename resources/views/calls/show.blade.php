@@ -228,15 +228,15 @@
 
 @section('scripts')
 @php
-    $pollUrl = route('calls.poll', ['callInvite' => $callInvite], false);
-    $offerUrl = route('calls.offer', ['callInvite' => $callInvite], false);
-    $answerUrl = route('calls.answer', ['callInvite' => $callInvite], false);
-    $candidateUrl = route('calls.candidate', ['callInvite' => $callInvite], false);
-    $connectedUrl = route('calls.connected', ['callInvite' => $callInvite], false);
-    $endUrl = route('calls.end', ['callInvite' => $callInvite], false);
+    $pollUrl = route('calls.poll', ['callInvite' => $callInvite]);
+    $offerUrl = route('calls.offer', ['callInvite' => $callInvite]);
+    $answerUrl = route('calls.answer', ['callInvite' => $callInvite]);
+    $candidateUrl = route('calls.candidate', ['callInvite' => $callInvite]);
+    $connectedUrl = route('calls.connected', ['callInvite' => $callInvite]);
+    $endUrl = route('calls.end', ['callInvite' => $callInvite]);
     $backUrl = $isBuyer
-        ? route('vendor.show', ['vendor' => $callInvite->vendor], false)
-        : route('vendor.dashboard', [], false);
+        ? route('vendor.show', ['vendor' => $callInvite->vendor])
+        : route('vendor.dashboard');
 @endphp
 @if(false)
 <script type="module">

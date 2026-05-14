@@ -157,8 +157,8 @@
                                 <span class="caller-badge">{{ $vendor->is_live ? 'Live' : 'Offline' }}</span>
                             </div>
                             <div class="caller-actions">
-                                <button type="button" class="caller-btn primary js-start-call" data-url="{{ route('vendor.call.online', $vendor, false) }}" data-type="audio">Start Audio</button>
-                                <button type="button" class="caller-btn js-start-call" data-url="{{ route('vendor.call.online', $vendor, false) }}" data-type="video">Start Video</button>
+                                <button type="button" class="caller-btn primary js-start-call" data-url="{{ route('vendor.call.online', $vendor) }}" data-type="audio">Start Audio</button>
+                                <button type="button" class="caller-btn js-start-call" data-url="{{ route('vendor.call.online', $vendor) }}" data-type="video">Start Video</button>
                             </div>
                         </div>
                     @empty
@@ -187,7 +187,7 @@
                             </div>
                             <div class="caller-actions">
                                 @if($call->status === 'ringing')
-                                    <button type="button" class="caller-btn primary js-accept-call" data-url="{{ route('vendor.call.accept', $call, false) }}" data-call-type="{{ $call->call_type ?? 'audio' }}">Accept</button>
+                                    <button type="button" class="caller-btn primary js-accept-call" data-url="{{ route('vendor.call.accept', $call) }}" data-call-type="{{ $call->call_type ?? 'audio' }}">Accept</button>
                                 @endif
                                 <a href="{{ route('calls.show', $call) }}" class="caller-btn js-open-call">Open Call</a>
                             </div>

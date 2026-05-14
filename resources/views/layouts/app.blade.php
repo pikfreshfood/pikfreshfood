@@ -2643,7 +2643,7 @@
                         isCheckingIncomingCall = true;
 
                         try {
-                            const response = await fetch('{{ route('vendor.call.incoming', [], false) }}', {
+                            const response = await fetch('{{ route('vendor.call.incoming') }}', {
                                 headers: {
                                     'X-Requested-With': 'XMLHttpRequest',
                                     'Accept': 'application/json',
