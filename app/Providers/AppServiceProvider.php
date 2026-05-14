@@ -99,8 +99,8 @@ class AppServiceProvider extends ServiceProvider
                     $headerNotificationPreview[] = [
                         'label' => 'Incoming calls',
                         'message' => $headerIncomingCallCount === 1
-                            ? 'A buyer call is waiting for your response.'
-                            : "{$headerIncomingCallCount} buyer calls are waiting for your response.",
+                            ? 'A call is waiting for your response.'
+                            : "{$headerIncomingCallCount} calls are waiting for your response.",
                     ];
                 }
 

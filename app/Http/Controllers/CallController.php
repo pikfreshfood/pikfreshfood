@@ -88,7 +88,10 @@ class CallController extends Controller
             ->with('vendor.user', 'buyer.vendor')
             ->where('call_type', $mode)
             ->when($user->isVendor() && $user->vendor, function ($query) use ($user) {
-                $query->where('vendor_id', $user->vendor->id);
+                $query->where(function ($query) use ($user) {
+                    $query->where('vendor_id', $user->vendor->id)
+                        ->orWhere('buyer_id', $user->id);
+                });
             }, function ($query) use ($user) {
                 $query->where('buyer_id', $user->id);
             })
@@ -114,6 +117,19 @@ class CallController extends Controller
         return [$user, $isBuyer, $isVendor];
     }
 
+    protected function participantName($user, string $fallback = 'Caller'): string
+    {
+        if (! $user) {
+            return $fallback;
+        }
+
+        if ($user->isVendor() && $user->vendor) {
+            return $user->vendor->shop_name ?: ($user->name ?? 'Vendor');
+        }
+
+        return $user->name ?? $fallback;
+    }
+
     public function start(Request $request, Vendor $vendor)
     {
         if (! Auth::check()) {
@@ -122,15 +138,15 @@ class CallController extends Controller
                 : redirect()->route('login');
         }
 
-        if (! Auth::user()->isBuyer()) {
+        if (! Auth::user()->isBuyer() && ! Auth::user()->isVendor()) {
             return $request->expectsJson()
-                ? response()->json(['message' => 'Only buyer accounts can start calls to vendors.'], 403)
-                : abort(403, 'Only buyer accounts can start calls to vendors.');
+                ? response()->json(['message' => 'Only buyer and vendor accounts can start calls to vendors.'], 403)
+                : abort(403, 'Only buyer and vendor accounts can start calls to vendors.');
         }
 
         if (Auth::id() === $vendor->user_id) {
             return $request->expectsJson()
-                ? response()->json(['message' => 'You cannot call your own vendor account.'], 403)
+                ? response()->json(['message' => 'You cannot call your own vendor account.'], 422)
                 : abort(403, 'You cannot call your own vendor account.');
         }
 
@@ -198,7 +214,7 @@ class CallController extends Controller
     {
         [$user, $isBuyer, $isVendor] = $this->authorizeParticipant($callInvite);
 
-        $callInvite->load('vendor.user', 'buyer');
+        $callInvite->load('vendor.user', 'buyer.vendor');
         $livekitUrl = (string) config('services.livekit.url');
         $livekitReady = $livekitUrl !== ''
             && filled(config('services.livekit.api_key'))
@@ -207,7 +223,7 @@ class CallController extends Controller
             ? 'buyer-'.$user->id
             : 'vendor-'.($user->vendor->id ?? $user->id);
         $participantName = $isBuyer
-            ? ($user->name ?? 'Buyer')
+            ? $this->participantName($user, 'Caller')
             : ($user->vendor->shop_name ?? $user->name ?? 'Vendor');
         $livekitToken = $livekitReady
             ? $this->generateLiveKitToken($identity, $participantName, $callInvite->room_name)
@@ -266,7 +282,7 @@ class CallController extends Controller
     public function poll(CallInvite $callInvite)
     {
         [, $isBuyer, $isVendor] = $this->authorizeParticipant($callInvite);
-        $callInvite->load('buyer');
+        $callInvite->load('vendor.user', 'buyer.vendor');
 
         return response()->json([
             'id' => $callInvite->id,
@@ -279,7 +295,7 @@ class CallController extends Controller
             'call_type' => $callInvite->call_type ?: 'audio',
             'peer_name' => $isBuyer
                 ? ($callInvite->vendor->shop_name ?? 'Vendor')
-                : ($callInvite->buyer?->name ?? 'Buyer'),
+                : $this->participantName($callInvite->buyer, 'Caller'),
             'role' => $isBuyer ? 'buyer' : 'vendor',
         ]);
     }
@@ -289,7 +305,7 @@ class CallController extends Controller
         abort_unless(Auth::check() && Auth::user()->isVendor() && Auth::user()->vendor, 403);
 
         $invite = CallInvite::query()
-            ->with('buyer')
+            ->with('buyer.vendor')
             ->where('vendor_id', Auth::user()->vendor->id)
             ->where('status', 'ringing')
             ->latest()
@@ -305,7 +321,8 @@ class CallController extends Controller
             'incoming' => true,
             'invite' => [
                 'id' => $invite->id,
-                'buyer_name' => $invite->buyer?->name ?? 'Buyer',
+                'buyer_name' => $this->participantName($invite->buyer, 'Caller'),
+                'caller_name' => $this->participantName($invite->buyer, 'Caller'),
                 'call_type' => $invite->call_type ?: 'audio',
                 'call_url' => route('calls.show', ['callInvite' => $invite], false),
             ],

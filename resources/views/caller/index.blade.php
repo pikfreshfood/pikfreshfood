@@ -141,7 +141,7 @@
     </div>
 
     <div class="caller-grid">
-        @if($viewer->isBuyer())
+        @if($viewer->isBuyer() || $viewer->isVendor())
             <div class="caller-panel">
                 <h2>Start Calls</h2>
                 <div class="caller-copy">Pick a vendor and start a fresh call from the Laravel side.</div>
@@ -173,14 +173,14 @@
         @if($viewer->isVendor())
             <div class="caller-panel">
                 <h2>Incoming Calls</h2>
-                <div class="caller-copy">Accept fresh calls here after the buyer starts one on the other account.</div>
+                <div class="caller-copy">Accept fresh calls here after another account starts one.</div>
 
                 <div class="caller-list">
                     @forelse($incomingCalls as $call)
                         <div class="caller-card">
                             <div class="caller-card-top">
                                 <div>
-                                    <div class="caller-card-title">{{ $call->buyer->name ?? 'Buyer' }}</div>
+                                    <div class="caller-card-title">{{ $call->buyer?->vendor?->shop_name ?? $call->buyer?->name ?? 'Caller' }}</div>
                                     <div class="caller-meta">Call #{{ $call->id }} | {{ ucfirst($call->call_type ?? 'audio') }} | {{ ucfirst($call->status) }}</div>
                                 </div>
                                 <span class="caller-badge">{{ ucfirst($call->status) }}</span>
@@ -212,10 +212,10 @@
                             <div>
                                 <div class="caller-card-title">
                                     Call #{{ $call->id }}
-                                    @if($viewer->isBuyer())
+                                    @if($call->buyer_id === $viewer->id)
                                         with {{ $call->vendor->shop_name ?? 'Vendor' }}
                                     @else
-                                        with {{ $call->buyer->name ?? 'Buyer' }}
+                                        with {{ $call->buyer?->vendor?->shop_name ?? $call->buyer?->name ?? 'Caller' }}
                                     @endif
                                 </div>
                                 <div class="caller-meta">{{ ucfirst($call->call_type ?? 'audio') }} | {{ ucfirst($call->status) }} | {{ $call->created_at?->diffForHumans() }}</div>

@@ -329,7 +329,7 @@
                     </a>
                 @endif
 
-                @if(auth()->user()->isBuyer())
+                @if(auth()->id() !== $vendor->user_id)
                     <div class="vendor-action-row">
                         @if($canCallVendor)
                             <button
@@ -373,6 +373,9 @@
                         </button>
                     </div>
 
+                @endif
+
+                @if(auth()->user()->isBuyer())
                     <div class="vendor-action-row">
                         <a href="#rate-vendor" class="vendor-action outline">
                             <svg viewBox="0 0 24 24" aria-hidden="true">

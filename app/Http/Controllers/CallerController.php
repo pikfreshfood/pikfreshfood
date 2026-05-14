@@ -33,19 +33,17 @@ class CallerController extends Controller
 
         $user = Auth::user();
 
-        $vendors = collect();
+        $vendors = Vendor::query()
+            ->where('user_id', '!=', $user->id)
+            ->orderByDesc('is_live')
+            ->orderBy('shop_name')
+            ->get();
         $incomingCalls = collect();
         $recentCalls = collect();
 
         if ($user->isBuyer()) {
-            $vendors = Vendor::query()
-                ->where('user_id', '!=', $user->id)
-                ->orderByDesc('is_live')
-                ->orderBy('shop_name')
-                ->get();
-
             $recentCalls = CallInvite::query()
-                ->with('vendor')
+                ->with('vendor', 'buyer.vendor')
                 ->where('buyer_id', $user->id)
                 ->latest()
                 ->take(10)
@@ -54,7 +52,7 @@ class CallerController extends Controller
 
         if ($user->isVendor() && $user->vendor) {
             $incomingCalls = CallInvite::query()
-                ->with('buyer')
+                ->with('buyer.vendor')
                 ->where('vendor_id', $user->vendor->id)
                 ->whereIn('status', ['ringing', 'accepted', 'connected'])
                 ->latest()
@@ -62,8 +60,11 @@ class CallerController extends Controller
                 ->get();
 
             $recentCalls = CallInvite::query()
-                ->with('buyer')
-                ->where('vendor_id', $user->vendor->id)
+                ->with('vendor', 'buyer.vendor')
+                ->where(function ($query) use ($user) {
+                    $query->where('vendor_id', $user->vendor->id)
+                        ->orWhere('buyer_id', $user->id);
+                })
                 ->latest()
                 ->take(10)
                 ->get();
@@ -75,6 +76,19 @@ class CallerController extends Controller
             'incomingCalls' => $incomingCalls,
             'recentCalls' => $recentCalls,
         ];
+    }
+
+    protected function participantName($user, string $fallback = 'Caller'): string
+    {
+        if (! $user) {
+            return $fallback;
+        }
+
+        if ($user->isVendor() && $user->vendor) {
+            return $user->vendor->shop_name ?: ($user->name ?? 'Vendor');
+        }
+
+        return $user->name ?? $fallback;
     }
 
     public function data()
@@ -110,7 +124,8 @@ class CallerController extends Controller
             'incomingCalls' => $payload['incomingCalls']->map(function (CallInvite $call) {
                 return [
                     'id' => $call->id,
-                    'buyer_name' => $call->buyer->name ?? 'Buyer',
+                    'buyer_name' => $this->participantName($call->buyer, 'Caller'),
+                    'caller_name' => $this->participantName($call->buyer, 'Caller'),
                     'call_type' => $call->call_type ?? 'audio',
                     'status' => $call->status,
                     'accept_url' => route('vendor.call.accept', ['callInvite' => $call], false),
@@ -118,11 +133,13 @@ class CallerController extends Controller
                 ];
             })->values(),
             'recentCalls' => $payload['recentCalls']->map(function (CallInvite $call) use ($viewer) {
+                $viewerIsCaller = $call->buyer_id === $viewer->id;
+
                 return [
                     'id' => $call->id,
-                    'with_name' => $viewer->isBuyer()
+                    'with_name' => $viewerIsCaller
                         ? ($call->vendor->shop_name ?? 'Vendor')
-                        : ($call->buyer->name ?? 'Buyer'),
+                        : $this->participantName($call->buyer, 'Caller'),
                     'call_type' => $call->call_type ?? 'audio',
                     'status' => $call->status,
                     'created_at_human' => $call->created_at?->diffForHumans(),

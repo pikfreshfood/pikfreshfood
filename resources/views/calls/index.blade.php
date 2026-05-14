@@ -194,13 +194,13 @@
             @foreach($calls as $call)
                 @php
                     $viewer = auth()->user();
-                    $isBuyerView = $viewer->isBuyer();
-                    $otherName = $isBuyerView
+                    $viewerIsCaller = $call->buyer_id === $viewer->id;
+                    $otherName = $viewerIsCaller
                         ? ($call->vendor->shop_name ?? 'Vendor')
-                        : ($call->buyer->name ?? 'Buyer');
-                    $otherImage = $isBuyerView
+                        : ($call->buyer?->vendor?->shop_name ?? $call->buyer?->name ?? 'Caller');
+                    $otherImage = $viewerIsCaller
                         ? ($call->vendor->profile_image ? \App\Support\PublicStorage::url($call->vendor->profile_image) : null)
-                        : ($call->buyer->vendor?->profile_image ? \App\Support\PublicStorage::url($call->buyer->vendor->profile_image) : null);
+                        : ($call->buyer?->vendor?->profile_image ? \App\Support\PublicStorage::url($call->buyer->vendor->profile_image) : null);
                     $statusLabel = match ($call->status) {
                         'ringing' => 'Ringing',
                         'accepted' => 'Accepted',
@@ -232,7 +232,7 @@
                             <a href="{{ route('calls.show', $call) }}" class="call-history-btn js-open-call" data-call-type="{{ $call->call_type ?? 'audio' }}">Open Call</a>
                         @endif
 
-                        @if($viewer->isBuyer() && $call->vendor)
+                        @if($viewerIsCaller && $call->vendor)
                             <button
                                 type="button"
                                 class="call-history-btn primary js-call-back"
@@ -242,8 +242,18 @@
                             >
                                 {{ ucfirst($call->call_type ?? 'audio') }} Call Back
                             </button>
+                        @elseif($call->buyer?->vendor && $call->buyer_id !== $viewer->id)
+                            <button
+                                type="button"
+                                class="call-history-btn primary js-call-back"
+                                data-call-url="{{ route('vendor.call.online', $call->buyer->vendor, false) }}"
+                                data-call-type="{{ $call->call_type ?? 'audio' }}"
+                                data-call-label="{{ ucfirst($call->call_type ?? 'audio') }} Call Back"
+                            >
+                                {{ ucfirst($call->call_type ?? 'audio') }} Call Back
+                            </button>
                         @elseif($call->buyer)
-                            <a href="{{ route('messages.show', $call->buyer) }}" class="call-history-btn primary">Message Buyer</a>
+                            <a href="{{ route('messages.show', $call->buyer) }}" class="call-history-btn primary">Message Caller</a>
                         @endif
                     </div>
                 </div>

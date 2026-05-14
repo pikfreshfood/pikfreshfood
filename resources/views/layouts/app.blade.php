@@ -1968,8 +1968,8 @@
                                 <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7l.5 3a2 2 0 0 1-.6 1.8l-1.3 1.3a16 16 0 0 0 6.4 6.4l1.3-1.3a2 2 0 0 1 1.8-.6l3 .5A2 2 0 0 1 22 16.9Z"></path>
                             </svg>
                         </div>
-                        <h3>Incoming Buyer Call</h3>
-                        <p id="globalIncomingCallMessage">A buyer is trying to reach you online.</p>
+                        <h3>Incoming Call</h3>
+                        <p id="globalIncomingCallMessage">Someone is trying to reach you online.</p>
                         <div class="global-call-actions">
                             <button type="button" class="global-call-btn primary" id="globalAcceptIncomingCallButton">Accept Call</button>
                             <button type="button" class="global-call-btn" id="globalDismissIncomingCallButton">Close</button>
@@ -2657,7 +2657,7 @@
                                 activeInviteId = payload.invite.id;
                                 activeInviteType = payload.invite.call_type || 'audio';
                                 const callTypeLabel = payload.invite.call_type === 'video' ? 'video call' : 'audio call';
-                                incomingCallMessage.textContent = `${payload.invite.buyer_name} is starting an online ${callTypeLabel}.`;
+                                incomingCallMessage.textContent = `${payload.invite.caller_name || payload.invite.buyer_name} is starting an online ${callTypeLabel}.`;
                                 incomingCallModal.classList.add('is-visible');
                                 incomingCallModal.setAttribute('aria-hidden', 'false');
                                 startRinging();

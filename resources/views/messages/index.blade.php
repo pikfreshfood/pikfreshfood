@@ -535,7 +535,7 @@
                 </div>
 
                 <div class="conversation-actions">
-                    @if(auth()->user()->isBuyer() && $selectedUser->vendor)
+                    @if($selectedUser->vendor && auth()->id() !== $selectedUser->vendor->user_id)
                         <button
                             type="button"
                             class="icon-button js-message-call"
@@ -561,7 +561,7 @@
                                 <path d="m16 10 5-3v10l-5-3"></path>
                             </svg>
                         </button>
-                    @else
+                    @elseif(auth()->id() !== $selectedUser->id)
                         <a href="{{ $selectedPhone ? 'tel:' . preg_replace('/\s+/', '', $selectedPhone) : '#' }}" class="icon-button {{ $selectedPhone ? '' : 'is-disabled' }}" aria-label="Call">
                             <svg viewBox="0 0 24 24" aria-hidden="true">
                                 <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7l.5 3a2 2 0 0 1-.6 1.8l-1.3 1.3a16 16 0 0 0 6.4 6.4l1.3-1.3a2 2 0 0 1 1.8-.6l3 .5A2 2 0 0 1 22 16.9Z"></path>

@@ -167,10 +167,10 @@
 <div class="call-page">
     <div class="call-card">
         <div>
-            <h1>{{ $isBuyer ? ($callInvite->vendor->shop_name ?? 'Vendor Call') : ($callInvite->buyer->name ?? 'Buyer Call') }}</h1>
+            <h1>{{ $isBuyer ? ($callInvite->vendor->shop_name ?? 'Vendor Call') : ($callInvite->buyer?->vendor?->shop_name ?? $callInvite->buyer?->name ?? 'Caller') }}</h1>
         </div>
         <div class="call-badges">
-            <span class="call-badge">{{ $isBuyer ? 'Buyer' : 'Vendor' }}</span>
+            <span class="call-badge">{{ $isBuyer ? 'Caller' : 'Vendor' }}</span>
             <span class="call-badge">{{ ucfirst($callType) }} call</span>
             <span class="call-badge" id="statusBadge">{{ ucfirst($callInvite->status) }}</span>
         </div>
@@ -195,7 +195,7 @@
             @endif
         </div>
         <div class="call-panel">
-            <h2>{{ $isBuyer ? ($callInvite->vendor->shop_name ?? 'Vendor') : ($callInvite->buyer->name ?? 'Buyer') }}</h2>
+            <h2>{{ $isBuyer ? ($callInvite->vendor->shop_name ?? 'Vendor') : ($callInvite->buyer?->vendor?->shop_name ?? $callInvite->buyer?->name ?? 'Caller') }}</h2>
             @if($callType === 'video')
                 <video id="remoteVideo" class="call-video" autoplay playsinline></video>
             @else
@@ -253,7 +253,7 @@
             livekitUrl: @json($livekitUrl),
             livekitToken: @json($livekitToken),
             embedded: @json(request()->boolean('embedded')),
-            title: @json(($isBuyer ? ($callInvite->vendor->shop_name ?? 'Vendor') : ($callInvite->buyer->name ?? 'Buyer')).' '.ucfirst($callType).' call'),
+            title: @json(($isBuyer ? ($callInvite->vendor->shop_name ?? 'Vendor') : ($callInvite->buyer?->vendor?->shop_name ?? $callInvite->buyer?->name ?? 'Caller')).' '.ucfirst($callType).' call'),
         };
 
         let room = null;
@@ -557,7 +557,7 @@
             backUrl: @json($backUrl),
             iceServers: @json($iceServers),
             embedded: @json(request()->boolean('embedded')),
-            title: @json(($isBuyer ? ($callInvite->vendor->shop_name ?? 'Vendor') : ($callInvite->buyer->name ?? 'Buyer')).' '.ucfirst($callType).' call'),
+            title: @json(($isBuyer ? ($callInvite->vendor->shop_name ?? 'Vendor') : ($callInvite->buyer?->vendor?->shop_name ?? $callInvite->buyer?->name ?? 'Caller')).' '.ucfirst($callType).' call'),
         };
 
         let peer = null;
@@ -999,7 +999,7 @@
                     await startOffer();
                 } else {
                     stage = 'waiting-offer';
-                    updateDebug('Joining call...', 'Waiting for buyer offer, then answering automatically.');
+                    updateDebug('Joining call...', 'Waiting for caller offer, then answering automatically.');
                     await ensurePeer();
                     await poll();
                 }
