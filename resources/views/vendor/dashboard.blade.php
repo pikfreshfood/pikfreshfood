@@ -473,8 +473,9 @@
             </strong>
             <div style="color:var(--muted-color); font-size:.82rem;">3 months: ₦700 • 6 months: ₦1000 • 1 year: ₦1500</div>
         </div>
-        <form action="{{ route('vendor.boost.shop') }}" method="POST" class="boost-inline-form" style="max-width:360px; width:100%;">
+        <form id="boostShopForm" action="{{ route('vendor.boost.shop') }}" method="POST" class="boost-inline-form" style="max-width:360px; width:100%;">
             @csrf
+            <input type="hidden" name="transaction_ref" id="boostTransactionRef" value="">
             <select name="boost_plan" class="boost-plan-select" required>
                 <option value="premium_3m">Boost Shop - 3 Months (₦700)</option>
                 <option value="premium_6m">Boost Shop - 6 Months (₦1000)</option>
@@ -927,6 +928,78 @@
             if (event.key === 'Escape' && modal.classList.contains('is-visible')) {
                 closeModal();
             }
+        });
+    })();
+</script>
+
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script>
+    (function () {
+        const PAYSTACK_KEY = @json(config('services.paystack.public_key'));
+        const form = document.getElementById('boostShopForm');
+        const referenceInput = document.getElementById('boostTransactionRef');
+
+        if (!form || !PAYSTACK_KEY) {
+            return;
+        }
+
+        let paying = false;
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            if (paying) {
+                return;
+            }
+
+            const plan = form.querySelector('select[name="boost_plan"]').value;
+
+            fetch(form.action.replace('/boost-shop', '/boost-shop/pay'), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || @json(csrf_token()),
+                },
+                body: JSON.stringify({ boost_plan: plan }),
+            })
+            .then(function (response) {
+                return response.json().then(function (data) {
+                    return { ok: response.ok, data: data };
+                });
+            })
+            .then(function (result) {
+                if (!result.ok || !result.data.status) {
+                    const message = (result.data && result.data.message) || 'Could not start payment.';
+                    window.PikFreshToast ? PikFreshToast.show(message, 'error') : alert(message);
+                    return;
+                }
+
+                const data = result.data;
+
+                const handler = PaystackPop.setup({
+                    key: PAYSTACK_KEY,
+                    email: data.email,
+                    amount: data.amount,
+                    ref: data.reference,
+                    access_code: data.access_code,
+                    currency: 'NGN',
+                    onClose: function () {
+                        paying = false;
+                    },
+                    callback: function (response) {
+                        referenceInput.value = response.reference || data.reference;
+                        form.submit();
+                    },
+                });
+
+                paying = true;
+                handler.openIframe();
+            })
+            .catch(function () {
+                paying = false;
+                window.PikFreshToast ? PikFreshToast.show('Payment could not be started. Try again.', 'error') : alert('Payment could not be started.');
+            });
         });
     })();
 </script>

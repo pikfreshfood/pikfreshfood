@@ -7,9 +7,11 @@ use App\Models\Vendor;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\VendorLiveVideo;
+use App\Services\PaystackService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class VendorController extends Controller
 {
@@ -32,6 +34,17 @@ class VendorController extends Controller
             'premium_6m' => 6,
             'premium_12m' => 12,
             default => 1,
+        };
+    }
+
+    protected function boostPrice(string $plan): int
+    {
+        return match ($plan) {
+            'premium_1m' => 500,
+            'premium_3m' => 700,
+            'premium_6m' => 1000,
+            'premium_12m' => 1500,
+            default => 500,
         };
     }
 
@@ -523,13 +536,82 @@ class VendorController extends Controller
         return back()->with('success', 'Live video removed.');
     }
 
-    public function boostShop(Request $request)
+    public function boostShopPay(Request $request, PaystackService $paystack)
+    {
+        $vendor = $this->resolveVendor();
+        $user = Auth::user();
+
+        $validated = $request->validate([
+            'boost_plan' => 'required|in:premium_1m,premium_3m,premium_6m,premium_12m',
+        ]);
+
+        if (! $paystack->ready()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Online payment is temporarily unavailable. Please try again later.',
+            ], 422);
+        }
+
+        $price = $this->boostPrice($validated['boost_plan']);
+        $reference = 'BOOST-' . $vendor->id . '-' . strtoupper(Str::random(8));
+
+        $gateway = $paystack->initializeTransaction([
+            'email' => $user->email,
+            'amount' => $price * 100,
+            'reference' => $reference,
+            'currency' => 'NGN',
+            'metadata' => [
+                'type' => 'boost',
+                'entity' => 'shop',
+                'vendor_id' => $vendor->id,
+                'boost_plan' => $validated['boost_plan'],
+            ],
+        ]);
+
+        if (! $gateway['status']) {
+            return response()->json([
+                'status' => false,
+                'message' => $gateway['message'] ?? 'Could not reach the payment gateway.',
+            ], 422);
+        }
+
+        // Remember the chosen plan so the boost is only applied after a successful charge.
+        session()->put("boost_shop_{$reference}", $validated['boost_plan']);
+
+        return response()->json([
+            'status' => true,
+            'reference' => $reference,
+            'access_code' => $gateway['access_code'],
+            'amount' => $price * 100,
+            'email' => $user->email,
+        ]);
+    }
+
+    public function boostShop(Request $request, PaystackService $paystack)
     {
         $vendor = $this->resolveVendor();
 
         $validated = $request->validate([
             'boost_plan' => 'required|in:premium_1m,premium_3m,premium_6m,premium_12m',
+            'transaction_ref' => 'required|string',
         ]);
+
+        $reference = $validated['transaction_ref'];
+
+        if (session()->get("boost_shop_{$reference}") !== $validated['boost_plan']) {
+            return back()->with('error', 'This boost request is invalid. Please try again.');
+        }
+
+        $verification = $paystack->verifyTransaction($reference);
+        $paid = $verification['status']
+            && ($verification['data']['status'] ?? '') === 'success'
+            && ($verification['data']['amount'] ?? 0) >= $this->boostPrice($validated['boost_plan']) * 100;
+
+        if (! $paid) {
+            session()->forget("boost_shop_{$reference}");
+
+            return back()->with('error', 'Payment was not completed. Your shop was not boosted.');
+        }
 
         $months = $this->boostMonths($validated['boost_plan']);
         $baseDate = $vendor->boosted_until && now()->lte($vendor->boosted_until)
@@ -539,6 +621,8 @@ class VendorController extends Controller
         $vendor->update([
             'boosted_until' => $baseDate->copy()->addMonths($months),
         ]);
+
+        session()->forget("boost_shop_{$reference}");
 
         return back()->with('success', 'Shop boosted successfully.');
     }

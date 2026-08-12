@@ -15,6 +15,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->trustProxies(at: '*');
         $middleware->redirectGuestsTo(fn (Request $request) => route('login'));
         $middleware->redirectUsersTo('/');
+        $middleware->validateCsrfTokens(except: [
+            'checkout/paystack/webhook',
+        ]);
         $middleware->web(append: [
             \App\Http\Middleware\TrackSiteVisit::class,
         ]);

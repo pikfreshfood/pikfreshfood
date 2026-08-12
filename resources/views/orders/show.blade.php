@@ -30,7 +30,14 @@
         <p><strong>Vendor:</strong> {{ $order->vendor->shop_name }}</p>
         <p><strong>Delivery Address:</strong> {{ $order->delivery_address }}</p>
         <p><strong>Payment Method:</strong> {{ ucfirst($order->payment_method) }}</p>
+        <p><strong>Payment Status:</strong> {{ ucfirst($order->payment_status) }}</p>
+        @if($order->transaction_reference)
+            <p><strong>Reference:</strong> {{ $order->transaction_reference }}</p>
+        @endif
         <p><strong>Ordered on:</strong> {{ $order->created_at->format('M d, Y H:i') }}</p>
+        @if($order->payment_status === 'pending' && $order->payment_method !== 'cash')
+            <p style="margin-top:14px;"><a href="{{ route('orders.pay', $order) }}" style="background:#27ae60; color:#fff; padding:10px 20px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block;">Pay Now via Paystack</a></p>
+        @endif
     </div>
 
     <h3>Order Items</h3>

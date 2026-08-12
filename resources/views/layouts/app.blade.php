@@ -807,7 +807,7 @@
             right: 16px;
             bottom: 146px;
             width: min(360px, calc(100vw - 24px));
-            max-height: min(70vh, 560px);
+            height: min(70vh, 520px);
             border-radius: 20px;
             border: 1px solid var(--border-color);
             background: #fff;
@@ -844,26 +844,31 @@
         }
 
         .support-chat-close {
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            border: 1px solid rgba(13, 35, 24, 0.14);
-            background: rgba(255, 255, 255, 0.7);
-            color: #143121;
+            border: none;
+            background: #fff;
+            color: #111;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
 
         .support-chat-close svg {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             stroke: currentColor;
             fill: none;
-            stroke-width: 2;
+            stroke-width: 2.5;
             stroke-linecap: round;
             stroke-linejoin: round;
+        }
+
+        .support-chat-close:hover {
+            background: #f0f0f0;
         }
 
         .support-chat-messages {
@@ -1112,9 +1117,231 @@
             font-weight: 600;
         }
 
+        @media (max-width: 480px) {
+            .header {
+                padding: 8px 10px;
+            }
+
+            .header-top {
+                gap: 6px;
+                margin-bottom: 4px;
+            }
+
+            .logo {
+                height: clamp(72px, 12vw, 104px);
+            }
+
+            .header-icon-link {
+                width: 32px;
+                height: 32px;
+            }
+
+            .header-icon-link svg {
+                width: 15px;
+                height: 15px;
+            }
+
+            .header-icon-badge {
+                min-width: 15px;
+                height: 15px;
+                font-size: 0.6rem;
+                top: -5px;
+                right: -5px;
+                padding: 0 3px;
+                border-width: 1.5px;
+            }
+
+            .mobile-login-link {
+                min-height: 32px;
+                padding: 0 8px;
+                font-size: 0.78rem;
+            }
+
+            .mobile-login-link svg {
+                width: 14px;
+                height: 14px;
+            }
+
+            .search-section {
+                gap: 4px;
+                margin-top: 4px;
+            }
+
+            .search-bar {
+                min-height: 34px;
+                padding: 6px 10px;
+                font-size: 13px;
+            }
+
+            .search-submit,
+            .header-action {
+                width: 34px;
+                min-height: 34px;
+            }
+
+            .search-submit svg,
+            .header-action svg {
+                width: 15px;
+                height: 15px;
+            }
+
+            .global-search-form {
+                gap: 4px;
+            }
+
+            .header-tools {
+                gap: 4px;
+            }
+
+            .bottom-nav {
+                padding: 4px 0;
+            }
+
+            .nav-item {
+                padding: 4px;
+                font-size: 10px;
+            }
+
+            .nav-item-icon {
+                width: 18px;
+                height: 18px;
+                margin-bottom: 2px;
+            }
+
+            .nav-item-icon svg {
+                width: 18px;
+                height: 18px;
+            }
+
+            .nav-item-label {
+                font-size: 10px;
+            }
+
+            .nav-item-badge {
+                min-width: 15px;
+                height: 15px;
+                font-size: 0.58rem;
+                top: -10px;
+                right: -12px;
+                padding: 0 3px;
+                border-width: 1.5px;
+            }
+
+            .quick-support-btn {
+                width: 44px;
+                height: 44px;
+            }
+
+            .quick-support-btn svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .quick-support-stack {
+                right: 10px;
+                bottom: 72px;
+                gap: 8px;
+            }
+
+            .main-content {
+                padding-bottom: 120px;
+            }
+
+            .header-popover {
+                width: min(280px, calc(100vw - 24px));
+                padding: 10px;
+                right: -10px;
+            }
+
+            .header-live-toast {
+                right: 10px;
+                top: 76px;
+                max-width: min(280px, calc(100vw - 20px));
+                padding: 10px 12px;
+            }
+
+            .support-chat-panel {
+                top: 0;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                height: 100dvh;
+                border-radius: 0;
+                border: 0;
+                box-shadow: none;
+                z-index: 110;
+            }
+
+            .support-chat-header {
+                padding: 10px 12px;
+            }
+
+            .support-chat-header h3 {
+                font-size: 0.9rem;
+            }
+
+            .support-chat-header p {
+                font-size: 0.76rem;
+            }
+
+            .support-chat-close {
+                width: 34px;
+                height: 34px;
+            }
+
+            .support-chat-close svg {
+                width: 18px;
+                height: 18px;
+            }
+
+            .support-chat-messages {
+                flex: 1;
+                padding: 10px;
+            }
+
+            .support-chat-intro {
+                padding: 12px;
+            }
+
+            .support-chat-intro p {
+                font-size: 0.8rem;
+            }
+
+            .support-chat-identity {
+                padding: 10px;
+                gap: 8px;
+            }
+
+            .support-chat-identity input {
+                min-height: 40px;
+            }
+
+            .support-chat-identity button {
+                min-height: 40px;
+            }
+
+            .support-chat-form {
+                padding: 8px 10px;
+            }
+
+            .support-chat-form-inner {
+                gap: 6px;
+            }
+
+            .support-chat-textarea {
+                min-height: 42px;
+                padding: 10px 12px;
+            }
+
+            .support-chat-send {
+                min-width: 46px;
+                height: 42px;
+            }
+        }
+
         @media (min-width: 1024px) {
             .header {
-                padding: 14px 24px 14px 0;
+                padding: 8px 24px 8px 0;
             }
 
             .header-top {
@@ -1125,13 +1352,13 @@
 
             .header-top {
                 justify-content: flex-start;
-                gap: 8px;
+                gap: 6px;
                 margin-bottom: 0;
             }
 
             .logo {
-                width: 500px;
-                height: 124px;
+                width: 360px;
+                height: 90px;
             }
 
             .desktop-nav,
@@ -1149,10 +1376,37 @@
                 justify-content: flex-start;
                 flex-wrap: nowrap;
                 row-gap: 0;
+                gap: 6px;
+            }
+
+            .desktop-nav-link,
+            .desktop-auth-link {
+                font-size: 0.82rem;
+                padding: 5px 8px;
+                gap: 4px;
+            }
+
+            .desktop-nav-link svg,
+            .desktop-auth-link svg {
+                width: 14px;
+                height: 14px;
             }
 
             .desktop-auth-links {
                 margin-left: auto;
+                gap: 6px;
+            }
+
+            .desktop-auth-link.icon-only {
+                width: 32px;
+                height: 32px;
+            }
+
+            .desktop-menu-badge {
+                min-width: 16px;
+                height: 16px;
+                font-size: 0.6rem;
+                padding: 0 4px;
             }
 
             .search-section {
@@ -1160,7 +1414,7 @@
                 margin-left: 18px;
                 margin-right: 18px;
                 width: 100%;
-                margin-top: 12px;
+                margin-top: 6px;
             }
 
             .global-search-form {
@@ -1176,24 +1430,25 @@
 
             .search-bar {
                 width: 100%;
-                min-height: 52px;
-                padding: 12px 16px;
-                font-size: 16px;
+                min-height: 38px;
+                padding: 6px 12px;
+                font-size: 14px;
             }
 
             .search-submit,
             .header-action {
-                width: 52px;
-                min-height: 52px;
+                width: 38px;
+                min-height: 38px;
             }
 
             .header-tools {
                 display: flex;
                 position: fixed;
-                top: 14px;
+                top: 8px;
                 right: 22px;
                 z-index: 1301;
                 background: transparent;
+                gap: 4px;
             }
 
             .header-tools > .header-icon-link {
@@ -1204,13 +1459,29 @@
                 display: inline-flex;
             }
 
+            .header-tools .header-icon-link {
+                width: 32px;
+                height: 32px;
+            }
 
+            .header-tools .header-icon-link svg {
+                width: 15px;
+                height: 15px;
+            }
+
+            .header-tools .header-icon-badge {
+                min-width: 15px;
+                height: 15px;
+                font-size: 0.58rem;
+                top: -5px;
+                right: -5px;
+            }
 
             .main-content {
                 max-width: 1240px;
                 margin: 0 auto;
-                min-height: calc(100vh - 110px);
-                padding: 22px 24px 44px;
+                min-height: calc(100vh - 80px);
+                padding: 14px 24px 28px;
             }
 
             .desktop-footer {
@@ -1218,14 +1489,73 @@
                 width: 100%;
                 max-width: none;
                 margin: 0;
-                padding: 0 0 26px;
+                padding: 0 0 16px;
             }
 
             .desktop-footer-inner {
                 border-top: 0;
                 border-radius: 0;
                 background: linear-gradient(135deg, #1f7a43 0%, #4ea95f 28%, #f4c400 72%, #ffd95a 100%);
-                padding: 18px 24px;
+                padding: 12px 24px;
+            }
+
+            .desktop-footer-copy {
+                font-size: 0.78rem;
+            }
+
+            .desktop-footer-link {
+                font-size: 0.78rem;
+            }
+
+            .desktop-footer-social-title {
+                font-size: 0.78rem;
+            }
+
+            .desktop-footer-social-link {
+                width: 28px;
+                height: 28px;
+            }
+
+            .desktop-footer-social-link svg {
+                width: 14px;
+                height: 14px;
+            }
+
+            .desktop-footer-news h4 {
+                font-size: 0.88rem;
+            }
+
+            .desktop-footer-news p {
+                font-size: 0.8rem;
+            }
+
+            .desktop-footer-checkline {
+                font-size: 0.8rem;
+            }
+
+            .desktop-footer-subscribe input {
+                min-height: 34px;
+                min-width: 220px;
+                font-size: 0.82rem;
+            }
+
+            .desktop-footer-subscribe button {
+                min-height: 34px;
+                font-size: 0.82rem;
+            }
+
+            .desktop-playstore-badge {
+                min-height: 34px;
+                font-size: 0.76rem;
+                padding: 5px 10px;
+            }
+
+            .desktop-footer-app {
+                font-size: 0.82rem;
+            }
+
+            .desktop-footer-app-copy {
+                font-size: 0.76rem;
             }
 
             .bottom-nav {
@@ -1236,6 +1566,17 @@
                 display: grid !important;
                 right: 24px;
                 bottom: 24px;
+                gap: 8px;
+            }
+
+            .quick-support-btn {
+                width: 44px;
+                height: 44px;
+            }
+
+            .quick-support-btn svg {
+                width: 20px;
+                height: 20px;
             }
 
             .quick-support-stack .quick-support-btn.whatsapp {
@@ -1243,8 +1584,10 @@
             }
 
             .support-chat-panel {
+                top: 160px;
                 right: 24px;
                 bottom: 92px;
+                height: auto;
             }
         }
 
@@ -1903,10 +2246,10 @@
             <div class="desktop-footer-social" aria-label="Social media links">
                 <span class="desktop-footer-social-title">Follow us</span>
                 <div class="desktop-footer-social-links">
-                    <a href="#" class="desktop-footer-social-link" aria-label="Facebook">
+                    <a href="https://www.facebook.com/share/19187ZUmR3/" class="desktop-footer-social-link" aria-label="Facebook" target="_blank" rel="noopener">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 8h3V4h-3a5 5 0 0 0-5 5v3H7v4h3v4h4v-4h3l1-4h-4V9a1 1 0 0 1 1-1Z"></path></svg>
                     </a>
-                    <a href="#" class="desktop-footer-social-link" aria-label="Instagram">
+                    <a href="https://www.instagram.com/pikfreshfood" class="desktop-footer-social-link" aria-label="Instagram" target="_blank" rel="noopener">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17" cy="7" r="1"></circle></svg>
                     </a>
                     <a href="#" class="desktop-footer-social-link" aria-label="X">

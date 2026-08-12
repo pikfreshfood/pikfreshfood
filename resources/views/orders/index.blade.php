@@ -42,6 +42,9 @@
                     <div style="text-align: right;">
                         <span class="order-status status-{{ $order->status }}">{{ ucfirst($order->status) }}</span>
                         <div class="order-total">₦{{ $order->total_amount }}</div>
+                        @if($order->payment_status === 'pending' && $order->payment_method !== 'cash')
+                            <a href="{{ route('orders.pay', $order) }}" style="display:inline-block; margin-top:8px; background:#27ae60; color:#fff; padding:8px 14px; border-radius:6px; text-decoration:none; font-size:13px; font-weight:bold;">Pay Now</a>
+                        @endif
                     </div>
                 </div>
                 <a href="{{ route('orders.show', $order) }}" class="order-link">View Details</a>

@@ -20,6 +20,7 @@ class Order extends Model
         'delivery_longitude',
         'payment_method',
         'payment_status',
+        'transaction_reference',
         'delivered_at',
     ];
 

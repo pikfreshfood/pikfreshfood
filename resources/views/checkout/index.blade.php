@@ -153,8 +153,8 @@
         <h1 class="checkout-title">Checkout</h1>
     </div>
 
-    <div class="checkout-note">
-        Payment-ready flow enabled for Paystack, Flutterwave, wallet, and cash on delivery. External gateway callbacks can be connected next.
+<div class="checkout-note">
+        Secure payment is processed via Paystack (debit/credit cards, bank transfer, USSD) or Cash on Delivery.
     </div>
 
     <div class="checkout-layout">
@@ -191,10 +191,8 @@
 
                 <div class="checkout-field">
                     <label class="checkout-label" for="payment_method">Payment Method</label>
-                    <select id="payment_method" name="payment_method" class="checkout-select" required>
-                        <option value="paystack">Paystack</option>
-                        <option value="flutterwave">Flutterwave</option>
-                        <option value="wallet">Wallet</option>
+<select id="payment_method" name="payment_method" class="checkout-select" required>
+                        <option value="paystack">Paystack (Cards, Bank Transfer, USSD)</option>
                         <option value="cash">Cash on Delivery</option>
                     </select>
                 </div>

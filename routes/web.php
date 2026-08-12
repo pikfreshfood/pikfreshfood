@@ -41,6 +41,9 @@ Route::get('/storage/{path}', function (string $path) {
 Route::get('/', [ProductController::class, 'index'])->name('home');
 Route::get('/search/suggestions', [ProductController::class, 'suggestions'])->name('search.suggestions');
 
+// Paystack webhook (public - Paystack POSTs here directly)
+Route::post('/checkout/paystack/webhook', [\App\Http\Controllers\CheckoutController::class, 'webhook'])->name('checkout.paystack.webhook');
+
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware('guest')->group(function () {
         Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('login');
@@ -134,9 +137,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+    Route::get('/checkout/paystack/callback/{reference}', [CheckoutController::class, 'callback'])->name('checkout.paystack.callback');
 
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::get('/orders/{order}/pay', [OrderController::class, 'pay'])->name('orders.pay');
 
     Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
     Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
@@ -183,10 +188,12 @@ Route::middleware('auth')->group(function () {
         Route::post('/vendor/live-videos', [VendorController::class, 'storeLiveVideo'])->name('vendor.live-videos.store');
         Route::delete('/vendor/live-videos/{liveVideo}', [VendorController::class, 'destroyLiveVideo'])->name('vendor.live-videos.destroy');
         Route::post('/vendor/boost-shop', [VendorController::class, 'boostShop'])->name('vendor.boost.shop');
+        Route::post('/vendor/boost-shop/pay', [VendorController::class, 'boostShopPay'])->name('vendor.boost.shop.pay');
         Route::post('/vendor/products/{product}/boost', [VendorController::class, 'boostProduct'])->name('vendor.products.boost');
         Route::get('/vendor/wallet', [VendorFinanceController::class, 'wallet'])->name('vendor.wallet');
         Route::get('/vendor/subscription', [VendorFinanceController::class, 'subscription'])->name('vendor.subscription');
         Route::post('/vendor/subscription', [VendorFinanceController::class, 'updateSubscription'])->name('vendor.subscription.update');
+        Route::get('/vendor/subscription/callback/{reference}', [VendorFinanceController::class, 'subscriptionCallback'])->name('vendor.subscription.callback');
         Route::get('/vendor/add-product', [VendorController::class, 'addProduct'])->name('vendor.add-product');
         Route::post('/vendor/products', [VendorController::class, 'storeProduct'])->name('vendor.store-product');
         Route::get('/vendor/products/{product}/edit', [VendorController::class, 'editProduct'])->name('vendor.products.edit');

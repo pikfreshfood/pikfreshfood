@@ -60,7 +60,8 @@
                 </label>
             @endforeach
         </div>
-        <button type="submit" class="add-to-cart-btn" style="margin-top:18px;">Upgrade Plan</button>
+        <button type="submit" class="add-to-cart-btn" style="margin-top:18px;">Pay &amp; Upgrade</button>
+        <p style="margin-top:8px; color:var(--muted-color); font-size:.85rem;">Payments are securely processed via Paystack.</p>
     </form>
 </div>
 @endsection
