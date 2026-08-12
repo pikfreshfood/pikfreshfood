@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    # The repository is checked out directly in public_html, so no copy step is needed.
+    - /bin/true
