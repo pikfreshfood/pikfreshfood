@@ -8,6 +8,7 @@ use App\Http\Controllers\CallController;
 use App\Http\Controllers\CallerController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\MockupController;
@@ -80,6 +81,7 @@ Route::get('/prices/{slug}', [PriceController::class, 'show'])->name('prices.sho
 Route::get('/caller', [CallerController::class, 'index'])->name('caller.index');
 Route::view('/about', 'about')->name('about');
 Route::view('/contact-us', 'contact-us')->name('contact-us');
+Route::post('/contact-us', [ContactController::class, 'store'])->name('contact-us.store');
 Route::view('/faq', 'faq')->name('faq');
 Route::view('/terms-and-condition', 'terms-and-condition')->name('terms-and-condition');
 Route::view('/privacy-and-policy', 'privacy-and-policy')->name('privacy-and-policy');

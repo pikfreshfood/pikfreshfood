@@ -10,6 +10,18 @@
             Have questions about your order, want to partner with us as a vendor, or just want to say hello? Our team is here to help you.
         </p>
 
+        @if (session('success'))
+            <div role="status" style="margin-bottom: 20px; padding: 12px; border-radius: 8px; background: #dcfce7; color: #166534;">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div role="alert" style="margin-bottom: 20px; padding: 12px; border-radius: 8px; background: #fee2e2; color: #991b1b;">
+                Please correct the highlighted details and try again.
+            </div>
+        @endif
+
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; margin-bottom: 32px;">
             <div>
                 <h3 style="margin-bottom: 12px; color: var(--text-color);">Get in Touch</h3>
@@ -33,17 +45,18 @@
 
             <div>
                 <h3 style="margin-bottom: 12px; color: var(--text-color);">Send us a Message</h3>
-                <form action="#" method="POST" style="display: grid; gap: 12px;">
-                    <input type="text" placeholder="Your Name" style="padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-color);" required>
-                    <input type="email" placeholder="Your Email" style="padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-color);" required>
-                    <select style="padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-color);">
-                        <option>General Inquiry</option>
-                        <option>Order Support</option>
-                        <option>Vendor Registration</option>
-                        <option>Technical Issue</option>
+                <form action="{{ route('contact-us.store') }}" method="POST" style="display: grid; gap: 12px;">
+                    @csrf
+                    <input type="text" name="name" value="{{ old('name', auth()->user()?->name) }}" placeholder="Your Name" style="padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-color);" required>
+                    <input type="email" name="email" value="{{ old('email', auth()->user()?->email) }}" placeholder="Your Email" style="padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-color);" required>
+                    <select name="subject" style="padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-color);">
+                        <option value="General Inquiry" @selected(old('subject') === 'General Inquiry')>General Inquiry</option>
+                        <option value="Order Support" @selected(old('subject') === 'Order Support')>Order Support</option>
+                        <option value="Vendor Registration" @selected(old('subject') === 'Vendor Registration')>Vendor Registration</option>
+                        <option value="Technical Issue" @selected(old('subject') === 'Technical Issue')>Technical Issue</option>
                     </select>
-                    <textarea placeholder="Your Message" rows="4" style="padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-color);" required></textarea>
-                    <button type="button" class="checkout-btn" style="width: 100%; border: none; cursor: pointer;">Send Message</button>
+                    <textarea name="message" placeholder="Your Message" rows="4" style="padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-color);" required>{{ old('message') }}</textarea>
+                    <button type="submit" class="checkout-btn" style="width: 100%; border: none; cursor: pointer;">Send Message</button>
                 </form>
             </div>
         </div>
