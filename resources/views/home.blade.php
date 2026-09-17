@@ -436,10 +436,13 @@
         }
         .products-scroll {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
             grid-auto-flow: row;
             gap: 12px;
             overflow: visible;
+        }
+        .products-scroll .product-card {
+            min-width: 0;
         }
         .scroll-nav-btn {
             width: 34px;
@@ -537,7 +540,7 @@
         }
         .products-scroll {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
             grid-auto-flow: row;
             gap: 12px;
             overflow: visible;
