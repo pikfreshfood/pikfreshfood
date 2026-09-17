@@ -1649,10 +1649,6 @@
                 height: 20px;
             }
 
-            .quick-support-stack .quick-support-btn.whatsapp {
-                display: none;
-            }
-
             .support-chat-panel {
                 top: 160px;
                 right: 24px;
