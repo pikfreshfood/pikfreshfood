@@ -458,9 +458,24 @@
         }
         .mobile-home-footer-links a,
         .mobile-home-footer-social a {
+            width: 34px;
+            height: 34px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            border-radius: 50%;
             color: rgba(255, 255, 255, 0.9);
-            font-size: 0.84rem;
             text-decoration: none;
+        }
+        .mobile-home-footer-social a svg {
+            width: 17px;
+            height: 17px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
         .mobile-home-footer-links a:hover,
         .mobile-home-footer-social a:hover { color: var(--secondary-color); }
@@ -817,9 +832,15 @@
         </nav>
         <div class="mobile-home-footer-social">
             <strong>Follow us</strong>
-            <a href="https://www.facebook.com/share/19187ZUmR3/" target="_blank" rel="noopener">Facebook</a>
-            <a href="https://www.instagram.com/pikfreshfood" target="_blank" rel="noopener">Instagram</a>
-            <a href="https://wa.me/2348000000000" target="_blank" rel="noopener">WhatsApp</a>
+            <a href="https://www.facebook.com/share/19187ZUmR3/" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 21v-8h3l.5-3H14V8.3c0-1 .3-1.7 1.8-1.7H18V4.1c-.4-.1-1.4-.2-2.5-.2C13 3.9 11 5.4 11 8.2V10H8v3h3v8"></path></svg>
+            </a>
+            <a href="https://www.instagram.com/pikfreshfood" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17" cy="7" r="1"></circle></svg>
+            </a>
+            <a href="https://wa.me/2348000000000" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.7 7l-4.3 1.2 1.2-4.2A8 8 0 1 1 20 12Z"></path><path d="M9.4 10.2c.2-.5.4-.5.6-.5h.5c.2 0 .4 0 .5.3l.7 1.5c.1.2 0 .4-.1.5l-.3.4c-.1.1-.2.2-.1.4a6.3 6.3 0 0 0 2.9 2.5c.2.1.3 0 .4-.1l.5-.6c.1-.1.3-.2.5-.1l1.4.7c.2.1.3.2.3.4v.5c0 .2 0 .4-.4.6a3.4 3.4 0 0 1-2 .2c-1.8-.5-4.2-2.7-5.2-4.4-.6-1.1-.8-2-.4-2.8Z"></path></svg>
+            </a>
         </div>
     </footer>
 
