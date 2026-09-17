@@ -34,6 +34,16 @@
         border-radius: 16px;
         background: var(--bottom-sheet-bg);
     }
+    @media (max-width: 640px) {
+        .category-container { margin: 20px auto; padding: 0 12px; }
+        .products { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+        .product { min-width: 0; padding: 10px; }
+        .product img { height: 120px; margin-bottom: 10px; }
+        .product h3 { font-size: 0.95rem; }
+        .product p { font-size: 0.8rem; }
+        .vendor { font-size: 0.78rem; }
+        .price { font-size: 1rem; }
+    }
 </style>
 @endsection
 
