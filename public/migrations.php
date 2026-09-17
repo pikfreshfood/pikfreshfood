@@ -67,8 +67,8 @@ $kernel = $app->make(\Illuminate\Contracts\Console\Kernel::class);
 $kernel->bootstrap();
 
 $commands = [
-    ['optimize:clear', []],
     ['migrate', ['--force' => true]],
+    ['optimize:clear', []],
     ['storage:link', []],
 ];
 
