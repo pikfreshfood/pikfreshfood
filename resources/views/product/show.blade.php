@@ -48,7 +48,10 @@
         .product-container { margin: 20px 12px; padding: 20px; }
         .product-gallery-slide img { height: 240px; }
         .product-gallery-thumb img { height: 68px; }
-        .insights-grid, .related-grid { grid-template-columns: 1fr; }
+        .insights-grid { grid-template-columns: 1fr; }
+        .related-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+        .related-card { padding: 10px; min-width: 0; }
+        .related-card img { height: 96px; }
     }
 </style>
 @endsection
