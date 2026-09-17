@@ -452,6 +452,35 @@
         .scroll-nav-btn.next { right: 4px; }
     }
     @media (max-width: 640px) {
+        .category-strip {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+        .category-pill {
+            width: 100%;
+            min-width: 0;
+            padding: 9px 10px;
+            gap: 6px;
+            border-radius: 14px;
+        }
+        .category-pill .category-icon {
+            width: 26px;
+            height: 26px;
+            font-size: 0.9rem;
+        }
+        .category-pill .category-label {
+            min-width: 0;
+            line-height: 1.15;
+        }
+        .category-pill .category-label > span {
+            font-size: 0.86rem;
+            overflow-wrap: anywhere;
+        }
+        .category-pill .category-label small {
+            font-size: 0.61rem;
+            line-height: 1.15;
+        }
         .home-hero {
             min-height: 440px;
             padding: 0 18px 22px;
