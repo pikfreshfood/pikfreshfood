@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\CallInvite;
+use App\Models\Cart;
 
 class AuthController extends Controller
 {
@@ -28,6 +29,20 @@ class AuthController extends Controller
             ]);
     }
 
+    protected function mergeGuestCart(Request $request, User $user): void
+    {
+        if (! $user->isBuyer()) {
+            return;
+        }
+
+        foreach ($request->session()->pull('guest_cart', []) as $productId => $quantity) {
+            Cart::updateOrCreate(
+                ['user_id' => $user->id, 'product_id' => $productId],
+                ['quantity' => $quantity]
+            );
+        }
+    }
+
     public function login(Request $request)
     {
         $validated = $request->validate([
@@ -45,6 +60,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             $this->endActiveCalls($user);
+            $this->mergeGuestCart($request, $user);
             $request->session()->regenerate();
             return redirect()->intended('/');
         }
@@ -78,6 +94,7 @@ class AuthController extends Controller
 
         Auth::login($user);
         $this->endActiveCalls($user);
+        $this->mergeGuestCart($request, $user);
 
         if ($user->isVendor()) {
             return redirect()->route('vendor.onboarding');

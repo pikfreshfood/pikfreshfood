@@ -40,6 +40,9 @@ class AppServiceProvider extends ServiceProvider
             $headerIncomingCallCount = 0;
             $headerNotificationPreview = [];
 
+            $guestCart = session('guest_cart', []);
+            $headerCartCount = array_sum($guestCart);
+
             if (Auth::check()) {
                 $user = Auth::user();
 

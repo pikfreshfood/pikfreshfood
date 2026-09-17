@@ -131,7 +131,13 @@
             <div class="buyer-note">Only buyer accounts can add items to cart.</div>
         @endif
     @else
-        <p><a href="{{ route('login') }}" class="login-link">Login</a> to add to cart or open your watch list.</p>
+        <form action="{{ route('cart.store') }}" method="POST" class="product-form">
+            @csrf
+            <input type="hidden" name="product_id" value="{{ $product->id }}">
+            <label>Quantity: <input type="number" name="quantity" value="1" min="1" max="{{ $product->stock_quantity }}" class="quantity-input"></label>
+            <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+        </form>
+        <p class="buyer-note">Your cart is saved on this device. <a href="{{ route('login') }}" class="login-link">Sign in</a> when you are ready to checkout.</p>
     @endauth
 
     <div class="product-insights">

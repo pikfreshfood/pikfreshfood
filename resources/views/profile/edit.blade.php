@@ -148,7 +148,7 @@
         gap: 10px;
         padding: 14px;
         text-decoration: none;
-        color: white;
+        color: #111;
         border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
     .menu-row:first-of-type { border-top: none; }
@@ -182,10 +182,10 @@
     .menu-name {
         font-size: 0.95rem;
         font-weight: 700;
-        color: white;
+        color: #111;
     }
     .menu-arrow {
-        color: rgba(255, 255, 255, 0.35);
+        color: #6b7b70;
         font-size: 1.1rem;
     }
 
@@ -381,7 +381,7 @@
                 </div>
                 <span class="menu-arrow">›</span>
             </a>
-            <div class="menu-row">
+            <button type="button" class="menu-row" data-open-support-chat style="width:100%; background:transparent; border-left:none; border-right:none; border-bottom:none; cursor:pointer;">
                 <div class="menu-left">
                     <span class="menu-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24">
@@ -393,7 +393,7 @@
                     <span class="menu-name">Help & Support</span>
                 </div>
                 <span class="menu-arrow">›</span>
-            </div>
+            </button>
         </div>
 
     </div>
@@ -413,6 +413,9 @@
 
         toggleButton?.addEventListener('click', toggleForm);
         toggleMenuButton?.addEventListener('click', toggleForm);
+        document.querySelector('[data-open-support-chat]')?.addEventListener('click', function () {
+            document.getElementById('supportChatToggle')?.click();
+        });
     })();
 </script>
 @endsection

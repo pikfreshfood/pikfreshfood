@@ -1095,6 +1095,34 @@
             stroke: none;
         }
 
+        .mobile-media-sheet {
+            position: fixed;
+            left: 12px;
+            right: 12px;
+            bottom: 84px;
+            z-index: 115;
+            display: none;
+            padding: 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            background: var(--surface-alt);
+            box-shadow: 0 14px 32px var(--shadow-color);
+        }
+
+        .mobile-media-sheet.is-open { display: grid; gap: 8px; }
+        .mobile-media-sheet-title { font-weight: 800; color: var(--text-color); }
+        .mobile-media-sheet a {
+            display: flex;
+            align-items: center;
+            min-height: 42px;
+            padding: 0 12px;
+            border-radius: 10px;
+            background: color-mix(in srgb, var(--primary-color) 8%, white 92%);
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
         .nav-item.active .nav-item-icon svg.fill-soft {
             fill: currentColor;
             stroke: currentColor;
@@ -2534,6 +2562,28 @@
                     <div class="nav-item-label">Profile</div>
                 </a>
             @endif
+            <a href="{{ route('profile.notifications') }}" class="nav-item {{ request()->routeIs('profile.notifications') ? 'active' : '' }}">
+                <div class="nav-item-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 9a6 6 0 1 1 12 0c0 7 3 7 3 7H3s3 0 3-7"></path>
+                        <path d="M10 20a2 2 0 0 0 4 0"></path>
+                    </svg>
+                    @if(($headerNotificationCount ?? 0) > 0)
+                        <span class="nav-item-badge">{{ $headerNotificationCount > 9 ? '9+' : $headerNotificationCount }}</span>
+                    @endif
+                </div>
+                <div class="nav-item-label">Notifications</div>
+            </a>
+            <button type="button" class="nav-item" id="mobileMediaToggle" aria-expanded="false" aria-controls="mobileMediaSheet">
+                <div class="nav-item-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 7h16v10H4z"></path>
+                        <path d="m9 7 1.5-3h3L15 7"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                </div>
+                <div class="nav-item-label">Media</div>
+            </button>
             <a href="{{ route('auth.logout.get') }}" class="nav-item" aria-label="Logout">
                 <div class="nav-item-icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24">
@@ -2587,6 +2637,15 @@
 
         @endauth
     </div>
+
+    @auth
+        <div class="mobile-media-sheet" id="mobileMediaSheet" aria-hidden="true">
+            <div class="mobile-media-sheet-title">Media</div>
+            <a href="{{ route('calls.index', ['mode' => 'video']) }}">Video Call</a>
+            <a href="{{ route('calls.index', ['mode' => 'audio']) }}">Audio Call</a>
+            <a href="{{ route('messages.index') }}">Messages</a>
+        </div>
+    @endauth
 
     <script>
         if ('serviceWorker' in navigator) {
@@ -2708,6 +2767,31 @@
                 }
 
                 window.setInterval(pollNotificationSummary, 5000);
+            })();
+        @endauth
+
+        @auth
+            (function () {
+                const mediaToggle = document.getElementById('mobileMediaToggle');
+                const mediaSheet = document.getElementById('mobileMediaSheet');
+
+                if (!mediaToggle || !mediaSheet) {
+                    return;
+                }
+
+                mediaToggle.addEventListener('click', function () {
+                    const isOpen = mediaSheet.classList.toggle('is-open');
+                    mediaSheet.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+                    mediaToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                });
+
+                document.addEventListener('click', function (event) {
+                    if (!mediaSheet.contains(event.target) && !mediaToggle.contains(event.target)) {
+                        mediaSheet.classList.remove('is-open');
+                        mediaSheet.setAttribute('aria-hidden', 'true');
+                        mediaToggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
             })();
         @endauth
 
