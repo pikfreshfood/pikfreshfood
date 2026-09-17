@@ -1043,6 +1043,9 @@
             font-size: 12px;
             color: #000;
             text-decoration: none;
+            border: 0;
+            background: transparent;
+            font-family: inherit;
         }
 
         .nav-item.active {
@@ -2552,7 +2555,7 @@
                     </div>
                     <div class="nav-item-label">Watch list</div>
                 </a>
-                <a href="{{ route('profile.edit') }}" class="nav-item {{ request()->routeIs('profile.edit') || request()->routeIs('profile.addresses') || request()->routeIs('profile.payment-methods') || request()->routeIs('profile.notifications') ? 'active' : '' }}">
+                <a href="{{ route('profile.edit') }}" class="nav-item {{ request()->routeIs('profile.edit') || request()->routeIs('profile.addresses') || request()->routeIs('profile.payment-methods') ? 'active' : '' }}">
                     <div class="nav-item-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24">
                             <circle cx="12" cy="8" r="3.5"></circle>
@@ -2577,23 +2580,11 @@
             <button type="button" class="nav-item" id="mobileMediaToggle" aria-expanded="false" aria-controls="mobileMediaSheet">
                 <div class="nav-item-icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24">
-                        <path d="M4 7h16v10H4z"></path>
-                        <path d="m9 7 1.5-3h3L15 7"></path>
-                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M6.6 3.5 9.2 3l2 4.7-2.1 1.7a14.4 14.4 0 0 0 5.5 5.5l1.7-2.1 4.7 2 .5 2.6a2 2 0 0 1-2.2 2.3A17.5 17.5 0 0 1 4.3 5.7a2 2 0 0 1 2.3-2.2Z"></path>
                     </svg>
                 </div>
-                <div class="nav-item-label">Media</div>
+                <div class="nav-item-label">Call</div>
             </button>
-            <a href="{{ route('auth.logout.get') }}" class="nav-item" aria-label="Logout">
-                <div class="nav-item-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                        <path d="M16 17l5-5-5-5"></path>
-                        <path d="M21 12H9"></path>
-                    </svg>
-                </div>
-                <div class="nav-item-label">Logout</div>
-            </a>
         @else
             <a href="{{ route('cart.index') }}" class="nav-item {{ request()->routeIs('cart.*') ? 'active' : '' }}">
                 <div class="nav-item-icon" aria-hidden="true">
@@ -2640,7 +2631,7 @@
 
     @auth
         <div class="mobile-media-sheet" id="mobileMediaSheet" aria-hidden="true">
-            <div class="mobile-media-sheet-title">Media</div>
+            <div class="mobile-media-sheet-title">Call Options</div>
             <a href="{{ route('calls.index', ['mode' => 'video']) }}">Video Call</a>
             <a href="{{ route('calls.index', ['mode' => 'audio']) }}">Audio Call</a>
             <a href="{{ route('messages.index') }}">Messages</a>
