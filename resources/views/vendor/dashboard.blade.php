@@ -4,15 +4,18 @@
 
 @section('styles')
 <style>
-    .dashboard-container { max-width: 1200px; margin: 40px auto; }
-    .dashboard-container h1 { color: #27ae60; margin-bottom: 30px; }
-    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px; }
-    .stat { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; transition: transform 0.2s; }
-    .stat:hover { transform: translateY(-2px); }
-    .stat h3 { margin: 0 0 10px 0; color: #27ae60; font-size: 28px; }
-    .stat p { margin: 0; color: #7f8c8d; font-size: 14px; }
-    .actions { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 30px; }
-    .actions h2 { color: #27ae60; margin-bottom: 20px; }
+    .dashboard-container { max-width: 1200px; margin: 24px auto; }
+    .dashboard-container h1 { color: var(--primary-color); margin-bottom: 18px; position: relative; display: inline-block; padding-bottom: 8px; }
+    .dashboard-container h1::after { content:''''; position: absolute; left: 0; bottom: 0; width: 60px; height: 4px; background: var(--secondary-color); border-radius: 999px; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .stat { background: white; padding: 22px; border-radius: 14px; border: 1px solid #e8eee9; border-top: 4px solid var(--secondary-color); box-shadow: 0 4px 14px rgba(0,0,0,0.06); text-align: center; transition: transform 0.18s, box-shadow 0.18s; }
+    .stat:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+    .stat h3 { margin: 0 0 6px 0; color: var(--primary-color); font-size: 26px; font-weight: 900; }
+    .stat p { margin: 0; color: #5b6b5f; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+    .actions { background: white; padding: 22px; border-radius: 16px; border: 1px solid #e8eee9; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin-bottom: 24px; position: relative; overflow: hidden; }
+    .actions::before { content:''''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%); }
+    .actions h2 { color: var(--primary-color); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .actions h2::before { content:''''; width: 6px; height: 18px; background: var(--secondary-color); border-radius: 999px; }
     .actions-grid {
         display: grid;
         grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -22,6 +25,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
         min-height: 74px;
         padding: 14px 12px;
         text-align: center;
@@ -41,13 +45,87 @@
     .action-btn-icon {
         width: 22px;
         height: 22px;
-        margin-bottom: 8px;
+        margin: 0 0 8px 0;
         color: currentColor;
         flex: 0 0 auto;
         opacity: 0.95;
+        display: block;
     }
     .action-btn-label {
         display: block;
+        width: 100%;
+        text-align: center;
+        line-height: 1.25;
+        word-break: break-word;
+    }
+    .dashboard-top-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
+    }
+    .dashboard-top-row h1 {
+        margin-bottom: 0;
+        line-height: 1.2;
+        word-break: break-word;
+    }
+    .vendor-summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-bottom: 24px;
+        padding: 18px;
+    }
+    .vendor-summary-grid > div {
+        text-align: center;
+    }
+    .vendor-boost-card {
+        padding: 14px;
+        margin-bottom: 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+    .vendor-alert-banner {
+        margin-bottom: 18px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        font-weight: 700;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        line-height: 1.5;
+    }
+    .order {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        border-bottom: 1px solid #eee;
+        padding: 15px 0;
+    }
+    .order:last-child { border-bottom: none; }
+    .order-main {
+        flex: 1 1 auto;
+        min-width: 0;
+        word-break: break-word;
+        line-height: 1.5;
+    }
+    .order-action {
+        flex: 0 0 auto;
+    }
+    .order-action a {
+        color: var(--primary-color);
+        font-weight: 700;
+        text-decoration: none;
+        white-space: nowrap;
     }
     .action-btn:hover {
         transform: translateY(-2px);
@@ -60,16 +138,20 @@
         outline: 2px solid #27ae60;
         outline-offset: 2px;
     }
-    .orders { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-    .orders h2 { color: #27ae60; margin-bottom: 20px; }
-    .order { border-bottom: 1px solid #eee; padding: 15px 0; }
-    .order:last-child { border-bottom: none; }
+    .orders { background: white; padding: 22px; border-radius: 16px; border: 1px solid #e8eee9; box-shadow: 0 4px 14px rgba(0,0,0,0.06); position: relative; overflow: hidden; }
+    .orders::before { content:''''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--secondary-color); }
+    .orders h2 { color: var(--primary-color); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .orders h2::before { content:''''; width: 6px; height: 18px; background: var(--primary-color); border-radius: 999px; }
     .order strong { color: #333; }
-    .order-status { color: #27ae60; font-weight: bold; }
-    .products-panel { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 30px; }
-    .products-panel h2 { color: #27ae60; margin-bottom: 20px; }
-    .live-panel { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 30px; }
-    .live-panel h2 { color: #27ae60; margin-bottom: 8px; }
+    .order-status { color: var(--primary-color); font-weight: bold; }
+    .products-panel { background: white; padding: 22px; border-radius: 16px; border: 1px solid #e8eee9; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin-bottom: 24px; position: relative; overflow: hidden; }
+    .products-panel::before { content:''''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--secondary-color); }
+    .products-panel h2 { color: var(--primary-color); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .products-panel h2::before { content:''''; width: 6px; height: 18px; background: var(--secondary-color); border-radius: 999px; }
+    .live-panel { background: white; padding: 22px; border-radius: 16px; border: 1px solid #e8eee9; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin-bottom: 24px; position: relative; overflow: hidden; }
+    .live-panel::before { content:''''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); }
+    .live-panel h2 { color: var(--primary-color); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+    .live-panel h2::before { content:''''; width: 6px; height: 18px; background: var(--secondary-color); border-radius: 999px; }
     .live-panel-copy { color: #7f8c8d; margin-bottom: 16px; font-size: 0.94rem; }
     .live-upload-form {
         display: grid;
@@ -207,7 +289,7 @@
     }
     .product-row p {
         margin: 0;
-        color: #27ae60;
+        color: var(--primary-color);
         font-size: 1.04rem;
         font-weight: 800;
     }
@@ -235,7 +317,7 @@
     }
     .product-icon-btn:hover {
         transform: translateY(-1px);
-        border-color: #27ae60;
+        border-color: var(--primary-color);
     }
     .product-icon-btn svg {
         width: 18px;
@@ -287,15 +369,80 @@
         cursor: pointer;
     }
     .products-pagination {
-        margin-top: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 22px;
+        padding-top: 16px;
+        border-top: 1px solid #e8eee9;
+    }
+    .products-pagination-summary {
+        color: #6b7c71;
+        font-size: 0.84rem;
+        white-space: nowrap;
+    }
+    .products-pagination-controls {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 6px;
+    }
+    .products-pagination a,
+    .products-pagination span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 36px;
+        min-height: 36px;
+        padding: 0 10px;
+        border: 1px solid #dce8df;
+        border-radius: 9px;
+        background: #fff;
+        color: #23633e;
+        font-size: 0.84rem;
+        font-weight: 700;
+        text-decoration: none;
+        transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    }
+    .products-pagination a:hover {
+        border-color: #168447;
+        background: #eef8f1;
+    }
+    .products-pagination .is-current {
+        border-color: #168447;
+        background: #168447;
+        color: #fff;
+    }
+    .products-pagination .is-disabled {
+        color: #a7b2aa;
+        background: #f5f7f5;
+        cursor: not-allowed;
+    }
+    .products-pagination .pagination-arrow {
+        gap: 6px;
+        padding: 0 12px;
+    }
+    .products-pagination svg {
+        width: 15px;
+        height: 15px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+    .products-pagination .pagination-ellipsis {
+        min-width: 24px;
+        padding: 0;
+        border-color: transparent;
+        background: transparent;
+        color: #829188;
     }
     .products-pagination nav {
         display: flex;
         justify-content: center;
-    }
-    .products-pagination svg {
-        width: 16px;
-        height: 16px;
     }
     .confirm-modal {
         position: fixed;
@@ -362,61 +509,427 @@
     }
     @media (max-width: 640px) {
         .dashboard-container {
-            margin: 24px auto;
-            padding: 0 12px;
+            margin: 16px auto;
+            padding: 0 14px;
+        }
+        .dashboard-top-row {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 14px !important;
+            margin-bottom: 16px !important;
+        }
+        .dashboard-top-row h1 {
+            font-size: 1.35rem !important;
+            line-height: 1.3;
+            text-align: center;
+            margin: 0 !important;
+            word-break: break-word;
+        }
+        .dashboard-top-row form {
+            width: 100%;
+        }
+        .dashboard-top-row .confirm-modal-btn {
+            width: 100%;
+            justify-content: center;
+            display: inline-flex;
+            align-items: center;
+            min-height: 44px;
+            font-size: 0.92rem;
+        }
+        .vendor-summary-grid {
+            grid-template-columns: 1fr !important;
+            gap: 0 !important;
+            padding: 0 !important;
+            overflow: hidden;
+            border-radius: 14px;
+        }
+        .vendor-summary-grid > div {
+            padding: 14px 16px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .vendor-summary-grid > div:last-child {
+            border-bottom: none;
+        }
+        .vendor-summary-grid > div div:first-child {
+            font-size: 0.8rem !important;
+            letter-spacing: 0.02em;
+            margin-bottom: 4px;
+        }
+        .vendor-summary-grid > div strong {
+            font-size: 0.96rem;
+            word-break: break-word;
+            display: block;
+            line-height: 1.4;
+        }
+        .vendor-boost-card {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            padding: 16px !important;
+            gap: 14px !important;
+            border-radius: 14px;
+        }
+        .vendor-boost-card > div {
+            text-align: center;
+            width: 100%;
+        }
+        .vendor-boost-card > div strong {
+            display: block;
+            margin: 4px 0;
+            word-break: break-word;
+        }
+        .vendor-boost-card .boost-inline-form {
+            max-width: 100% !important;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .vendor-boost-card .boost-plan-select,
+        .vendor-boost-card .product-action-btn {
+            width: 100%;
+            min-height: 44px;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+        .vendor-alert-banner {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            text-align: center;
+            gap: 10px !important;
+            padding: 14px !important;
+            border-radius: 14px;
+        }
+        .vendor-alert-banner span {
+            line-height: 1.5;
+            font-size: 0.88rem;
+            word-break: break-word;
+        }
+        .vendor-alert-banner .confirm-modal-btn {
+            width: 100%;
+            justify-content: center;
+            display: inline-flex;
+            align-items: center;
+            text-align: center;
+            min-height: 44px;
+            font-size: 0.88rem;
         }
         .stats {
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 12px;
+            gap: 10px;
+            margin-bottom: 20px;
         }
         .stat {
-            padding: 20px 14px;
+            padding: 16px 10px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .stat h3 {
+            font-size: 1.35rem;
+            word-break: break-word;
+            line-height: 1.2;
+        }
+        .stat p {
+            font-size: 0.82rem;
+            line-height: 1.3;
+            margin-top: 4px;
         }
         .actions {
-            padding: 18px;
+            padding: 16px 14px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+        }
+        .actions h2 {
+            font-size: 1.12rem;
+            margin-bottom: 14px;
+            text-align: center;
         }
         .actions-grid {
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 10px;
+            gap: 8px;
         }
         .action-btn {
-            min-height: 66px;
-            padding: 12px 8px;
-            font-size: 0.82rem;
+            min-height: 78px;
+            padding: 10px 6px;
+            font-size: 0.76rem;
             line-height: 1.25;
             border-radius: 12px;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            word-break: break-word;
+            hyphens: auto;
         }
         .action-btn-icon {
             width: 20px;
             height: 20px;
-            margin-bottom: 6px;
+            margin: 0 0 6px 0;
+            flex-shrink: 0;
         }
-        .products-panel {
-            padding: 18px;
+        .action-btn-label {
+            line-height: 1.2;
+            display: block;
+            width: 100%;
         }
-        .products-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 12px;
+        .live-panel {
+            padding: 16px 14px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+        }
+        .live-panel h2 {
+            font-size: 1.12rem;
+            text-align: center;
+        }
+        .live-panel-copy {
+            text-align: center;
+            font-size: 0.86rem;
+            margin-bottom: 14px;
+            line-height: 1.5;
+        }
+        .live-upload-form {
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .live-upload-input,
+        .live-upload-file,
+        .live-upload-btn {
+            width: 100%;
+            min-height: 44px;
+            font-size: 0.9rem;
+        }
+        .live-upload-note {
+            text-align: center;
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+        .live-upload-progress-text {
+            text-align: center;
         }
         .live-video-list {
             grid-template-columns: 1fr;
             gap: 12px;
         }
-        .product-row {
+        .live-video-item {
             padding: 12px;
+            gap: 8px;
+            text-align: center;
+        }
+        .live-video-item video {
+            height: 200px;
+        }
+        .live-video-meta {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 4px;
+        }
+        .live-video-meta strong {
+            word-break: break-word;
+        }
+        .live-video-delete {
+            width: 100%;
+            min-height: 42px;
+            justify-content: center;
+        }
+        .products-panel {
+            padding: 16px 14px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+        }
+        .products-panel h2 {
+            font-size: 1.12rem;
+            text-align: center;
+            margin-bottom: 14px;
+        }
+        .products-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+        .product-row {
+            padding: 10px;
+            border-radius: 12px;
+            text-align: center;
+            align-items: center;
+        }
+        .product-row h3 {
+            font-size: 0.9rem;
+            text-align: center;
+            word-break: break-word;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 2.6em;
+            line-height: 1.3;
+        }
+        .product-row p {
+            font-size: 0.95rem;
+            text-align: center;
         }
         .product-thumb {
-            height: 126px;
+            height: 118px;
+            border-radius: 10px;
+        }
+        .product-row-actions {
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
         }
         .product-icon-btn {
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
+        }
+        .product-icon-btn svg {
+            width: 16px;
+            height: 16px;
         }
         .boost-inline-form {
             flex-direction: column;
+            width: 100%;
         }
-        .live-panel {
+        .products-pagination {
+            margin-top: 16px;
+            align-items: stretch;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .products-pagination-summary {
+            text-align: center;
+        }
+        .products-pagination-controls {
+            justify-content: center;
+        }
+        .orders {
+            padding: 16px 14px;
+            border-radius: 14px;
+        }
+        .orders h2 {
+            font-size: 1.12rem;
+            text-align: center;
+            margin-bottom: 14px;
+        }
+        .order {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 8px !important;
+            padding: 14px 0 !important;
+            text-align: center;
+            float: none !important;
+        }
+        .order-main {
+            order: 1;
+            width: 100%;
+            text-align: center;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .order-action {
+            order: 2;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            float: none !important;
+        }
+        .order-action a {
+            width: 100%;
+            min-height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 14px;
+            border-radius: 10px;
+            background: var(--primary-color);
+            color: white !important;
+            font-size: 0.88rem;
+            text-align: center;
+        }
+        .confirm-modal-card {
+            padding: 20px 16px;
+        }
+        .confirm-modal-actions {
+            flex-direction: column-reverse;
+        }
+        .confirm-modal-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+    @media (max-width: 380px) {
+        .dashboard-container {
+            padding: 0 10px;
+        }
+        .actions-grid {
+            gap: 6px;
+        }
+        .action-btn {
+            min-height: 72px;
+            padding: 8px 4px;
+            font-size: 0.7rem;
+        }
+        .action-btn-icon {
+            width: 18px;
+            height: 18px;
+            margin-bottom: 4px;
+        }
+        .products-grid {
+            gap: 8px;
+        }
+        .product-row {
+            padding: 8px;
+        }
+        .product-thumb {
+            height: 100px;
+        }
+        .stats {
+            gap: 8px;
+        }
+        .stat {
+            padding: 14px 8px;
+        }
+        .stat h3 {
+            font-size: 1.2rem;
+        }
+        .live-video-item video {
+            height: 180px;
+        }
+    }
+    @media (min-width: 1024px) {
+        .dashboard-container {
+            max-width: 1280px;
+            padding: 0 24px;
+        }
+        .dashboard-top-row h1 {
+            font-size: 1.7rem;
+            text-align: left;
+        }
+        .vendor-summary-grid {
             padding: 18px;
+            gap: 16px;
+        }
+        .actions-grid {
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 14px;
+        }
+        .action-btn {
+            min-height: 92px;
+            padding: 16px 10px;
+            font-size: 0.88rem;
+        }
+        .action-btn-icon {
+            width: 24px;
+            height: 24px;
+        }
+        .products-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+        }
+        .live-video-list {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
         }
     }
 </style>
@@ -430,8 +943,8 @@
         </div>
     @endif
 
-    <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:18px; flex-wrap:wrap;">
-        <h1 style="margin-bottom:0;">{{ $vendor->shop_name }} Dashboard</h1>
+    <div class="dashboard-top-row">
+        <h1>{{ $vendor->shop_name }} Dashboard</h1>
         <form action="{{ route('vendor.live.toggle') }}" method="POST" style="margin:0;">
             @csrf
             <button type="submit" class="confirm-modal-btn {{ $vendor->is_live ? 'danger' : '' }}" style="border-color:{{ $vendor->is_live ? '#e74c3c' : 'var(--primary-color)' }}; background:{{ $vendor->is_live ? '#e74c3c' : 'var(--primary-color)' }}; color:white;">
@@ -440,7 +953,7 @@
         </form>
     </div>
 
-    <div class="vendor-card" style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:12px; margin-bottom:24px; padding:18px;">
+    <div class="vendor-card vendor-summary-grid">
         <div>
             <div style="color:var(--muted-color); font-size:.85rem;">Live Status</div>
             <strong>{{ $vendor->is_live ? 'Live Now' : 'Paused' }}</strong>
@@ -465,7 +978,7 @@
         </div>
     </div>
 
-    <div class="vendor-card" style="padding:14px; margin-bottom:18px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+    <div class="vendor-card vendor-boost-card">
         <div>
             <div style="color:var(--muted-color); font-size:.84rem;">Shop Boost</div>
             <strong>
@@ -486,12 +999,12 @@
     </div>
 
     @if($subscriptionExpired)
-        <div style="margin-bottom:18px; padding:12px 14px; border-radius:12px; background:rgba(192,57,43,.12); color:#c0392b; font-weight:700; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+        <div class="vendor-alert-banner" style="background:rgba(192,57,43,.12); color:#c0392b;">
             <span>Your free trial has expired. Upgrade now to continue uploading or editing products.</span>
             <a href="{{ route('vendor.subscription') }}" class="confirm-modal-btn danger" style="text-decoration:none;">Upgrade Plan</a>
         </div>
     @else
-        <div style="margin-bottom:18px; padding:12px 14px; border-radius:12px; background:rgba(47,131,105,.12); color:var(--primary-color); font-weight:700; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+        <div class="vendor-alert-banner" style="background:rgba(47,131,105,.12); color:var(--primary-color);">
             <span>Trial active until {{ $subscriptionExpiresAt ? $subscriptionExpiresAt->format('d M Y') : 'N/A' }}. You can upgrade anytime for premium visibility.</span>
             <a href="{{ route('vendor.subscription') }}" class="confirm-modal-btn" style="text-decoration:none;">See Upgrade Plans</a>
         </div>
@@ -663,7 +1176,57 @@
 
             @if($products->hasPages())
                 <div class="products-pagination">
-                    {{ $products->onEachSide(1)->links() }}
+                    <div class="products-pagination-summary">
+                        Showing {{ $products->firstItem() }}-{{ $products->lastItem() }} of {{ $products->total() }} products
+                    </div>
+                    <nav class="products-pagination-controls" aria-label="Product pages">
+                        @if($products->onFirstPage())
+                            <span class="pagination-arrow is-disabled" aria-disabled="true">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+                                Previous
+                            </span>
+                        @else
+                            <a class="pagination-arrow" href="{{ $products->previousPageUrl() }}" rel="prev">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+                                Previous
+                            </a>
+                        @endif
+
+                        @php
+                            $pageStart = max(1, $products->currentPage() - 1);
+                            $pageEnd = min($products->lastPage(), $products->currentPage() + 1);
+                        @endphp
+
+                        @if($pageStart > 1)
+                            <a href="{{ $products->url(1) }}">1</a>
+                            @if($pageStart > 2)<span class="pagination-ellipsis">...</span>@endif
+                        @endif
+
+                        @for($page = $pageStart; $page <= $pageEnd; $page++)
+                            @if($page === $products->currentPage())
+                                <span class="is-current" aria-current="page">{{ $page }}</span>
+                            @else
+                                <a href="{{ $products->url($page) }}">{{ $page }}</a>
+                            @endif
+                        @endfor
+
+                        @if($pageEnd < $products->lastPage())
+                            @if($pageEnd < $products->lastPage() - 1)<span class="pagination-ellipsis">...</span>@endif
+                            <a href="{{ $products->url($products->lastPage()) }}">{{ $products->lastPage() }}</a>
+                        @endif
+
+                        @if($products->hasMorePages())
+                            <a class="pagination-arrow" href="{{ $products->nextPageUrl() }}" rel="next">
+                                Next
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+                            </a>
+                        @else
+                            <span class="pagination-arrow is-disabled" aria-disabled="true">
+                                Next
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+                            </span>
+                        @endif
+                    </nav>
                 </div>
             @endif
         @endif
@@ -676,12 +1239,14 @@
         @else
             @foreach($orders as $order)
                 <div class="order">
-                    <div style="float:right;">
-                        <a href="{{ route('vendor.orders.show', $order) }}" style="color:var(--primary-color); font-weight:700; text-decoration:none;">Open Order</a>
+                    <div class="order-main">
+                        <strong>Order #{{ $order->id }}</strong> -
+                        <span class="order-status">{{ ucfirst($order->status) }}</span> -
+                        ₦{{ $order->total_amount }}
                     </div>
-                    <strong>Order #{{ $order->id }}</strong> -
-                    <span class="order-status">{{ ucfirst($order->status) }}</span> -
-                    ₦{{ $order->total_amount }}
+                    <div class="order-action">
+                        <a href="{{ route('vendor.orders.show', $order) }}">Open Order</a>
+                    </div>
                 </div>
                 @endforeach
         @endif

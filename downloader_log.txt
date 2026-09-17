@@ -1,0 +1,52 @@
+App started
+Default folder: C:\xampp\htdocs\pikefresh\video
+Starting download - URL: https://app.pixverse.ai/video/411726554513286, Folder: C:\xampp\htdocs\pikefresh\video
+Ensured folder exists: C:\xampp\htdocs\pikefresh\video
+Fetching page: https://app.pixverse.ai/video/411726554513286
+Page fetched, status: 200, size: 86232
+Found via contentUrl: https://media.pixverse.ai/pixverse%2Fmp4%2Fmedia%2Fweb%2Fori%2F2cd90869-1bd0-4880-a7f4-8ce5ee1f2525_seed757159744.mp4
+Output path: C:\xampp\htdocs\pikefresh\video\pixverse_mp4_media_web_ori_2cd90869-1bd0-4880-a7f4-8ce5ee1f2525_seed757159744.mp4
+Downloading from: https://media.pixverse.ai/pixverse%2Fmp4%2Fmedia%2Fweb%2Fori%2F2cd90869-1bd0-4880-a7f4-8ce5ee1f2525_seed757159744.mp4
+Saving to: C:\xampp\htdocs\pikefresh\video\pixverse_mp4_media_web_ori_2cd90869-1bd0-4880-a7f4-8ce5ee1f2525_seed757159744.mp4
+Download response: 200, size: 3006298
+Download complete
+Starting download - URL: https://app.pixverse.ai/video/411726554513286, Folder: C:/Users/USER/Pictures
+Ensured folder exists: C:/Users/USER/Pictures
+Fetching page: https://app.pixverse.ai/video/411726554513286
+Page fetched, status: 200, size: 86232
+Found via contentUrl: https://media.pixverse.ai/pixverse%2Fmp4%2Fmedia%2Fweb%2Fori%2F2cd90869-1bd0-4880-a7f4-8ce5ee1f2525_seed757159744.mp4
+Output path: C:/Users/USER/Pictures\pixverse_mp4_media_web_ori_2cd90869-1bd0-4880-a7f4-8ce5ee1f2525_seed757159744.mp4
+Downloading from: https://media.pixverse.ai/pixverse%2Fmp4%2Fmedia%2Fweb%2Fori%2F2cd90869-1bd0-4880-a7f4-8ce5ee1f2525_seed757159744.mp4
+Saving to: C:/Users/USER/Pictures\pixverse_mp4_media_web_ori_2cd90869-1bd0-4880-a7f4-8ce5ee1f2525_seed757159744.mp4
+Download response: 200, size: 3006298
+Download complete
+Starting download - URL: https://app.pixverse.ai/video/411715618830744, Folder: C:/Users/USER/Pictures
+Ensured folder exists: C:/Users/USER/Pictures
+Fetching page: https://app.pixverse.ai/video/411715618830744
+Page fetched, status: 200, size: 86297
+Found via contentUrl: https://media.pixverse.ai/pixverse%2Fmp4%2Fmedia%2Fweb%2Fori%2Fdfd6301a-8479-4f99-a453-2b5f1de3a6a2_seed1511343949.mp4
+Output path: C:/Users/USER/Pictures\pixverse_mp4_media_web_ori_dfd6301a-8479-4f99-a453-2b5f1de3a6a2_seed1511343949.mp4
+Downloading from: https://media.pixverse.ai/pixverse%2Fmp4%2Fmedia%2Fweb%2Fori%2Fdfd6301a-8479-4f99-a453-2b5f1de3a6a2_seed1511343949.mp4
+Saving to: C:/Users/USER/Pictures\pixverse_mp4_media_web_ori_dfd6301a-8479-4f99-a453-2b5f1de3a6a2_seed1511343949.mp4
+Download response: 200, size: 2906225
+Download complete
+Starting download - URL: https://app.pixverse.ai/video/411722319777089, Folder: C:/Users/USER/Pictures
+Ensured folder exists: C:/Users/USER/Pictures
+Fetching page: https://app.pixverse.ai/video/411722319777089
+Page fetched, status: 200, size: 85132
+Found via contentUrl: https://media.pixverse.ai/pixverse%2Fmp4%2Fmedia%2Fweb%2Fori%2F9ec912f9-f783-497a-b265-f61656d62253_seed137758708.mp4
+Output path: C:/Users/USER/Pictures\pixverse_mp4_media_web_ori_9ec912f9-f783-497a-b265-f61656d62253_seed137758708.mp4
+Downloading from: https://media.pixverse.ai/pixverse%2Fmp4%2Fmedia%2Fweb%2Fori%2F9ec912f9-f783-497a-b265-f61656d62253_seed137758708.mp4
+Saving to: C:/Users/USER/Pictures\pixverse_mp4_media_web_ori_9ec912f9-f783-497a-b265-f61656d62253_seed137758708.mp4
+Download response: 200, size: 3130471
+Download complete
+Starting download - URL: https://app.pixverse.ai/video/411716418810253, Folder: C:/Users/USER/Pictures
+Ensured folder exists: C:/Users/USER/Pictures
+Fetching page: https://app.pixverse.ai/video/411716418810253
+Page fetched, status: 200, size: 85904
+Found via contentUrl: https://media.pixverse.ai/pixverse%2Fmp4%2Fmedia%2Fweb%2Fori%2F40b15a04-0873-475a-83d2-96a3548a1ad8_seed761594557.mp4
+Output path: C:/Users/USER/Pictures\pixverse_mp4_media_web_ori_40b15a04-0873-475a-83d2-96a3548a1ad8_seed761594557.mp4
+Downloading from: https://media.pixverse.ai/pixverse%2Fmp4%2Fmedia%2Fweb%2Fori%2F40b15a04-0873-475a-83d2-96a3548a1ad8_seed761594557.mp4
+Saving to: C:/Users/USER/Pictures\pixverse_mp4_media_web_ori_40b15a04-0873-475a-83d2-96a3548a1ad8_seed761594557.mp4
+Download response: 200, size: 3223141
+Download complete

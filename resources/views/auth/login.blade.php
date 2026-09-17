@@ -86,6 +86,100 @@
         background: rgba(255, 255, 255, 0.22);
         color: #ffffff;
     }
+
+    @media (max-width: 640px) {
+        body:has(.auth-container) {
+            background: #f7fbf8;
+        }
+
+        body:has(.auth-container) .header,
+        body:has(.auth-container) .bottom-nav,
+        body:has(.auth-container) .quick-support-stack {
+            display: none;
+        }
+
+        body:has(.auth-container) .main-content {
+            min-height: 100dvh;
+            padding: 16px 12px 24px;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 430px;
+            margin: 0 auto;
+            padding: 24px 18px 22px;
+            border: 1px solid #e3eee7;
+            border-radius: 22px;
+            box-shadow: 0 10px 30px rgba(22, 132, 71, 0.09);
+        }
+
+        .auth-container h1 {
+            margin: 2px 0 22px;
+            font-size: 1.7rem;
+        }
+
+        .auth-tabs {
+            gap: 6px;
+            margin-bottom: 18px;
+            padding: 4px;
+            border-radius: 12px;
+            background: #edf6ef;
+        }
+
+        .auth-tab {
+            min-height: 44px;
+            padding: 12px 8px;
+            border-radius: 9px;
+            font-size: 0.92rem;
+            font-weight: 700;
+        }
+
+        .auth-tab:not(.active) {
+            background: transparent;
+            color: #47705a;
+        }
+
+        .auth-input,
+        .auth-select {
+            min-height: 50px;
+            margin-bottom: 12px;
+            padding: 13px 14px;
+            border-color: #d9e8de;
+            border-radius: 11px;
+            font-size: 16px;
+        }
+
+        .auth-password-field {
+            margin-bottom: 12px;
+        }
+
+        .auth-password-field .auth-input {
+            padding-right: 56px;
+        }
+
+        .auth-password-toggle {
+            right: 8px;
+            width: 36px;
+            height: 36px;
+        }
+
+        .auth-checkline {
+            gap: 9px;
+            margin: 0 0 16px;
+            font-size: 12px;
+        }
+
+        .auth-button {
+            min-height: 50px;
+            border-radius: 11px;
+            font-size: 15px;
+        }
+
+        .auth-alert {
+            padding: 11px 12px;
+            font-size: 13px;
+        }
+    }
 </style>
 @endsection
 

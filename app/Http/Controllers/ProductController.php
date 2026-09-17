@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
@@ -83,7 +84,7 @@ class ProductController extends Controller
 
     protected function categories(): Collection
     {
-        return collect(['fruits', 'vegetables', 'roasted foods'])
+        return collect(['fruits', 'vegetables', 'roasted foods', 'restaurant'])
             ->merge(
                 Product::query()
                     ->where('is_available', true)
@@ -166,6 +167,17 @@ class ProductController extends Controller
             })
             ->values();
 
+        $productsPage = new LengthAwarePaginator(
+            $products->forPage($request->integer('page', 1), 20)->values(),
+            $products->count(),
+            20,
+            $request->integer('page', 1),
+            [
+                'path' => $request->url(),
+                'query' => $request->query(),
+            ]
+        );
+
         $vendors = Vendor::query()
             ->with(['products' => fn ($query) => $query->where('is_available', true)->latest()])
             ->when($search !== '', function ($query) use ($search) {
@@ -193,7 +205,7 @@ class ProductController extends Controller
             ->values();
 
         return view('home', [
-            'products' => $products,
+            'productsPage' => $productsPage,
             'popularProducts' => $popularProducts,
             'categories' => $this->categories(),
             'nearbyVendors' => $nearbyVendors,

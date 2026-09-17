@@ -167,6 +167,12 @@
 @endsection
 
 @section('content')
+<div style="max-width:1100px; margin:14px auto 0; padding:0 16px;">
+<a href="{{ route('vendor.dashboard') }}" style="display:inline-flex; align-items:center; gap:8px; text-decoration:none; color:var(--muted-color); font-weight:700; font-size:0.9rem; margin:14px 0 12px;">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Back to Dashboard
+    </a>
+</div>
 <div class="vendor-products-container">
     @if(session('success'))
         <div style="margin-bottom:16px; padding:12px 14px; border-radius:12px; background:rgba(47,131,105,.18); color:#d7fff3;">

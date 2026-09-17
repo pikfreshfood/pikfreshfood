@@ -233,6 +233,10 @@
 @endsection
 
 @section('content')
+<a href="{{ route('vendor.products') }}" style="display:inline-flex; align-items:center; gap:8px; text-decoration:none; color:var(--muted-color); font-weight:700; font-size:0.9rem; margin:14px 0 12px;">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Back to Products
+    </a>
 <div class="edit-product-container">
     <h1>Edit Product</h1>
     <p>Update your product details, stock, availability, and product photo gallery.</p>

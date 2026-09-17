@@ -172,14 +172,50 @@
     .section-copy { color: var(--muted-color); margin: -8px 0 16px; }
     .category-strip { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 24px; }
     .category-pill {
-        padding: 10px 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
         border-radius: 999px;
         background: var(--surface-alt);
         text-decoration: none;
         color: var(--text-color);
         font-weight: 700;
         border: 1px solid var(--border-color);
+        transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+        line-height: 1;
     }
+    .category-pill:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-color: rgba(22,132,71,0.22); }
+    .category-pill .category-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        flex: 0 0 auto;
+        background: rgba(22,132,71,0.12);
+    }
+    .category-pill .category-label { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+    .category-pill .category-label small { font-size: 0.68rem; font-weight: 600; opacity: 0.72; letter-spacing: 0.02em; text-transform: uppercase; }
+    .category-pill.cat-fruits { background: #fff7ed; border-color: #fed7aa; color: #9a3412; }
+    .category-pill.cat-fruits .category-icon { background: #ffedd5; }
+    .category-pill.cat-vegetables { background: #f0fdf4; border-color: #bbf7d0; color: #166534; }
+    .category-pill.cat-vegetables .category-icon { background: #dcfce7; }
+    .category-pill.cat-roasted-foods { background: #fef3c7; border-color: #fde68a; color: #92400e; }
+    .category-pill.cat-roasted-foods .category-icon { background: #fde68a; }
+    .category-pill.cat-grains { background: #fefce8; border-color: #fef08a; color: #854d0e; }
+    .category-pill.cat-grains .category-icon { background: #fef9c3; }
+    .category-pill.cat-dairy { background: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
+    .category-pill.cat-dairy .category-icon { background: #dbeafe; }
+    .category-pill.cat-meat { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
+    .category-pill.cat-meat .category-icon { background: #fee2e2; }
+    .category-pill.cat-pantry { background: #f8fafc; border-color: #e2e8f0; color: #334155; }
+    .category-pill.cat-pantry .category-icon { background: #e2e8f0; }
+    .category-pill.cat-restaurant { background: #f5f3ff; border-color: #ddd6fe; color: #5b21b6; }
+    .category-pill.cat-restaurant .category-icon { background: #ede9fe; }
+    .category-pill.cat-default { background: #f1f5f9; border-color: #e2e8f0; color: #334155; }
     .vendor-scroll-wrap {
         position: relative;
         margin-bottom: 28px;
@@ -267,20 +303,10 @@
     }
     .products-scroll {
         display: grid;
-        grid-auto-flow: column;
-        grid-auto-columns: calc((100% - (18px * 3)) / 4);
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 18px;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        padding-bottom: 8px;
-    }
-    .products-scroll::-webkit-scrollbar {
-        display: none;
-    }
-    .products-scroll .product-card {
-        scroll-snap-align: start;
+        overflow: visible;
+        padding-bottom: 0;
     }
     .scroll-nav-btn {
         position: absolute;
@@ -310,7 +336,40 @@
         overflow: hidden;
         text-decoration: none;
         color: inherit;
+        position: relative;
+        transition: transform 0.16s ease, box-shadow 0.16s ease;
     }
+    .product-card:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
+    .product-card.cat-accent-fruits { border-top: 3px solid #fb923c; }
+    .product-card.cat-accent-vegetables { border-top: 3px solid #4ade80; }
+    .product-card.cat-accent-roasted-foods { border-top: 3px solid #f59e0b; }
+    .product-card.cat-accent-grains { border-top: 3px solid #eab308; }
+    .product-card.cat-accent-dairy { border-top: 3px solid #60a5fa; }
+    .product-card.cat-accent-meat { border-top: 3px solid #f87171; }
+    .product-card.cat-accent-pantry { border-top: 3px solid #94a3b8; }
+    .product-card.cat-accent-restaurant { border-top: 3px solid #a78bfa; }
+    .product-card.cat-accent-default { border-top: 3px solid #cbd5e1; }
+    .product-category-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 8px;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 800;
+        text-transform: capitalize;
+        border: 1px solid transparent;
+    }
+    .product-category-badge.cat-fruits { background: #fff7ed; border-color:#fed7aa; color:#9a3412; }
+    .product-category-badge.cat-vegetables { background: #f0fdf4; border-color:#bbf7d0; color:#166534; }
+    .product-category-badge.cat-roasted-foods { background: #fef3c7; border-color:#fde68a; color:#92400e; }
+    .product-category-badge.cat-grains { background: #fefce8; border-color:#fef08a; color:#854d0e; }
+    .product-category-badge.cat-dairy { background: #eff6ff; border-color:#bfdbfe; color:#1e40af; }
+    .product-category-badge.cat-meat { background: #fef2f2; border-color:#fecaca; color:#991b1b; }
+    .product-category-badge.cat-pantry { background: #f8fafc; border-color:#e2e8f0; color:#334155; }
+    .product-category-badge.cat-restaurant { background: #f5f3ff; border-color:#ddd6fe; color:#5b21b6; }
+    .product-category-badge.cat-default { background: #f1f5f9; border-color:#e2e8f0; color:#334155; }
+    .product-desc { margin: 8px 0 0; color: var(--muted-color); font-size: 0.84rem; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     .product-card img {
         width: 100%;
         height: 180px;
@@ -376,8 +435,11 @@
             display: none;
         }
         .products-scroll {
-            grid-auto-columns: calc((100% - 12px) / 2);
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-auto-flow: row;
             gap: 12px;
+            overflow: visible;
         }
         .scroll-nav-btn {
             width: 34px;
@@ -445,8 +507,11 @@
             display: none;
         }
         .products-scroll {
-            grid-auto-columns: calc((100% - 12px) / 2);
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-auto-flow: row;
             gap: 12px;
+            overflow: visible;
         }
         .product-card img {
             height: 132px;
@@ -508,9 +573,47 @@
         </div>
     </div>
 
+    @php
+        $categoryIcons = [
+            'fruits' => '🍎',
+            'vegetables' => '🥬',
+            'roasted foods' => '🔥',
+            'grains' => '🌾',
+            'dairy' => '🥛',
+            'meat' => '🍖',
+            'pantry' => '🥫',
+            'restaurant' => '🍽',
+            'popular near you' => '⭐',
+            'all products' => '🛒',
+        ];
+        $categoryDescs = [
+            'fruits' => 'Fresh & sweet',
+            'vegetables' => 'Farm fresh',
+            'roasted foods' => 'Ready to eat',
+            'grains' => 'Staple foods',
+            'dairy' => 'Milk & eggs',
+            'meat' => 'Protein rich',
+            'pantry' => 'Essentials',
+            'restaurant' => 'Dine-in & takeaway',
+        ];
+    @endphp
     <div class="category-strip">
         @foreach($categories as $category)
-            <a href="{{ route('category.show', $category) }}" class="category-pill">{{ ucfirst($category) }}</a>
+            @php
+                $catKey = strtolower(trim($category));
+                $catSlug = \Illuminate\Support\Str::slug($catKey);
+                $catIcon = $categoryIcons[$catKey] ?? '🛍️';
+                $catDesc = $categoryDescs[$catKey] ?? 'Shop now';
+                $catClass = 'cat-' . ($catSlug ?: 'default');
+                if (!in_array($catClass, ['cat-fruits','cat-vegetables','cat-roasted-foods','cat-grains','cat-dairy','cat-meat','cat-pantry','cat-restaurant'])) { $catClass = 'cat-default'; }
+            @endphp
+            <a href="{{ route('category.show', $category) }}" class="category-pill {{ $catClass }}">
+                <span class="category-icon" aria-hidden="true">{{ $catIcon }}</span>
+                <span class="category-label">
+                    <span>{{ ucfirst($category) }}</span>
+                    <small>{{ $catDesc }}</small>
+                </span>
+            </a>
         @endforeach
     </div>
 
@@ -522,11 +625,17 @@
     </div>
 
     <div class="products-scroll-wrap">
-        <button type="button" class="scroll-nav-btn prev" id="popularScrollPrev" aria-label="Scroll products left">&#8249;</button>
-        <button type="button" class="scroll-nav-btn next" id="popularScrollNext" aria-label="Scroll products right">&#8250;</button>
         <div class="products-scroll" id="popularProductsScroll">
-        @forelse($popularProducts as $product)
-            <a href="{{ route('product.show', $product) }}" class="product-card">
+        @forelse($productsPage as $product)
+            @php
+                $prodCatKey = strtolower(trim($product->category ?? ''));
+                $prodCatSlug = \Illuminate\Support\Str::slug($prodCatKey);
+                $prodCatClass = 'cat-' . ($prodCatSlug ?: 'default');
+                if (!in_array($prodCatClass, ['cat-fruits','cat-vegetables','cat-roasted-foods','cat-grains','cat-dairy','cat-meat','cat-pantry','cat-restaurant'])) { $prodCatClass = 'cat-default'; }
+                $prodIcons = ['fruits'=>'🍎','vegetables'=>'🥬','roasted foods'=>'🔥','grains'=>'🌾','dairy'=>'🥛','meat'=>'🍖','pantry'=>'🥫','restaurant'=>'🍽'];
+                $prodIcon = $prodIcons[$prodCatKey] ?? '🏷️';
+            @endphp
+            <a href="{{ route('product.show', $product) }}" class="product-card cat-accent-{{ $prodCatSlug ?: 'default' }}">
                 @if($product->primary_image)
                     <img src="{{ \App\Support\PublicStorage::url($product->primary_image) }}" alt="{{ $product->name }}">
                 @else
@@ -537,14 +646,19 @@
                     <div class="product-vendor">By {{ $product->vendor->shop_name }}</div>
                     <div class="product-meta">
                         <div class="product-price">₦{{ $product->price }}</div>
-                        <div class="product-category">{{ $product->category }}</div>
+                        <div class="product-category-badge {{ $prodCatClass }}"><span aria-hidden="true">{{ $prodIcon }}</span> {{ $product->category }}</div>
                     </div>
-                    <div class="product-distance">{{ $product->distance_km }} km away • Vendor rating {{ $product->vendor->rating ?: 'N/A' }}</div>
+                    @if(!empty($product->description))
+                        <div class="product-desc">{{ \Illuminate\Support\Str::limit($product->description, 72) }}</div>
+                    @else
+                        <div class="product-desc">Fresh {{ $product->category }} from {{ $product->vendor->shop_name }} - Quality guaranteed.</div>
+                    @endif
+                    <div class="product-distance">📍 {{ $product->distance_km }} km away | ⭐ {{ $product->vendor->rating ?: '0.0' }}</div>
                     @if($product->isBoosted() || $product->vendor->isBoosted())
-                        <div class="boosted-badge">Boosted</div>
+                        <div class="boosted-badge">⚡ Boosted</div>
                     @endif
                     <div class="product-status {{ $product->vendor->is_live ? 'is-live' : 'is-offline' }}">
-                        {{ $product->vendor->is_live ? 'Vendor Live Now' : 'Vendor Offline' }}
+                        {{ $product->vendor->is_live ? '🟢 Vendor Live Now' : '⚪ Vendor Offline' }}
                     </div>
                 </div>
             </a>
@@ -552,6 +666,21 @@
             <p>No products available yet.</p>
         @endforelse
         </div>
+        @if($productsPage->hasPages())
+            <nav class="products-pagination" aria-label="Product pages">
+                @if($productsPage->onFirstPage())
+                    <span>Previous</span>
+                @else
+                    <a href="{{ $productsPage->previousPageUrl() }}">Previous</a>
+                @endif
+                <span class="is-current">Page {{ $productsPage->currentPage() }} of {{ $productsPage->lastPage() }}</span>
+                @if($productsPage->hasMorePages())
+                    <a href="{{ $productsPage->nextPageUrl() }}">Next</a>
+                @else
+                    <span>Next</span>
+                @endif
+            </nav>
+        @endif
     </div>
 
     <div class="section-heading">Vendors Close to You</div>
@@ -697,32 +826,9 @@
             voiceTriggerButton.style.display = 'none';
         }
 
-        const popularScroll = document.getElementById('popularProductsScroll');
-        const popularPrev = document.getElementById('popularScrollPrev');
-        const popularNext = document.getElementById('popularScrollNext');
         const vendorsScroll = document.getElementById('nearbyVendorsScroll');
         const vendorsPrev = document.getElementById('vendorsScrollPrev');
         const vendorsNext = document.getElementById('vendorsScrollNext');
-
-        if (popularScroll && popularPrev && popularNext) {
-            const scrollByCards = function (direction) {
-                const card = popularScroll.querySelector('.product-card');
-                const gap = 18;
-                const cardWidth = card ? card.getBoundingClientRect().width : 260;
-                popularScroll.scrollBy({
-                    left: direction * (cardWidth + gap) * 2,
-                    behavior: 'smooth',
-                });
-            };
-
-            popularPrev.addEventListener('click', function () {
-                scrollByCards(-1);
-            });
-
-            popularNext.addEventListener('click', function () {
-                scrollByCards(1);
-            });
-        }
 
         if (vendorsScroll && vendorsPrev && vendorsNext) {
             const scrollVendorsByCards = function (direction) {
@@ -785,7 +891,6 @@
             });
         };
 
-        enableManualDrag(popularScroll);
         enableManualDrag(vendorsScroll);
 
     })();

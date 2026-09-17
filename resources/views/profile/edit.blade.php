@@ -6,7 +6,7 @@
 <style>
     .main-content { padding: 0 0 90px; }
     .profile-shell { max-width: 720px; margin: 0 auto; padding: 0 14px 24px; }
-    .profile-topbar { height: 28px; background: var(--primary-color); margin: 0 -14px 12px; }
+    .profile-topbar { height: 6px; background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%); margin: 0 -14px 12px; border-radius: 0 0 10px 10px; }
 
     .profile-container {
         max-width: 100%;
@@ -21,45 +21,50 @@
     .menu-card,
     .logout-card,
     .profile-form-card {
-        background: #123f34;
-        color: white;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 10px;
-        box-shadow: none;
+        background: white;
+        color: #111;
+        border: 1px solid #e8eee9;
+        border-radius: 14px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
     }
 
-    .profile-card { padding: 14px; margin-bottom: 10px; }
+    .profile-card { padding: 16px; margin-bottom: 12px; border-left: 4px solid var(--secondary-color); }
     .profile-hero { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }
     .profile-avatar {
-        width: 46px;
-        height: 46px;
+        width: 52px;
+        height: 52px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #d8d1bf 0%, #84796f 100%);
+        background: linear-gradient(135deg, var(--primary-color) 0%, #1e8a4a 100%);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: 700;
-        color: #123f34;
+        font-weight: 800;
+        color: white;
         flex-shrink: 0;
+        border: 3px solid var(--secondary-color);
+        box-shadow: 0 4px 12px rgba(22,132,71,0.2);
     }
     .profile-meta h1 {
-        color: white;
+        color: #111;
         margin: 0;
         font-size: 1.5rem;
         line-height: 1;
     }
     .profile-badge {
-        color: #ffc107;
-        font-size: 0.75rem;
-        font-weight: 700;
-        margin-left: 6px;
+        background: var(--secondary-color);
+        color: #111;
+        font-size: 0.72rem;
+        font-weight: 800;
+        margin-left: 8px;
         vertical-align: middle;
+        padding: 2px 8px;
+        border-radius: 999px;
     }
     .profile-subtext {
         margin-top: 4px;
-        font-size: 0.72rem;
-        color: rgba(255, 255, 255, 0.7);
-        line-height: 1.35;
+        font-size: 0.74rem;
+        color: #5b6b5f;
+        line-height: 1.4;
     }
 
     .profile-actions {
@@ -79,37 +84,48 @@
         text-align: center;
     }
     .profile-action-btn {
-        background: #0f352c;
-        color: white;
+        background: white;
+        color: var(--primary-color);
+        border-color: var(--primary-color);
     }
+    .profile-action-btn:hover { background: #eef8f1; }
     .profile-action-btn.upgrade {
-        background: #2f8369;
-        color: #ffe082;
+        background: var(--secondary-color);
+        color: #111;
+        border-color: #e6b800;
+        box-shadow: 0 4px 12px rgba(244,196,0,0.24);
     }
 
     .profile-stats {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-        margin-bottom: 10px;
+        gap: 10px;
+        margin-bottom: 12px;
     }
     .stat-tile {
-        background: #123f34;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 10px;
-        padding: 14px 10px;
+        background: white;
+        border: 1px solid #e8eee9;
+        border-top: 3px solid var(--secondary-color);
+        border-radius: 12px;
+        padding: 16px 10px;
         text-align: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        transition: transform 0.15s;
     }
+    .stat-tile:hover { transform: translateY(-2px); }
     .stat-value {
-        color: #14d3b5;
-        font-size: 2rem;
+        color: var(--primary-color);
+        font-size: 1.9rem;
         line-height: 1;
-        font-weight: 800;
+        font-weight: 900;
         margin-bottom: 4px;
     }
     .stat-label {
-        color: rgba(255, 255, 255, 0.7);
-        font-size: 0.72rem;
+        color: #5b6b5f;
+        font-size: 0.74rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
     }
 
     .menu-card,
@@ -143,10 +159,12 @@
         min-width: 0;
     }
     .menu-icon {
-        width: 22px;
-        height: 22px;
+        width: 32px;
+        height: 32px;
         text-align: center;
-        color: #9dd8ca;
+        color: var(--primary-color);
+        background: var(--secondary-color);
+        border-radius: 8px;
         flex-shrink: 0;
         display: inline-flex;
         align-items: center;
@@ -186,18 +204,21 @@
         width: 100%;
         padding: 12px 14px;
         border-radius: 8px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        background: #0f352c;
-        color: white;
+        border: 1px solid #dfe8e1;
+        background: #f8faf9;
+        color: #111;
         font-size: 0.9rem;
     }
-    .profile-input::placeholder { color: rgba(255, 255, 255, 0.55); }
+    .profile-input::placeholder { color: #8a9a8f; }
+    .profile-input:focus, .profile-select:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(22,132,71,0.12); }
     .profile-button {
-        background: #2f8369;
+        background: linear-gradient(135deg, var(--primary-color) 0%, #1e8a4a 100%);
         color: white;
         border: none;
         margin-top: 4px;
+        box-shadow: 0 6px 14px rgba(22,132,71,0.2);
     }
+    .profile-button:hover { filter: brightness(1.03); }
     .profile-message {
         margin: 0 14px 10px;
         padding: 10px 12px;
@@ -223,6 +244,10 @@
 @endsection
 
 @section('content')
+<a href="{{ route('home') }}" style="display:inline-flex; align-items:center; gap:8px; text-decoration:none; color:var(--muted-color); font-weight:700; font-size:0.9rem; margin:14px 0 12px;">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Back to Home
+    </a>
 <div class="profile-shell">
     <div class="profile-topbar"></div>
 

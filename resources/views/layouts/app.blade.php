@@ -6,21 +6,22 @@
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="shortcut icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#f4c400">
+    <meta name="theme-color" content="#168447">
     <title>@yield('title', 'PikFreshFood')</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --primary-color: #1f4a36;
-            --header-bg: #f4c400;
+            --primary-color: #168447;
+            --header-bg: #ffffff;
             --text-color: #111;
             --page-bg: #fff;
             --surface-bg: #fff;
-            --surface-alt: #fbf6d7;
-            --secondary-background: #1f4a36;
+            --surface-alt: #fff4d6;
+            --secondary-background: #168447;
+            --secondary-color: #f4c400;
             --map-gradient-1: #f4c400;
-            --map-gradient-2: #1f4a36;
+            --map-gradient-2: #168447;
             --bottom-sheet-bg: #fff;
             --vendor-bg: #fff;
             --border-color: #d9d9d9;
@@ -40,7 +41,7 @@
         a { color: inherit; }
 
         .header {
-            background: linear-gradient(135deg, #1f7a43 0%, #4ea95f 28%, #f4c400 72%, #ffd95a 100%);
+            background: #ffffff;
             padding: 12px 15px;
             box-shadow: 0 2px 8px var(--shadow-color);
             position: sticky;
@@ -650,7 +651,7 @@
             padding: 14px;
             border-radius: 18px;
             border: 1px solid var(--border-color);
-            background: linear-gradient(135deg, #1f7a43 0%, #4ea95f 28%, #f4c400 72%, #ffd95a 100%);
+            background: var(--surface-alt);
             box-shadow: 0 18px 40px var(--shadow-color);
             opacity: 0;
             visibility: hidden;
@@ -671,7 +672,7 @@
             right: 16px;
             width: 14px;
             height: 14px;
-            background: linear-gradient(135deg, #1f7a43 0%, #4ea95f 28%, #f4c400 72%, #ffd95a 100%);
+            background: var(--surface-alt);
             border-top: 1px solid rgba(255, 255, 255, 0.28);
             border-left: 1px solid var(--border-color);
             transform: rotate(45deg);
@@ -698,7 +699,7 @@
             max-width: min(320px, calc(100vw - 32px));
             padding: 12px 14px;
             border-radius: 16px;
-            background: linear-gradient(135deg, #1f7a43 0%, #4ea95f 28%, #f4c400 72%, #ffd95a 100%);
+            background: var(--surface-alt);
             border: 1px solid var(--border-color);
             box-shadow: 0 18px 40px var(--shadow-color);
             color: var(--text-color);
@@ -795,11 +796,11 @@
         }
 
         .quick-support-btn.live-chat {
-            background: linear-gradient(135deg, #1f7a43 0%, #2f9f5c 100%);
+            background: var(--primary-color);
         }
 
         .quick-support-btn.whatsapp {
-            background: linear-gradient(135deg, #149c4a 0%, #25d366 100%);
+            background: #149c4a;
         }
 
         .support-chat-panel {
@@ -828,7 +829,7 @@
             justify-content: space-between;
             gap: 12px;
             padding: 14px 16px;
-            background: linear-gradient(135deg, #1f7a43 0%, #4ea95f 60%, #f4c400 100%);
+            background: var(--primary-color);
         }
 
         .support-chat-header h3 {
@@ -1025,7 +1026,7 @@
             position: fixed;
             bottom: 0;
             width: 100%;
-            background: linear-gradient(135deg, #1f7a43 0%, #4ea95f 28%, #f4c400 72%, #ffd95a 100%);
+            background: var(--surface-alt);
             border-top: 1px solid rgba(255, 255, 255, 0.28);
             display: flex;
             justify-content: space-around;
@@ -1117,14 +1118,23 @@
             font-weight: 600;
         }
 
+        @media (max-width: 640px) {
+            .header-top {
+                display: none;
+            }
+
+            .mobile-hidden-tab {
+                display: none;
+            }
+        }
+
         @media (max-width: 480px) {
             .header {
                 padding: 8px 10px;
             }
 
             .header-top {
-                gap: 6px;
-                margin-bottom: 4px;
+                display: none;
             }
 
             .logo {
@@ -1341,140 +1351,169 @@
 
         @media (min-width: 1024px) {
             .header {
-                padding: 8px 24px 8px 0;
+                padding: 0;
+                background: #fff;
+                border-bottom: 1px solid #e5e7eb;
+                box-shadow: 0 1px 6px rgba(0,0,0,0.06);
             }
-
             .header-top {
-                max-width: none;
-                margin-left: 0;
-                margin-right: 0;
-            }
-
-            .header-top {
+                max-width: 1280px;
+                margin: 0 auto;
+                padding: 10px 24px;
+                display: flex;
+                flex-wrap: nowrap;
+                align-items: center;
+                gap: 16px;
                 justify-content: flex-start;
-                gap: 6px;
                 margin-bottom: 0;
             }
-
             .logo {
-                width: 360px;
-                height: 90px;
+                width: 170px;
+                height: 50px;
+                flex: 0 0 auto;
+                order: 1;
+                display: inline-flex;
+                align-items: center;
             }
-
             .desktop-nav,
             .desktop-auth-links {
                 display: flex;
             }
-
             .mobile-login-link {
                 display: none;
             }
-
-            .desktop-nav {
-                flex: 1;
-                margin-left: 0;
-                justify-content: flex-start;
-                flex-wrap: nowrap;
-                row-gap: 0;
-                gap: 6px;
-            }
-
-            .desktop-nav-link,
-            .desktop-auth-link {
-                font-size: 0.82rem;
-                padding: 5px 8px;
-                gap: 4px;
-            }
-
-            .desktop-nav-link svg,
-            .desktop-auth-link svg {
-                width: 14px;
-                height: 14px;
-            }
-
+            /* Logo stays inline with menu */
             .desktop-auth-links {
-                margin-left: auto;
+                order: 3;
+                margin-left: 0;
                 gap: 6px;
+                align-items: center;
+                flex-wrap: nowrap;
+                flex-shrink: 0;
             }
-
-            .desktop-auth-link.icon-only {
-                width: 32px;
-                height: 32px;
-            }
-
-            .desktop-menu-badge {
-                min-width: 16px;
-                height: 16px;
-                font-size: 0.6rem;
-                padding: 0 4px;
-            }
-
-            .search-section {
-                max-width: calc(100% - 36px);
-                margin-left: 18px;
-                margin-right: 18px;
-                width: 100%;
-                margin-top: 6px;
-            }
-
-            .global-search-form {
-                flex: 1 1 100%;
-                max-width: 100%;
-                width: 100%;
-            }
-
-            .search-autocomplete {
-                flex: 1 1 100%;
-                width: 100%;
-            }
-
-            .search-bar {
-                width: 100%;
-                min-height: 38px;
-                padding: 6px 12px;
-                font-size: 14px;
-            }
-
-            .search-submit,
-            .header-action {
-                width: 38px;
-                min-height: 38px;
-            }
-
             .header-tools {
+                order: 4;
+                position: static;
                 display: flex;
-                position: fixed;
-                top: 8px;
-                right: 22px;
-                z-index: 1301;
+                gap: 6px;
                 background: transparent;
-                gap: 4px;
+                z-index: auto;
+                margin-left: 8px;
+                align-items: center;
+                flex-shrink: 0;
             }
-
             .header-tools > .header-icon-link {
                 display: none;
             }
-
             .header-tools > .header-notification-wrap {
                 display: inline-flex;
             }
-
             .header-tools .header-icon-link {
                 width: 32px;
                 height: 32px;
             }
-
             .header-tools .header-icon-link svg {
                 width: 15px;
                 height: 15px;
             }
-
             .header-tools .header-icon-badge {
                 min-width: 15px;
                 height: 15px;
                 font-size: 0.58rem;
                 top: -5px;
                 right: -5px;
+            }
+            /* Logo stays on same line as menu - inline center menu */
+            .desktop-nav {
+                order: 2;
+                flex: 1 1 auto;
+                width: auto;
+                margin: 0;
+                padding: 0;
+                justify-content: center;
+                align-items: center;
+                gap: 4px;
+                flex-wrap: nowrap;
+                row-gap: 0;
+                border: 0;
+                background: transparent;
+                min-width: 0;
+            }
+            .desktop-nav-link,
+            .desktop-auth-link {
+                font-size: 0.88rem;
+                padding: 8px 14px;
+                gap: 6px;
+                border: 1px solid transparent;
+                border-radius: 8px;
+                background: transparent;
+                font-weight: 600;
+                color: #1a1a1a;
+                white-space: nowrap;
+                transition: all 0.18s ease;
+            }
+            .desktop-nav-link:hover,
+            .desktop-auth-link:hover {
+                background: rgba(22,132,71,0.08);
+                border-color: rgba(22,132,71,0.15);
+                color: #168447;
+            }
+            .desktop-nav-link.is-active,
+            .desktop-auth-link.is-active {
+                background: #168447;
+                border-color: #168447;
+                color: #fff;
+                box-shadow: 0 2px 8px rgba(22,132,71,0.25);
+            }
+            .desktop-nav-link.is-active svg,
+            .desktop-auth-link.is-active svg {
+                stroke: #fff;
+            }
+            .desktop-nav-link svg,
+            .desktop-auth-link svg {
+                width: 15px;
+                height: 15px;
+            }
+            .desktop-auth-link.icon-only {
+                width: 32px;
+                height: 32px;
+            }
+            .desktop-auth-hide-wide {
+                display: none !important;
+            }
+            .desktop-menu-badge {
+                min-width: 16px;
+                height: 16px;
+                font-size: 0.6rem;
+                padding: 0 4px;
+            }
+            .search-section {
+                max-width: 1280px;
+                margin: 0 auto;
+                padding: 12px 24px;
+                width: 100%;
+                margin-top: 0;
+                background: #fff;
+            }
+            .global-search-form {
+                flex: 1 1 100%;
+                max-width: 100%;
+                width: 100%;
+            }
+            .search-autocomplete {
+                flex: 1 1 100%;
+                width: 100%;
+            }
+            .search-bar {
+                width: 100%;
+                min-height: 38px;
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+            .search-submit,
+            .header-action {
+                width: 38px;
+                min-height: 38px;
             }
 
             .main-content {
@@ -1495,7 +1534,7 @@
             .desktop-footer-inner {
                 border-top: 0;
                 border-radius: 0;
-                background: linear-gradient(135deg, #1f7a43 0%, #4ea95f 28%, #f4c400 72%, #ffd95a 100%);
+                background: var(--primary-color);
                 padding: 12px 24px;
             }
 
@@ -1607,7 +1646,7 @@
             max-width: 420px;
             padding: 26px;
             border-radius: 22px;
-            background: linear-gradient(135deg, #1f7a43 0%, #4ea95f 28%, #f4c400 72%, #ffd95a 100%);
+            background: var(--surface-alt);
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 24px 54px rgba(0, 0, 0, 0.42);
             text-align: center;
@@ -1676,7 +1715,7 @@
             grid-template-rows: auto minmax(0, 1fr);
             border-radius: 26px;
             overflow: hidden;
-            background: linear-gradient(135deg, #1f7a43 0%, #4ea95f 28%, #f4c400 72%, #ffd95a 100%);
+            background: var(--primary-color);
             border: 1px solid var(--border-color);
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
         }
@@ -1710,7 +1749,7 @@
             padding: 0 14px;
             border-radius: 12px;
             border: 1px solid var(--border-color);
-            background: linear-gradient(135deg, #1f7a43 0%, #4ea95f 28%, #f4c400 72%, #ffd95a 100%);
+            background: var(--primary-color);
             color: var(--text-color);
             font-weight: 700;
             cursor: pointer;
@@ -2021,6 +2060,23 @@
         .order-info p {
             color: var(--muted-color) !important;
         }
+
+        /* === SECONDARY COLOR (YELLOW #f4c400) SITE-WIDE THEME === */
+        .header { border-top: 3px solid var(--secondary-color); }
+        .desktop-nav-link.is-active { box-shadow: inset 0 -3px 0 var(--secondary-color); }
+        .category-pill:hover, .sort-link:hover { border-color: color-mix(in srgb, var(--secondary-color) 55%, var(--border-color)); }
+        .sort-link.is-active { background: var(--primary-color) !important; box-shadow: 0 0 0 2px var(--secondary-color) inset; }
+        .product-card:hover { border-color: color-mix(in srgb, var(--secondary-color) 30%, var(--border-color)); }
+        .boosted-badge, .sub-plan-badge, .sub-hero-badge, .about-badge { background: var(--secondary-color) !important; color: #111 !important; border-color: #e6b800 !important; }
+        .vendor-card::before, .about-card::before { background: var(--secondary-color) !important; }
+        .btn-secondary, .checkout-btn.btn-secondary, .add-to-cart-btn.btn-secondary { background: var(--secondary-color) !important; border-color: var(--secondary-color) !important; color: #111 !important; font-weight:800; }
+        .btn-secondary:hover { filter:brightness(0.95); transform:translateY(-1px); }
+        .secondary-accent-bar { height:4px; background: var(--secondary-color); border-radius:999px; }
+        .sub-plan:has(input:checked), .category-pill.cat-restaurant:has(input:checked) { border-color: var(--secondary-color) !important; }
+        .header-tools .header-icon-link.has-unread { box-shadow: 0 0 0 2px var(--secondary-color); }
+        .desktop-footer { border-top: 4px solid var(--secondary-color); }
+        .about-stat::after, .sub-hero::after, .home-hero::after { /* keep yellow radial already */ }
+        ::selection { background: var(--secondary-color); color:#111; }
     </style>
     @yield('styles')
 </head>
@@ -2086,6 +2142,27 @@
                             <span class="desktop-menu-badge">{{ $headerIncomingCallCount > 9 ? '9+' : $headerIncomingCallCount }}</span>
                         @endif
                     </a>
+                    @if(auth()->check() && auth()->user()->isVendor())
+                        <a href="{{ route('vendor.dashboard') }}" class="desktop-nav-link {{ request()->routeIs('vendor.dashboard') ? 'is-active' : '' }}">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13h7V4H4z"></path><path d="M13 20h7v-9h-7z"></path><path d="M13 11h7V4h-7z"></path><path d="M4 20h7v-5H4z"></path></svg>
+                            <span>Dashboard</span>
+                        </a>
+                    @elseif(auth()->check())
+                        <a href="{{ route('profile.edit') }}" class="desktop-nav-link {{ request()->routeIs('profile.*') ? 'is-active' : '' }}">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20a7 7 0 0 1 14 0"></path></svg>
+                            <span>Dashboard</span>
+                        </a>
+                    @endif
+                    @auth
+                        <a href="{{ route('contact-us') }}" class="desktop-nav-link {{ request()->routeIs('contact-us') ? 'is-active' : '' }}">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"></path></svg>
+                            <span>Contact-us</span>
+                        </a>
+                        <a href="{{ route('auth.logout.get') }}" class="desktop-nav-link">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><path d="M10 17l5-5-5-5"></path><path d="M15 12H3"></path></svg>
+                            <span>Logout</span>
+                        </a>
+                    @endauth
                 @endauth
             </nav>
             <div class="desktop-auth-links">
@@ -2100,21 +2177,21 @@
                     </a>
                 @else
                     @if(auth()->user()->isVendor())
-                        <a href="{{ route('vendor.dashboard') }}" class="desktop-auth-link {{ request()->routeIs('vendor.*') ? 'is-active' : '' }}">
+                        <a href="{{ route('vendor.dashboard') }}" class="desktop-auth-link desktop-auth-hide-wide {{ request()->routeIs('vendor.*') ? 'is-active' : '' }}">
                             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13h7V4H4z"></path><path d="M13 20h7v-9h-7z"></path><path d="M13 11h7V4h-7z"></path><path d="M4 20h7v-5H4z"></path></svg>
                             <span>Dashboard</span>
                         </a>
                     @else
-                        <a href="{{ route('profile.edit') }}" class="desktop-auth-link {{ request()->routeIs('profile.*') ? 'is-active' : '' }}">
+                        <a href="{{ route('profile.edit') }}" class="desktop-auth-link desktop-auth-hide-wide {{ request()->routeIs('profile.*') ? 'is-active' : '' }}">
                             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20a7 7 0 0 1 14 0"></path></svg>
                             <span>Profile</span>
                         </a>
                     @endif
-                    <a href="{{ route('contact-us') }}" class="desktop-auth-link {{ request()->routeIs('contact-us') ? 'is-active' : '' }}">
+                    <a href="{{ route('contact-us') }}" class="desktop-auth-link desktop-auth-hide-wide {{ request()->routeIs('contact-us') ? 'is-active' : '' }}">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"></path></svg>
                         <span>Contact-us</span>
                     </a>
-                    <a href="{{ route('auth.logout.get') }}" class="desktop-auth-link">
+                    <a href="{{ route('auth.logout.get') }}" class="desktop-auth-link desktop-auth-hide-wide">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><path d="M10 17l5-5-5-5"></path><path d="M15 12H3"></path></svg>
                         <span>Logout</span>
                     </a>
@@ -2389,9 +2466,9 @@
                     <path d="M10 20v-5h4v5"></path>
                 </svg>
             </div>
-            <div class="nav-item-label">Home</div>
+            <div class="nav-item-label">Shop</div>
         </a>
-        <a href="{{ route('live.index') }}" class="nav-item {{ request()->routeIs('live.index') ? 'active' : '' }}">
+        <a href="{{ route('live.index') }}" class="nav-item mobile-hidden-tab {{ request()->routeIs('live.index') ? 'active' : '' }}">
             <div class="nav-item-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24">
                     <polygon points="9,7 18,12 9,17"></polygon>
@@ -2480,6 +2557,32 @@
                     @endif
                 </div>
                 <div class="nav-item-label">Cart</div>
+            </a>
+            <a href="{{ route('orders.index') }}" class="nav-item {{ request()->routeIs('orders.*') ? 'active' : '' }}">
+                <div class="nav-item-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 5h16v14H4z"></path>
+                        <path d="M8 9h8M8 13h5"></path>
+                    </svg>
+                </div>
+                <div class="nav-item-label">History</div>
+            </a>
+            <a href="{{ route('profile.wishlist') }}" class="nav-item {{ request()->routeIs('profile.wishlist') ? 'active' : '' }}">
+                <div class="nav-item-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10Z"></path>
+                    </svg>
+                </div>
+                <div class="nav-item-label">Wishlist</div>
+            </a>
+            <a href="{{ route('profile.edit') }}" class="nav-item {{ request()->routeIs('profile.edit') ? 'active' : '' }}">
+                <div class="nav-item-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="8" r="3.5"></circle>
+                        <path d="M5 20a7 7 0 0 1 14 0"></path>
+                    </svg>
+                </div>
+                <div class="nav-item-label">Account</div>
             </a>
 
         @endauth

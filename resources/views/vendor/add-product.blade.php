@@ -209,6 +209,10 @@
 @endsection
 
 @section('content')
+<a href="{{ route('vendor.dashboard') }}" style="display:inline-flex; align-items:center; gap:8px; text-decoration:none; color:var(--muted-color); font-weight:700; font-size:0.9rem; margin:14px 0 12px;">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Back to Dashboard
+    </a>
 <div class="add-product-shell">
     <div class="add-product-container">
         <h1>Add New Product</h1>
@@ -234,7 +238,12 @@
                 <option value="">Select Category</option>
                 <option value="fruits">Fruits</option>
                 <option value="vegetables">Vegetables</option>
+                <option value="roasted foods">Roasted foods</option>
                 <option value="grains">Grains</option>
+                <option value="dairy">Dairy</option>
+                <option value="meat">Meat</option>
+                <option value="pantry">Pantry</option>
+                <option value="restaurant">Restaurant</option>
                 <option value="spices">Spices</option>
                 <option value="nuts">Nuts</option>
             </select>
