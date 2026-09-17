@@ -349,27 +349,6 @@
     .product-card.cat-accent-pantry { border-top: 3px solid #94a3b8; }
     .product-card.cat-accent-restaurant { border-top: 3px solid #a78bfa; }
     .product-card.cat-accent-default { border-top: 3px solid #cbd5e1; }
-    .product-category-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 4px 8px;
-        border-radius: 999px;
-        font-size: 0.76rem;
-        font-weight: 800;
-        text-transform: capitalize;
-        border: 1px solid transparent;
-    }
-    .product-category-badge.cat-fruits { background: #fff7ed; border-color:#fed7aa; color:#9a3412; }
-    .product-category-badge.cat-vegetables { background: #f0fdf4; border-color:#bbf7d0; color:#166534; }
-    .product-category-badge.cat-roasted-foods { background: #fef3c7; border-color:#fde68a; color:#92400e; }
-    .product-category-badge.cat-grains { background: #fefce8; border-color:#fef08a; color:#854d0e; }
-    .product-category-badge.cat-dairy { background: #eff6ff; border-color:#bfdbfe; color:#1e40af; }
-    .product-category-badge.cat-meat { background: #fef2f2; border-color:#fecaca; color:#991b1b; }
-    .product-category-badge.cat-pantry { background: #f8fafc; border-color:#e2e8f0; color:#334155; }
-    .product-category-badge.cat-restaurant { background: #f5f3ff; border-color:#ddd6fe; color:#5b21b6; }
-    .product-category-badge.cat-default { background: #f1f5f9; border-color:#e2e8f0; color:#334155; }
-    .product-desc { margin: 8px 0 0; color: var(--muted-color); font-size: 0.84rem; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     .product-card img {
         width: 100%;
         height: 180px;
@@ -662,10 +641,6 @@
             @php
                 $prodCatKey = strtolower(trim($product->category ?? ''));
                 $prodCatSlug = \Illuminate\Support\Str::slug($prodCatKey);
-                $prodCatClass = 'cat-' . ($prodCatSlug ?: 'default');
-                if (!in_array($prodCatClass, ['cat-fruits','cat-vegetables','cat-roasted-foods','cat-grains','cat-dairy','cat-meat','cat-pantry','cat-restaurant'])) { $prodCatClass = 'cat-default'; }
-                $prodIcons = ['fruits'=>'🍎','vegetables'=>'🥬','roasted foods'=>'🔥','grains'=>'🌾','dairy'=>'🥛','meat'=>'🍖','pantry'=>'🥫','restaurant'=>'🍽'];
-                $prodIcon = $prodIcons[$prodCatKey] ?? '🏷️';
             @endphp
             <a href="{{ route('product.show', $product) }}" class="product-card cat-accent-{{ $prodCatSlug ?: 'default' }}">
                 @if($product->primary_image)
@@ -678,13 +653,7 @@
                     <div class="product-vendor">By {{ $product->vendor->shop_name }}</div>
                     <div class="product-meta">
                         <div class="product-price">₦{{ $product->price }}</div>
-                        <div class="product-category-badge {{ $prodCatClass }}"><span aria-hidden="true">{{ $prodIcon }}</span> {{ $product->category }}</div>
                     </div>
-                    @if(!empty($product->description))
-                        <div class="product-desc">{{ \Illuminate\Support\Str::limit($product->description, 72) }}</div>
-                    @else
-                        <div class="product-desc">Fresh {{ $product->category }} from {{ $product->vendor->shop_name }} - Quality guaranteed.</div>
-                    @endif
                     <div class="product-distance">📍 {{ $product->distance_km }} km away | ⭐ {{ $product->vendor->rating ?: '0.0' }}</div>
                     @if($product->isBoosted() || $product->vendor->isBoosted())
                         <div class="boosted-badge">⚡ Boosted</div>
