@@ -58,7 +58,13 @@
             @foreach($details as $detail)
                 <div class="detail-row">
                     <div class="detail-label">{{ $detail['label'] }}</div>
-                    <div class="detail-value">{{ $detail['value'] }}</div>
+                    <div class="detail-value">
+                        @if(!empty($detail['route']))
+                            <a href="{{ $detail['route'] }}" style="color:inherit; text-decoration:underline;">{{ $detail['value'] }}</a>
+                        @else
+                            {{ $detail['value'] }}
+                        @endif
+                    </div>
                 </div>
             @endforeach
         </div>

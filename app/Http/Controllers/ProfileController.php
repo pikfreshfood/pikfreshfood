@@ -210,7 +210,11 @@ class ProfileController extends Controller
             'primaryLabel' => 'Open Messages',
             'primaryRoute' => route('messages.index'),
             'details' => [
-                ['label' => 'Unread Messages', 'value' => (string) $summary['unread_messages']],
+                [
+                    'label' => 'Unread Messages',
+                    'value' => (string) $summary['unread_messages'],
+                    'route' => route('messages.index'),
+                ],
                 ['label' => 'New Reviews', 'value' => (string) $summary['new_reviews']],
                 ['label' => 'Order Updates', 'value' => 'Enabled'],
             ],

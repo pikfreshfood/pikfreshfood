@@ -2634,7 +2634,6 @@
             <div class="mobile-media-sheet-title">Call Options</div>
             <a href="{{ route('calls.index', ['mode' => 'video']) }}">Video Call</a>
             <a href="{{ route('calls.index', ['mode' => 'audio']) }}">Audio Call</a>
-            <a href="{{ route('messages.index') }}">Messages</a>
         </div>
     @endauth
 
