@@ -363,8 +363,12 @@
     .product-category { color: var(--muted-color); font-size: 0.85rem; text-transform: capitalize; }
     .product-distance { margin-top: 10px; color: var(--muted-color); font-size: 0.84rem; }
     .product-status { width: 12px; height: 12px; margin-top: 10px; display: inline-block; border-radius: 50%; }
-    .product-status.is-live { background: #27ae60; }
+    .product-status.is-live { background: #27ae60; animation: vendor-live-breathe 1.8s ease-in-out infinite; }
     .product-status.is-offline { background: #9ca3af; }
+    @keyframes vendor-live-breathe {
+        0%, 100% { opacity: 0.62; transform: scale(0.88); box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.28); }
+        50% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 5px rgba(39, 174, 96, 0); }
+    }
     .boosted-badge {
         margin-top: 10px;
         display: inline-flex;

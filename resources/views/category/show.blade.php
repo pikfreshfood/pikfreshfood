@@ -18,8 +18,12 @@
     .price { font-weight: bold; color: var(--primary-color); font-size: 18px; margin-bottom: 10px; }
     .vendor { color: var(--muted-color); font-size: 14px; }
     .vendor-status { width: 12px; height: 12px; display: inline-block; border-radius: 50%; margin-top: 10px; }
-    .vendor-status.is-live { background: #27ae60; }
+    .vendor-status.is-live { background: #27ae60; animation: vendor-live-breathe 1.8s ease-in-out infinite; }
     .vendor-status.is-offline { background: #9ca3af; }
+    @keyframes vendor-live-breathe {
+        0%, 100% { opacity: 0.62; transform: scale(0.88); box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.28); }
+        50% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 5px rgba(39, 174, 96, 0); }
+    }
     .back-link { color: var(--primary-color); text-decoration: none; font-weight: bold; margin-bottom: 20px; display: inline-block; }
     .back-link:hover { text-decoration: underline; }
     .empty-state {
