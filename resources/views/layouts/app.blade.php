@@ -2509,6 +2509,14 @@
             <div class="nav-item-label">Lives</div>
         </a>
         @auth
+            <button type="button" class="nav-item" id="mobileMediaToggle" aria-expanded="false" aria-controls="mobileMediaSheet">
+                <div class="nav-item-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6.6 3.5 9.2 3l2 4.7-2.1 1.7a14.4 14.4 0 0 0 5.5 5.5l1.7-2.1 4.7 2 .5 2.6a2 2 0 0 1-2.2 2.3A17.5 17.5 0 0 1 4.3 5.7a2 2 0 0 1 2.3-2.2Z"></path>
+                    </svg>
+                </div>
+                <div class="nav-item-label">Call</div>
+            </button>
             @if(auth()->user()->isVendor())
                 <a href="{{ route('vendor.dashboard') }}" class="nav-item {{ request()->routeIs('vendor.*') && !request()->routeIs('vendor.profile.*') ? 'active' : '' }}">
                     <div class="nav-item-icon" aria-hidden="true">
@@ -2565,14 +2573,6 @@
                     <div class="nav-item-label">Profile</div>
                 </a>
             @endif
-            <button type="button" class="nav-item" id="mobileMediaToggle" aria-expanded="false" aria-controls="mobileMediaSheet">
-                <div class="nav-item-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M6.6 3.5 9.2 3l2 4.7-2.1 1.7a14.4 14.4 0 0 0 5.5 5.5l1.7-2.1 4.7 2 .5 2.6a2 2 0 0 1-2.2 2.3A17.5 17.5 0 0 1 4.3 5.7a2 2 0 0 1 2.3-2.2Z"></path>
-                    </svg>
-                </div>
-                <div class="nav-item-label">Call</div>
-            </button>
             <a href="{{ route('profile.notifications') }}" class="nav-item {{ request()->routeIs('profile.notifications') ? 'active' : '' }}">
                 <div class="nav-item-icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24">
