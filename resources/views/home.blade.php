@@ -445,8 +445,11 @@
             gap: 14px;
             margin: 24px 0 90px;
             padding: 18px 14px;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-color);
+            border-top: 4px solid var(--secondary-color);
+            border-radius: 14px;
+            background: var(--primary-color);
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(22, 132, 71, 0.18);
         }
         .mobile-home-footer-links {
             display: grid;
@@ -455,22 +458,22 @@
         }
         .mobile-home-footer-links a,
         .mobile-home-footer-social a {
-            color: var(--muted-color);
+            color: rgba(255, 255, 255, 0.9);
             font-size: 0.84rem;
             text-decoration: none;
         }
         .mobile-home-footer-links a:hover,
-        .mobile-home-footer-social a:hover { color: var(--primary-color); }
+        .mobile-home-footer-social a:hover { color: var(--secondary-color); }
         .mobile-home-footer-social {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             gap: 12px;
             padding-top: 12px;
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid rgba(244, 196, 0, 0.45);
         }
         .mobile-home-footer-social strong {
-            color: var(--text-color);
+            color: var(--secondary-color);
             font-size: 0.88rem;
         }
     }
@@ -800,6 +803,10 @@
         </div>
     </div>
 
+    <a href="{{ route('delivery-coming-soon') }}" class="delivery-coming-banner" aria-label="Delivery services coming soon">
+        <img src="{{ asset('images/delivery-services-coming-soon.png') }}" alt="Delivery services coming soon">
+    </a>
+
     <footer class="mobile-home-footer" aria-label="Mobile site footer">
         <nav class="mobile-home-footer-links" aria-label="Footer links">
             <a href="{{ route('about') }}">About</a>
@@ -816,9 +823,6 @@
         </div>
     </footer>
 
-    <a href="{{ route('delivery-coming-soon') }}" class="delivery-coming-banner" aria-label="Delivery services coming soon">
-        <img src="{{ asset('images/delivery-services-coming-soon.png') }}" alt="Delivery services coming soon">
-    </a>
 </div>
 @endsection
 
