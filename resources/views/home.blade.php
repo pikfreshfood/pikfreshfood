@@ -383,9 +383,9 @@
     .product-price { color: var(--primary-color); font-weight: 800; font-size: 1.1rem; }
     .product-category { color: var(--muted-color); font-size: 0.85rem; text-transform: capitalize; }
     .product-distance { margin-top: 10px; color: var(--muted-color); font-size: 0.84rem; }
-    .product-status { margin-top: 10px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; }
-    .product-status.is-live { background: rgba(39, 174, 96, 0.12); color: #1f7a43; }
-    .product-status.is-offline { background: rgba(127, 140, 141, 0.14); color: #667085; }
+    .product-status { width: 12px; height: 12px; margin-top: 10px; display: inline-block; border-radius: 50%; }
+    .product-status.is-live { background: #27ae60; }
+    .product-status.is-offline { background: #9ca3af; }
     .boosted-badge {
         margin-top: 10px;
         display: inline-flex;
@@ -689,9 +689,11 @@
                     @if($product->isBoosted() || $product->vendor->isBoosted())
                         <div class="boosted-badge">⚡ Boosted</div>
                     @endif
-                    <div class="product-status {{ $product->vendor->is_live ? 'is-live' : 'is-offline' }}">
-                        {{ $product->vendor->is_live ? '🟢 Vendor Live Now' : '⚪ Vendor Offline' }}
-                    </div>
+                    <span
+                        class="product-status {{ $product->vendor->is_live ? 'is-live' : 'is-offline' }}"
+                        title="{{ $product->vendor->is_live ? 'Vendor is live' : 'Vendor is offline' }}"
+                        aria-label="{{ $product->vendor->is_live ? 'Vendor is live' : 'Vendor is offline' }}"
+                    ></span>
                 </div>
             </a>
         @empty

@@ -17,9 +17,9 @@
     .product p { color: var(--muted-color); margin: 0 0 15px 0; line-height: 1.4; }
     .price { font-weight: bold; color: var(--primary-color); font-size: 18px; margin-bottom: 10px; }
     .vendor { color: var(--muted-color); font-size: 14px; }
-    .vendor-status { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; margin-top: 10px; }
-    .vendor-status.is-live { background: rgba(39, 174, 96, 0.12); color: #1f7a43; }
-    .vendor-status.is-offline { background: rgba(127, 140, 141, 0.14); color: #667085; }
+    .vendor-status { width: 12px; height: 12px; display: inline-block; border-radius: 50%; margin-top: 10px; }
+    .vendor-status.is-live { background: #27ae60; }
+    .vendor-status.is-offline { background: #9ca3af; }
     .back-link { color: var(--primary-color); text-decoration: none; font-weight: bold; margin-bottom: 20px; display: inline-block; }
     .back-link:hover { text-decoration: underline; }
     .empty-state {
@@ -48,9 +48,11 @@
                 <p>{{ Str::limit($product->description, 100) }}</p>
                 <div class="price">₦{{ $product->price }}</div>
                 <div class="vendor">By {{ $product->vendor->shop_name }}</div>
-                <div class="vendor-status {{ $product->vendor->is_live ? 'is-live' : 'is-offline' }}">
-                    {{ $product->vendor->is_live ? 'Live Now' : 'Offline' }}
-                </div>
+                <span
+                    class="vendor-status {{ $product->vendor->is_live ? 'is-live' : 'is-offline' }}"
+                    title="{{ $product->vendor->is_live ? 'Vendor is live' : 'Vendor is offline' }}"
+                    aria-label="{{ $product->vendor->is_live ? 'Vendor is live' : 'Vendor is offline' }}"
+                ></span>
             </div>
         @empty
             <div class="empty-state">No available products were found in this category yet.</div>
