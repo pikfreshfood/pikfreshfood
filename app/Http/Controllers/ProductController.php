@@ -115,6 +115,7 @@ class ProductController extends Controller
             ->with('vendor')
             ->whereHas('vendor')
             ->where('is_available', true)
+            ->where('name', '!=', 'Fresh Cucumbers')
             ->when($search !== '', function ($query) use ($search) {
                 $query->where(function ($searchQuery) use ($search) {
                     $searchQuery
