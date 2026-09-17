@@ -403,6 +403,42 @@
         height: auto;
         display: block;
     }
+    .mobile-home-footer { display: none; }
+    @media (max-width: 760px) {
+        .mobile-home-footer {
+            display: grid;
+            gap: 14px;
+            margin: 24px 0 90px;
+            padding: 18px 14px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+        .mobile-home-footer-links {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px 14px;
+        }
+        .mobile-home-footer-links a,
+        .mobile-home-footer-social a {
+            color: var(--muted-color);
+            font-size: 0.84rem;
+            text-decoration: none;
+        }
+        .mobile-home-footer-links a:hover,
+        .mobile-home-footer-social a:hover { color: var(--primary-color); }
+        .mobile-home-footer-social {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+        }
+        .mobile-home-footer-social strong {
+            color: var(--text-color);
+            font-size: 0.88rem;
+        }
+    }
     @media (max-width: 900px) {
         .vendor-strip {
             grid-auto-flow: column;
@@ -718,6 +754,22 @@
         @endforelse
         </div>
     </div>
+
+    <footer class="mobile-home-footer" aria-label="Mobile site footer">
+        <nav class="mobile-home-footer-links" aria-label="Footer links">
+            <a href="{{ route('about') }}">About</a>
+            <a href="{{ route('contact-us') }}">Contact-us</a>
+            <a href="{{ route('faq') }}">FAQ</a>
+            <a href="{{ route('terms-and-condition') }}">Termes and Condition</a>
+            <a href="{{ route('privacy-and-policy') }}">Privacy and Policy</a>
+        </nav>
+        <div class="mobile-home-footer-social">
+            <strong>Follow us</strong>
+            <a href="https://www.facebook.com/share/19187ZUmR3/" target="_blank" rel="noopener">Facebook</a>
+            <a href="https://www.instagram.com/pikfreshfood" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://wa.me/2348000000000" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+    </footer>
 
     <a href="{{ route('delivery-coming-soon') }}" class="delivery-coming-banner" aria-label="Delivery services coming soon">
         <img src="{{ asset('images/delivery-services-coming-soon.png') }}" alt="Delivery services coming soon">
