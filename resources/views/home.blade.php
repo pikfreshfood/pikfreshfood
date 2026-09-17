@@ -772,7 +772,7 @@
             <p>No products available yet.</p>
         @endforelse
         </div>
-        @if($productsPage->hasPages())
+        @if($productsPage->count() > 0)
             <nav class="products-pagination" aria-label="Product pages">
                 @if($productsPage->onFirstPage())
                     <span>Previous</span>
