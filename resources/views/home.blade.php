@@ -453,8 +453,9 @@
         }
         .mobile-home-footer-links {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(2, max-content);
             gap: 10px 14px;
+            justify-content: start;
         }
         .mobile-home-footer-links a,
         .mobile-home-footer-social a {
@@ -492,6 +493,10 @@
             font-size: 0.88rem;
         }
     }
+        .mobile-home-footer-links a {
+            white-space: nowrap;
+            font-size: 0.74rem;
+        }
     @media (max-width: 900px) {
         .vendor-strip {
             grid-auto-flow: column;
