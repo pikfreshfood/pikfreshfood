@@ -75,6 +75,22 @@
     .auth-alert { margin-bottom: 16px; padding: 12px 14px; border-radius: 6px; font-size: 14px; }
     .auth-alert.error { background: #fdecea; color: #b3261e; border: 1px solid #f3c4c0; }
     .auth-alert.success { background: #eaf7ef; color: #1f7a43; border: 1px solid #c9e8d3; }
+    .auth-home-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 40px;
+        margin-bottom: 18px;
+        border: 1px solid #d7e6dc;
+        border-radius: 8px;
+        color: #1f7a43;
+        background: #f3fbf6;
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 700;
+    }
+    .auth-home-link:hover { background: #e9f8ef; color: #168447; }
 
     body.safplace-theme .auth-password-toggle {
         border-color: rgba(255, 255, 255, 0.2);
@@ -203,6 +219,8 @@
         <div class="auth-tab active" onclick="switchTab('login')">Login</div>
         <div class="auth-tab" onclick="switchTab('register')">Register</div>
     </div>
+
+    <a href="{{ route('home') }}" class="auth-home-link">&larr; Back to Home</a>
 
     <form id="loginForm" action="{{ route('auth.login') }}" method="POST" class="auth-form">
         @csrf
