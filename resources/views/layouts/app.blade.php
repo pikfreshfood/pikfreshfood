@@ -1399,8 +1399,8 @@
                 margin-bottom: 0;
             }
             .logo {
-                width: 170px;
-                height: 50px;
+                width: 220px;
+                height: 64px;
                 flex: 0 0 auto;
                 order: 1;
                 display: inline-flex;
