@@ -1400,7 +1400,7 @@
             }
             .logo {
                 width: 220px;
-                height: 64px;
+                height: 100px;
                 flex: 0 0 auto;
                 order: 1;
                 display: inline-flex;
