@@ -7,6 +7,7 @@ use App\Models\PushToken;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
 
 class NotificationController extends Controller
@@ -16,7 +17,9 @@ class NotificationController extends Controller
         abort_unless($request->user()->hasAdminPermission('notifications'), 403);
 
         return view('admin.notifications', [
-            'deviceCount' => PushToken::query()->count(),
+            'deviceCount' => Schema::hasTable('push_tokens')
+                ? PushToken::query()->count()
+                : 0,
         ]);
     }
 
@@ -29,6 +32,12 @@ class NotificationController extends Controller
             'body' => ['required', 'string', 'max:500'],
             'url' => ['nullable', 'url', 'max:500'],
         ]);
+
+        if (! Schema::hasTable('push_tokens')) {
+            return back()->withErrors([
+                'body' => 'Push notifications are not available until the database migration is applied.',
+            ]);
+        }
 
         $tokens = PushToken::query()->pluck('token')->unique()->values();
         if ($tokens->isEmpty()) {
