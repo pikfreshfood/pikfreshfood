@@ -24,6 +24,7 @@ use App\Http\Controllers\StreetFoodController;
 use App\Http\Controllers\VendorFinanceController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\PushTokenController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -64,6 +65,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/support/threads/{thread}', [AdminPortalController::class, 'supportThread'])->name('support.thread');
         Route::post('/support/threads/{thread}/reply', [AdminPortalController::class, 'replyToSupportThread'])->name('support.reply');
         Route::get('/emails', [AdminPortalController::class, 'emails'])->name('emails');
+        Route::get('/notifications', [\App\Http\Controllers\Admin\NotificationController::class, 'index'])->name('notifications');
+        Route::post('/notifications', [\App\Http\Controllers\Admin\NotificationController::class, 'store'])->name('notifications.store');
         Route::get('/barcodes', [AdminPortalController::class, 'barcodes'])->name('barcodes');
         Route::post('/barcodes', [AdminPortalController::class, 'storeBarcode'])->name('barcodes.store');
         Route::get('/barcodes/{barcode}/download', [AdminPortalController::class, 'downloadBarcode'])->name('barcodes.download');
@@ -116,6 +119,7 @@ Route::get('/auth/logout', [AuthController::class, 'logout'])->name('auth.logout
 
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth')->name('auth.logout');
 Route::post('/react-auth/logout', [ReactAuthController::class, 'logout'])->middleware('auth')->name('react-auth.logout');
+Route::post('/push-token', [PushTokenController::class, 'store'])->middleware('auth')->name('push-token.store');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart', [CartController::class, 'store'])->name('cart.store');

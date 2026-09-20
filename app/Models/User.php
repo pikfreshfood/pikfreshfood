@@ -91,6 +91,11 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
+    public function pushTokens()
+    {
+        return $this->hasMany(PushToken::class);
+    }
+
     public function isVendor()
     {
         return $this->role === 'vendor' && ! $this->isAdmin();
@@ -127,9 +132,9 @@ class User extends Authenticatable
         }
 
         $permissions = [
-            'manager' => ['dashboard', 'profile', 'products', 'shops', 'barcodes'],
-            'support' => ['dashboard', 'profile', 'support', 'emails', 'barcodes'],
-            'finance' => ['dashboard', 'profile', 'subscriptions', 'emails', 'barcodes'],
+            'manager' => ['dashboard', 'profile', 'products', 'shops', 'barcodes', 'notifications'],
+            'support' => ['dashboard', 'profile', 'support', 'emails', 'barcodes', 'notifications'],
+            'finance' => ['dashboard', 'profile', 'subscriptions', 'emails', 'barcodes', 'notifications'],
         ];
 
         return in_array($section, $permissions[$role] ?? [], true);

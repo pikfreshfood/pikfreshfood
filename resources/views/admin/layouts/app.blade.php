@@ -251,6 +251,9 @@
                 @if($adminUser && $adminUser->hasAdminPermission('emails'))
                     <a href="{{ route('admin.emails') }}" class="{{ request()->routeIs('admin.emails') ? 'active' : '' }}"><i class="menu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg></i><span>Emails</span></a>
                 @endif
+                @if($adminUser && $adminUser->hasAdminPermission('notifications'))
+                    <a href="{{ route('admin.notifications') }}" class="{{ request()->routeIs('admin.notifications') ? 'active' : '' }}"><i class="menu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg></i><span>Notifications</span></a>
+                @endif
                 @if($adminUser && $adminUser->hasAdminPermission('barcodes'))
                     <a href="{{ route('admin.barcodes') }}" class="{{ request()->routeIs('admin.barcodes*') ? 'active' : '' }}"><i class="menu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7v10"></path><path d="M7 7v10"></path><path d="M11 7v10"></path><path d="M15 7v10"></path><path d="M18 7v10"></path><path d="M20 7v10"></path><path d="M3 7h18"></path><path d="M3 17h18"></path></svg></i><span>Barcodes</span></a>
                 @endif

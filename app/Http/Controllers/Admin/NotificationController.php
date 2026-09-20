@@ -1,0 +1,80 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\PushToken;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\View\View;
+
+class NotificationController extends Controller
+{
+    public function index(Request $request): View
+    {
+        abort_unless($request->user()->hasAdminPermission('notifications'), 403);
+
+        return view('admin.notifications', [
+            'deviceCount' => PushToken::query()->count(),
+        ]);
+    }
+
+    public function store(Request $request): RedirectResponse
+    {
+        abort_unless($request->user()->hasAdminPermission('notifications'), 403);
+
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:100'],
+            'body' => ['required', 'string', 'max:500'],
+            'url' => ['nullable', 'url', 'max:500'],
+        ]);
+
+        $tokens = PushToken::query()->pluck('token')->unique()->values();
+        if ($tokens->isEmpty()) {
+            return back()->withErrors(['body' => 'No mobile devices have registered for push notifications yet.']);
+        }
+
+        $messages = $tokens->map(fn (string $token) => [
+            'to' => $token,
+            'title' => trim($validated['title']),
+            'body' => trim($validated['body']),
+            'sound' => 'default',
+            'channelId' => 'default',
+            'data' => array_filter([
+                'url' => $validated['url'] ?? null,
+                'link' => $validated['url'] ?? null,
+            ]),
+        ])->values()->all();
+
+        $sent = 0;
+        $invalidTokens = [];
+        foreach (array_chunk($messages, 100) as $chunk) {
+            $http = Http::acceptJson()->timeout(20);
+            if ($accessToken = config('services.expo.access_token')) {
+                $http = $http->withToken($accessToken);
+            }
+
+            $response = $http->post('https://exp.host/--/api/v2/push/send', $chunk);
+            if (! $response->successful()) {
+                return back()->withErrors(['body' => 'Expo Push Service could not be reached. Try again later.']);
+            }
+
+            foreach ($response->json('data', []) as $index => $ticket) {
+                if (($ticket['status'] ?? null) === 'ok') {
+                    $sent++;
+                }
+
+                if (($ticket['details']['error'] ?? null) === 'DeviceNotRegistered') {
+                    $invalidTokens[] = $chunk[$index]['to'];
+                }
+            }
+        }
+
+        if ($invalidTokens !== []) {
+            PushToken::query()->whereIn('token', $invalidTokens)->delete();
+        }
+
+        return back()->with('success', "Notification sent to {$sent} device(s).");
+    }
+}

@@ -49,4 +49,8 @@ return [
         'verify_ssl' => env('PAYSTACK_VERIFY_SSL', true),
     ],
 
+    'expo' => [
+        'access_token' => env('EXPO_ACCESS_TOKEN'),
+    ],
+
 ];
