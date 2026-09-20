@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\PushToken;
+use App\Services\BrowserPushNotificationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -12,18 +13,17 @@ use Illuminate\View\View;
 
 class NotificationController extends Controller
 {
-    public function index(Request $request): View
+    public function index(Request $request, BrowserPushNotificationService $browserPush): View
     {
         abort_unless($request->user()->hasAdminPermission('notifications'), 403);
 
         return view('admin.notifications', [
-            'deviceCount' => Schema::hasTable('push_tokens')
-                ? PushToken::query()->count()
-                : 0,
+            'deviceCount' => (Schema::hasTable('push_tokens') ? PushToken::query()->count() : 0)
+                + (Schema::hasTable('push_subscriptions') ? $browserPush->count() : 0),
         ]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, BrowserPushNotificationService $browserPush): RedirectResponse
     {
         abort_unless($request->user()->hasAdminPermission('notifications'), 403);
 
@@ -33,14 +33,17 @@ class NotificationController extends Controller
             'url' => ['nullable', 'url', 'max:500'],
         ]);
 
-        if (! Schema::hasTable('push_tokens')) {
+        if (! Schema::hasTable('push_tokens') && ! Schema::hasTable('push_subscriptions')) {
             return back()->withErrors([
                 'body' => 'Push notifications are not available until the database migration is applied.',
             ]);
         }
 
-        $tokens = PushToken::query()->pluck('token')->unique()->values();
-        if ($tokens->isEmpty()) {
+        $tokens = Schema::hasTable('push_tokens')
+            ? PushToken::query()->pluck('token')->unique()->values()
+            : collect();
+        $browserCount = Schema::hasTable('push_subscriptions') ? $browserPush->count() : 0;
+        if ($tokens->isEmpty() && $browserCount === 0) {
             return back()->withErrors(['body' => 'No mobile devices have registered for push notifications yet.']);
         }
 
@@ -83,6 +86,8 @@ class NotificationController extends Controller
         if ($invalidTokens !== []) {
             PushToken::query()->whereIn('token', $invalidTokens)->delete();
         }
+
+        $sent += $browserPush->send(trim($validated['title']), trim($validated['body']), $validated['url'] ?? null);
 
         return back()->with('success', "Notification sent to {$sent} device(s).");
     }

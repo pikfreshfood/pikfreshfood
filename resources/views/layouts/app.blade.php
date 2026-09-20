@@ -3674,6 +3674,59 @@
         </script>
     @endif
 
+    @auth
+        @if(config('webpush.vapid.public_key'))
+            <div id="pikfresh-browser-push" style="display:none;position:fixed;right:16px;bottom:16px;z-index:9999;max-width:340px;padding:14px 16px;border:1px solid #cfe8d8;border-radius:12px;background:#fff;box-shadow:0 8px 30px rgba(0,0,0,.14);font:14px/1.4 Arial,sans-serif;color:#173b26">
+                <strong style="display:block;margin-bottom:5px">Enable PikFreshFood notifications?</strong>
+                <span style="display:block;margin-bottom:10px">Get order and delivery updates in your browser.</span>
+                <button id="pikfresh-browser-push-enable" type="button" style="border:0;border-radius:7px;padding:8px 12px;background:#168447;color:#fff;font-weight:700;cursor:pointer">Enable notifications</button>
+                <button id="pikfresh-browser-push-dismiss" type="button" style="border:0;background:transparent;padding:8px;margin-left:5px;color:#555;cursor:pointer">Not now</button>
+            </div>
+            <script>
+                (() => {
+                    const banner = document.getElementById('pikfresh-browser-push');
+                    const enable = document.getElementById('pikfresh-browser-push-enable');
+                    const dismiss = document.getElementById('pikfresh-browser-push-dismiss');
+                    const vapidKey = @json(config('webpush.vapid.public_key'));
+                    const csrf = document.querySelector('meta[name="csrf-token"]')?.content || '';
+                    const urlBase64ToUint8Array = value => {
+                        const padding = '='.repeat((4 - value.length % 4) % 4);
+                        const raw = atob((value + padding).replace(/-/g, '+').replace(/_/g, '/'));
+                        return Uint8Array.from([...raw].map(char => char.charCodeAt(0)));
+                    };
+                    const registerBrowserPush = async () => {
+                        if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) return;
+                        const registration = await navigator.serviceWorker.register('/sw.js');
+                        const permission = await Notification.requestPermission();
+                        if (permission !== 'granted') return;
+                        const subscription = await registration.pushManager.subscribe({
+                            userVisibleOnly: true,
+                            applicationServerKey: urlBase64ToUint8Array(vapidKey),
+                        });
+                        const json = subscription.toJSON();
+                        const response = await fetch('{{ route('push-subscription.store') }}', {
+                            method: 'POST',
+                            credentials: 'same-origin',
+                            headers: {'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': csrf},
+                            body: JSON.stringify({endpoint: json.endpoint, keys: json.keys, content_encoding: 'aes128gcm'}),
+                        });
+                        if (!response.ok) throw new Error('Subscription registration failed');
+                        banner.style.display = 'none';
+                    };
+                    navigator.serviceWorker?.getRegistration('/').then(async registration => {
+                        if (Notification.permission === 'granted' && registration) {
+                            const subscription = await registration.pushManager.getSubscription();
+                            if (subscription) return;
+                        }
+                        if (Notification.permission !== 'denied' && !sessionStorage.getItem('pikfresh-push-dismissed')) banner.style.display = 'block';
+                    }).catch(() => {});
+                    enable.addEventListener('click', () => registerBrowserPush().catch(() => {}));
+                    dismiss.addEventListener('click', () => { sessionStorage.setItem('pikfresh-push-dismissed', '1'); banner.style.display = 'none'; });
+                })();
+            </script>
+        @endif
+    @endauth
+
     @yield('scripts')
 </body>
 </html>

@@ -120,6 +120,8 @@ Route::get('/auth/logout', [AuthController::class, 'logout'])->name('auth.logout
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth')->name('auth.logout');
 Route::post('/react-auth/logout', [ReactAuthController::class, 'logout'])->middleware('auth')->name('react-auth.logout');
 Route::post('/push-token', [PushTokenController::class, 'store'])->middleware('auth')->name('push-token.store');
+Route::post('/push-subscription', [\App\Http\Controllers\PushSubscriptionController::class, 'store'])->middleware('auth')->name('push-subscription.store');
+Route::delete('/push-subscription', [\App\Http\Controllers\PushSubscriptionController::class, 'destroy'])->middleware('auth')->name('push-subscription.destroy');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart', [CartController::class, 'store'])->name('cart.store');

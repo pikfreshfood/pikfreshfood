@@ -2,7 +2,7 @@
 
 @section('title', 'Admin Notifications - PikFreshFood')
 @section('page_title', 'Push Notifications')
-@section('page_copy', 'Send an occasional announcement to mobile users')
+@section('page_copy', 'Send an announcement to mobile and browser users')
 
 @section('styles')
 .notification-panel { max-width: 720px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; }
@@ -18,7 +18,7 @@
 @section('content')
 <article class="notification-panel">
     <span class="device-count">{{ $deviceCount }} registered mobile device(s)</span>
-    <p>Messages are delivered to users who have opened the mobile app and granted notification permission.</p>
+    <p>Messages are delivered to users who have enabled notifications in the app or browser.</p>
     <form method="POST" action="{{ route('admin.notifications.store') }}">
         @csrf
         <div class="field">
@@ -33,7 +33,7 @@
             <label for="url">Open link (optional)</label>
             <input id="url" name="url" type="url" value="{{ old('url') }}" placeholder="https://pikfreshfood.com/">
         </div>
-        <button class="send-button" type="submit">Send to mobile users</button>
+        <button class="send-button" type="submit">Send notification</button>
     </form>
 </article>
 @endsection

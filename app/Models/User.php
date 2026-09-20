@@ -96,6 +96,11 @@ class User extends Authenticatable
         return $this->hasMany(PushToken::class);
     }
 
+    public function pushSubscriptions()
+    {
+        return $this->hasMany(PushSubscription::class);
+    }
+
     public function isVendor()
     {
         return $this->role === 'vendor' && ! $this->isAdmin();
