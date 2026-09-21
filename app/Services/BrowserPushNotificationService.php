@@ -13,7 +13,7 @@ class BrowserPushNotificationService
     public function count(): int
     {
         return Schema::hasTable('push_subscriptions')
-            ? PushSubscription::query()->count()
+            ? PushSubscription::query()->whereHas('user', fn ($query) => $query->where('notifications_enabled', true))->count()
             : 0;
     }
 
@@ -38,7 +38,9 @@ class BrowserPushNotificationService
             ],
         ]);
 
-        $subscriptions = PushSubscription::query()->get();
+        $subscriptions = PushSubscription::query()
+            ->whereHas('user', fn ($query) => $query->where('notifications_enabled', true))
+            ->get();
         foreach ($subscriptions as $subscription) {
             $webPush->queueNotification(
                 Subscription::create([

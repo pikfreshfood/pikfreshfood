@@ -30,6 +30,8 @@ class PushTokenController extends Controller
             ],
         );
 
+        $request->user()->forceFill(['notifications_enabled' => true])->save();
+
         return response()->json(['message' => 'Push token registered.']);
     }
 }

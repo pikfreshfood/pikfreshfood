@@ -33,6 +33,8 @@ class PushSubscriptionController extends Controller
             ],
         );
 
+        $request->user()->forceFill(['notifications_enabled' => true])->save();
+
         return response()->json(['message' => 'Browser push subscription registered.']);
     }
 
@@ -44,6 +46,10 @@ class PushSubscriptionController extends Controller
                 ->where('endpoint', (string) $request->string('endpoint'))
                 ->delete();
         }
+
+            if ($request->user()->pushSubscriptions()->doesntExist() && $request->user()->pushTokens()->doesntExist()) {
+                $request->user()->forceFill(['notifications_enabled' => false])->save();
+            }
 
         return response()->json(['message' => 'Browser push subscription removed.']);
     }

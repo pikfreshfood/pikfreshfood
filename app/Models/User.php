@@ -30,6 +30,7 @@ class User extends Authenticatable
         'longitude',
         'language',
         'preferences',
+        'notifications_enabled',
     ];
 
     /**
@@ -53,6 +54,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'preferences' => 'array',
+            'notifications_enabled' => 'boolean',
         ];
     }
 
