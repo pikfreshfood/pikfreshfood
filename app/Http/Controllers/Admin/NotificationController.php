@@ -41,7 +41,10 @@ class NotificationController extends Controller
 
         $tokens = Schema::hasTable('push_tokens')
             ? PushToken::query()
-                ->whereHas('user', fn ($query) => $query->where('notifications_enabled', true))
+                ->where(function ($query) {
+                    $query->whereNull('user_id')
+                        ->orWhereHas('user', fn ($user) => $user->where('notifications_enabled', true));
+                })
                 ->pluck('token')->unique()->values()
             : collect();
         $browserCount = Schema::hasTable('push_subscriptions') ? $browserPush->count() : 0;

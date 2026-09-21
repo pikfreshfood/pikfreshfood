@@ -25,12 +25,14 @@ class PushTokenController extends Controller
         PushToken::query()->updateOrCreate(
             ['token' => $validated['token']],
             [
-                'user_id' => $request->user()->id,
+                'user_id' => $request->user()?->id,
                 'platform' => $validated['platform'] ?? null,
             ],
         );
 
-        $request->user()->forceFill(['notifications_enabled' => true])->save();
+        if ($request->user()) {
+            $request->user()->forceFill(['notifications_enabled' => true])->save();
+        }
 
         return response()->json(['message' => 'Push token registered.']);
     }
