@@ -46,7 +46,7 @@ Route::get('/search/suggestions', [ProductController::class, 'suggestions'])->na
 // Paystack webhook (public - Paystack POSTs here directly)
 Route::post('/checkout/paystack/webhook', [\App\Http\Controllers\CheckoutController::class, 'webhook'])->name('checkout.paystack.webhook');
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware('no-cache')->group(function () {
     Route::middleware('guest')->group(function () {
         Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('login');
         Route::post('/login', [AdminAuthController::class, 'login'])->name('login.submit');
