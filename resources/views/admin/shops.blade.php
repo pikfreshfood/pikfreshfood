@@ -9,6 +9,9 @@
 table { width: 100%; border-collapse: collapse; }
 th, td { text-align: left; padding: 10px; border-bottom: 1px solid var(--line); font-size: 0.88rem; }
 th { color: var(--muted); font-size: 0.76rem; text-transform: uppercase; }
+.action-cell { display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
+.action-link { display:inline-flex; align-items:center; min-height:34px; padding:0 10px; border-radius:8px; background:var(--dark-soft); color:#fff; text-decoration:none; font-weight:800; font-size:.78rem; }
+.action-link.delete { border:0; background:#a52b39; cursor:pointer; }
 .panel-title {
     margin-bottom: 10px;
     display: flex;
@@ -38,6 +41,7 @@ th { color: var(--muted); font-size: 0.76rem; text-transform: uppercase; }
                 <th>Verification</th>
                 <th>Rating</th>
                 <th>Total Orders</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -49,9 +53,16 @@ th { color: var(--muted); font-size: 0.76rem; text-transform: uppercase; }
                     <td>{{ ucfirst($shop->verification_status ?? 'pending') }}</td>
                     <td>{{ $shop->rating ?: 'N/A' }}</td>
                     <td>{{ $shop->total_orders ?? 0 }}</td>
+                    <td class="action-cell">
+                        <a class="action-link" href="{{ route('admin.shops.edit', $shop) }}">Edit</a>
+                        <form method="POST" action="{{ route('admin.shops.destroy', $shop) }}" onsubmit="return confirm('Delete this shop, owner account, and related shop records?');">
+                            @csrf @method('DELETE')
+                            <button class="action-link delete" type="submit">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             @empty
-                <tr><td colspan="6">No shops found.</td></tr>
+                <tr><td colspan="7">No shops found.</td></tr>
             @endforelse
         </tbody>
     </table>

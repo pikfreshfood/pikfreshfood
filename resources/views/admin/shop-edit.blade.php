@@ -1,0 +1,31 @@
+@extends('admin.layouts.app')
+
+@section('title', 'Edit Shop - PikFreshFood')
+@section('page_title', 'Edit Shop')
+@section('page_copy', 'Manage vendor shop details and verification')
+
+@section('styles')
+.form-card { max-width:760px; background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:18px; }
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; } .field { margin-bottom:12px; } .field.full { grid-column:1 / -1; }
+label { display:block; margin-bottom:6px; color:var(--muted); font-size:.84rem; font-weight:800; } input, textarea, select { width:100%; border:1px solid var(--line); border-radius:9px; padding:10px; font:inherit; } textarea { min-height:110px; resize:vertical; }
+.checkbox { display:flex; gap:8px; align-items:center; min-height:42px; } .checkbox input { width:auto; } .actions { display:flex; gap:8px; } .button { min-height:42px; border:0; border-radius:9px; padding:0 14px; background:var(--dark-soft); color:#fff; font-weight:800; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; } .button.secondary { background:#eef2f8; color:var(--dark-soft); }
+@media(max-width:700px){.grid{grid-template-columns:1fr}.field.full{grid-column:auto}}
+@endsection
+
+@section('content')
+<article class="form-card">
+    <form method="POST" action="{{ route('admin.shops.update', $vendor) }}">
+        @csrf @method('PUT')
+        <div class="grid">
+            <div class="field full"><label for="shop_name">Shop name</label><input id="shop_name" name="shop_name" value="{{ old('shop_name', $vendor->shop_name) }}" required></div>
+            <div class="field"><label for="phone">Shop phone</label><input id="phone" name="phone" value="{{ old('phone', $vendor->phone) }}"></div>
+            <div class="field"><label for="status">Account status</label><input id="status" name="status" value="{{ old('status', $vendor->status) }}"></div>
+            <div class="field"><label for="verification_status">Verification</label><select id="verification_status" name="verification_status"><option value="pending" @selected(old('verification_status', $vendor->verification_status) === 'pending')>Pending</option><option value="verified" @selected(old('verification_status', $vendor->verification_status) === 'verified')>Verified</option><option value="rejected" @selected(old('verification_status', $vendor->verification_status) === 'rejected')>Rejected</option></select></div>
+            <div class="field"><label for="address">Address</label><input id="address" name="address" value="{{ old('address', $vendor->address) }}"></div>
+            <div class="field full"><label for="description">Description</label><textarea id="description" name="description">{{ old('description', $vendor->description) }}</textarea></div>
+            <div class="field full checkbox"><input id="is_open" name="is_open" type="checkbox" value="1" @checked(old('is_open', $vendor->is_open))><label for="is_open">Shop is open</label></div>
+        </div>
+        <div class="actions"><button class="button" type="submit">Save shop</button><a class="button secondary" href="{{ route('admin.shops') }}">Cancel</a></div>
+    </form>
+</article>
+@endsection

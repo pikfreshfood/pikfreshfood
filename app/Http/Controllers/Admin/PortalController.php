@@ -296,6 +296,45 @@ class PortalController extends Controller
         return view('admin.shops', compact('shops'));
     }
 
+    public function editShop(Request $request, Vendor $vendor): View
+    {
+        $this->ensurePermission($request, 'shops');
+        $vendor->load('user:id,name,email');
+
+        return view('admin.shop-edit', compact('vendor'));
+    }
+
+    public function updateShop(Request $request, Vendor $vendor): RedirectResponse
+    {
+        $this->ensurePermission($request, 'shops');
+        $validated = $request->validate([
+            'shop_name' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string', 'max:5000'],
+            'phone' => ['nullable', 'string', 'max:30'],
+            'address' => ['nullable', 'string', 'max:500'],
+            'verification_status' => ['required', 'in:pending,verified,rejected'],
+            'status' => ['nullable', 'string', 'max:50'],
+            'is_open' => ['nullable', 'boolean'],
+        ]);
+        $validated['is_open'] = $request->boolean('is_open');
+        $vendor->update($validated);
+
+        return redirect()->route('admin.shops')->with('success', 'Shop updated successfully.');
+    }
+
+    public function destroyShop(Request $request, Vendor $vendor): RedirectResponse
+    {
+        $this->ensurePermission($request, 'shops');
+
+        DB::transaction(function () use ($vendor) {
+            $owner = $vendor->user;
+            $vendor->delete();
+            $owner?->delete();
+        });
+
+        return back()->with('success', 'Shop and its owner account were deleted successfully.');
+    }
+
     public function subscriptions(): View
     {
         $this->ensurePermission(request(), 'subscriptions');
