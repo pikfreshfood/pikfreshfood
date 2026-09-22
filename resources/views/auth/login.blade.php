@@ -76,21 +76,11 @@
     .auth-alert.error { background: #fdecea; color: #b3261e; border: 1px solid #f3c4c0; }
     .auth-alert.success { background: #eaf7ef; color: #1f7a43; border: 1px solid #c9e8d3; }
     .auth-home-link {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        min-height: 40px;
-        margin-bottom: 18px;
-        border: 1px solid #d7e6dc;
-        border-radius: 8px;
-        color: #1f7a43;
-        background: #f3fbf6;
-        text-decoration: none;
-        font-size: 0.88rem;
-        font-weight: 700;
+        display: none;
     }
-    .auth-home-link:hover { background: #e9f8ef; color: #168447; }
+    .auth-page {
+        width: 100%;
+    }
 
     body.safplace-theme .auth-password-toggle {
         border-color: rgba(255, 255, 255, 0.2);
@@ -195,11 +185,39 @@
             padding: 11px 12px;
             font-size: 13px;
         }
+
+        .auth-page {
+            width: 100%;
+            max-width: 430px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .auth-home-link {
+            display: inline-flex;
+            align-items: center;
+            align-self: flex-start;
+            width: auto;
+            min-height: 0;
+            margin: 0 0 12px 2px;
+            padding: 6px 4px 6px 0;
+            border: none;
+            border-radius: 0;
+            background: transparent;
+            color: #1f7a43;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+        .auth-home-link:hover { background: transparent; color: #168447; text-decoration: underline; }
     }
 </style>
 @endsection
 
 @section('content')
+<div class="auth-page">
+    <a href="{{ route('home') }}" class="auth-home-link">&larr; Back to Home</a>
 <div class="auth-container">
     <h1>PikFreshFood</h1>
 
@@ -219,8 +237,6 @@
         <div class="auth-tab active" onclick="switchTab('login')">Login</div>
         <div class="auth-tab" onclick="switchTab('register')">Register</div>
     </div>
-
-    <a href="{{ route('home') }}" class="auth-home-link">&larr; Back to Home</a>
 
     <form id="loginForm" action="{{ route('auth.login') }}" method="POST" class="auth-form">
         @csrf
@@ -288,6 +304,7 @@
         </label>
         <button type="submit" class="auth-button">Register</button>
     </form>
+</div>
 </div>
 @endsection
 
