@@ -31,6 +31,7 @@ class User extends Authenticatable
         'language',
         'preferences',
         'notifications_enabled',
+        'suspended_at',
     ];
 
     /**
@@ -55,6 +56,7 @@ class User extends Authenticatable
             'password' => 'hashed',
             'preferences' => 'array',
             'notifications_enabled' => 'boolean',
+            'suspended_at' => 'datetime',
         ];
     }
 

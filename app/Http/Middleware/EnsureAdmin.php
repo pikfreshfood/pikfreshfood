@@ -11,7 +11,7 @@ class EnsureAdmin
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (! Auth::check() || ! Auth::user()->isAdmin()) {
+        if (! Auth::check() || ! Auth::user()->isAdmin() || Auth::user()->suspended_at) {
             return redirect()->route('admin.login')->withErrors([
                 'email' => 'You are not authorized to access the admin portal.',
             ]);

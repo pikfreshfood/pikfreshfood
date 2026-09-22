@@ -59,6 +59,10 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
+            if ($user->suspended_at) {
+                Auth::logout();
+                return back()->withErrors(['login' => 'This account has been suspended.']);
+            }
             $this->endActiveCalls($user);
             $this->mergeGuestCart($request, $user);
             $request->session()->regenerate();

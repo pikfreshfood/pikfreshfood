@@ -66,6 +66,7 @@ Route::prefix('admin')->name('admin.')->middleware('no-cache')->group(function (
         Route::get('/users/{user}/edit', [AdminPortalController::class, 'editUser'])->name('users.edit');
         Route::put('/users/{user}', [AdminPortalController::class, 'updateUser'])->name('users.update');
         Route::delete('/users/{user}', [AdminPortalController::class, 'destroyUser'])->name('users.destroy');
+        Route::patch('/users/{user}/suspension', [AdminPortalController::class, 'toggleUserSuspension'])->name('users.suspension');
         Route::get('/shops', [AdminPortalController::class, 'shops'])->name('shops');
         Route::get('/subscriptions', [AdminPortalController::class, 'subscriptions'])->name('subscriptions');
         Route::get('/support', [AdminPortalController::class, 'support'])->name('support');

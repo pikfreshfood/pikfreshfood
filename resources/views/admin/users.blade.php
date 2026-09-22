@@ -11,6 +11,7 @@
 .search-form input { flex:1; min-height:40px; border:1px solid var(--line); border-radius:9px; padding:0 11px; }
 .button, .action-link { display:inline-flex; align-items:center; justify-content:center; min-height:36px; padding:0 11px; border:0; border-radius:8px; background:var(--dark-soft); color:#fff; text-decoration:none; font-weight:800; font-size:.8rem; cursor:pointer; }
 .action-link.delete { background:#a52b39; }
+.action-link.warning { background:#b7791f; }
 .action-cell { display:flex; gap:6px; align-items:center; }
 table { width:100%; border-collapse:collapse; } th,td { text-align:left; padding:10px; border-bottom:1px solid var(--line); font-size:.86rem; } th { color:var(--muted); font-size:.74rem; text-transform:uppercase; }
 .pagination { display:flex; gap:6px; align-items:center; flex-wrap:wrap; margin-top:14px; } .pagination a,.pagination span { min-width:32px; min-height:32px; padding:0 9px; display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--line); border-radius:7px; text-decoration:none; color:var(--dark-soft); font-size:.82rem; font-weight:800; background:#fff; } .pagination .active { background:var(--dark-soft); color:#fff; border-color:var(--dark-soft); } .pagination .disabled { color:#aab2c0; }
@@ -34,6 +35,7 @@ table { width:100%; border-collapse:collapse; } th,td { text-align:left; padding
                 <td>{{ $user->name }}</td><td>{{ $user->email }}</td><td>{{ $user->phone ?: '—' }}</td>
                 <td>{{ str_replace('_', ' ', $user->admin_role ?: $user->role) }}</td><td>{{ $user->created_at?->format('d M, Y') }}</td>
                 <td class="action-cell"><a class="action-link" href="{{ route('admin.users.edit', $user) }}">View / Edit</a>
+                    @if(auth()->user()->adminRole() === 'super_admin')<form method="POST" action="{{ route('admin.users.suspension', $user) }}">@csrf @method('PATCH')<button class="action-link warning" type="submit">{{ $user->suspended_at ? 'Restore' : 'Suspend' }}</button></form>@endif
                     @if($user->id !== auth()->id())<form method="POST" action="{{ route('admin.users.destroy', $user) }}" onsubmit="return confirm('Delete this user?');">@csrf @method('DELETE')<button class="action-link delete" type="submit">Delete</button></form>@endif
                 </td>
             </tr>

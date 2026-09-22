@@ -36,13 +36,17 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        if (! Auth::user()->isAdmin()) {
+        $authenticatedUser = Auth::user();
+        if (! $authenticatedUser->isAdmin() || $authenticatedUser->suspended_at) {
+            $message = $authenticatedUser->suspended_at
+                ? 'This admin account has been suspended.'
+                : 'Only admin accounts can access this portal.';
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
             return back()->withErrors([
-                'login' => 'Only admin accounts can access this portal.',
+                'login' => $message,
             ])->onlyInput('login');
         }
 

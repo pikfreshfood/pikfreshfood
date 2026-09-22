@@ -152,7 +152,7 @@ class PortalController extends Controller
                 $query->where('role', 'admin')->orWhereNotNull('admin_role');
             })
             ->latest()
-            ->paginate(15, ['id', 'name', 'email', 'phone', 'admin_role', 'created_at'])
+            ->paginate(15, ['id', 'name', 'email', 'phone', 'admin_role', 'suspended_at', 'created_at'])
             ->withQueryString();
 
         return view('admin.admins', compact('admins'));
@@ -227,7 +227,7 @@ class PortalController extends Controller
                     ->orWhere('phone', 'like', "%{$search}%");
             }))
             ->latest()
-            ->paginate(15, ['id', 'name', 'email', 'phone', 'address', 'role', 'admin_role', 'notifications_enabled', 'created_at'])
+            ->paginate(15, ['id', 'name', 'email', 'phone', 'address', 'role', 'admin_role', 'suspended_at', 'notifications_enabled', 'created_at'])
             ->withQueryString();
 
         return view('admin.users', compact('users', 'search'));
@@ -271,6 +271,17 @@ class PortalController extends Controller
         $user->delete();
 
         return back()->with('success', 'User deleted successfully.');
+    }
+
+    public function toggleUserSuspension(Request $request, User $user): RedirectResponse
+    {
+        abort_unless($request->user()->adminRole() === 'super_admin', 403);
+        abort_if($user->id === $request->user()->id, 403, 'You cannot suspend your own account.');
+
+        $willSuspend = ! $user->suspended_at;
+        $user->update(['suspended_at' => $willSuspend ? now() : null]);
+
+        return back()->with('success', $willSuspend ? 'User suspended successfully.' : 'User restored successfully.');
     }
 
     public function shops(): View

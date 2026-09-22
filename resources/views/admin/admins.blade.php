@@ -12,7 +12,8 @@
 input, select { width:100%; min-height:42px; border:1px solid var(--line); border-radius:9px; padding:0 10px; font:inherit; }
 .button { min-height:42px; border:0; border-radius:9px; padding:0 14px; background:var(--dark-soft); color:#fff; font-weight:800; cursor:pointer; }
 table { width:100%; border-collapse:collapse; } th, td { text-align:left; padding:9px; border-bottom:1px solid var(--line); font-size:.86rem; } th { color:var(--muted); font-size:.74rem; text-transform:uppercase; }
-.action-link { color:var(--dark-soft); font-weight:800; text-decoration:none; }
+.action-link { color:var(--dark-soft); font-weight:800; text-decoration:none; } .action-link.button { color:#fff; border:0; }
+.action-cell { display:flex; gap:6px; align-items:center; flex-wrap:wrap; } .action-link.warning { background:#b7791f; color:#fff; padding:7px 9px; border-radius:8px; }
 .pagination { display:flex; gap:6px; align-items:center; flex-wrap:wrap; margin-top:14px; } .pagination a,.pagination span { min-width:32px; min-height:32px; padding:0 9px; display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--line); border-radius:7px; text-decoration:none; color:var(--dark-soft); font-size:.82rem; font-weight:800; background:#fff; } .pagination .active { background:var(--dark-soft); color:#fff; border-color:var(--dark-soft); } .pagination .disabled { color:#aab2c0; }
 @media(max-width:900px){.grid{grid-template-columns:1fr}.table-wrap{overflow:auto}table{min-width:560px}}
 @endsection
@@ -35,7 +36,7 @@ table { width:100%; border-collapse:collapse; } th, td { text-align:left; paddin
         <h3>Administrator Accounts</h3>
         <div class="table-wrap"><table>
             <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Created</th><th>Action</th></tr></thead>
-            <tbody>@forelse($admins as $admin)<tr><td>{{ $admin->name }}</td><td>{{ $admin->email }}</td><td>{{ str_replace('_', ' ', $admin->admin_role ?: 'admin') }}</td><td>{{ $admin->created_at?->format('d M, Y') }}</td><td><a class="action-link" href="{{ route('admin.users.edit', $admin) }}">View / Edit</a></td></tr>@empty<tr><td colspan="5">No administrator accounts found.</td></tr>@endforelse</tbody>
+            <tbody>@forelse($admins as $admin)<tr><td>{{ $admin->name }}</td><td>{{ $admin->email }}</td><td>{{ str_replace('_', ' ', $admin->admin_role ?: 'admin') }}</td><td>{{ $admin->created_at?->format('d M, Y') }}</td><td class="action-cell"><a class="action-link" href="{{ route('admin.users.edit', $admin) }}">View / Edit</a>@if(auth()->user()->adminRole() === 'super_admin' && $admin->id !== auth()->id())<form method="POST" action="{{ route('admin.users.suspension', $admin) }}">@csrf @method('PATCH')<button class="action-link warning" type="submit">{{ $admin->suspended_at ? 'Restore' : 'Suspend' }}</button></form><form method="POST" action="{{ route('admin.users.destroy', $admin) }}" onsubmit="return confirm('Delete this admin account?');">@csrf @method('DELETE')<button class="action-link" style="background:#a52b39;color:#fff;padding:7px 9px;border:0;border-radius:8px;" type="submit">Delete</button></form>@endif</td></tr>@empty<tr><td colspan="5">No administrator accounts found.</td></tr>@endforelse</tbody>
         </table></div>
         <div class="pagination">
             @if($admins->onFirstPage()) <span class="disabled">Previous</span> @else <a href="{{ $admins->previousPageUrl() }}">Previous</a> @endif
