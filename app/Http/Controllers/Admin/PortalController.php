@@ -124,7 +124,6 @@ class PortalController extends Controller
     public function storeAdmin(Request $request): RedirectResponse
     {
         $this->ensurePermission($request, 'profile');
-        abort_unless($request->user()->adminRole() === 'super_admin', 403);
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],

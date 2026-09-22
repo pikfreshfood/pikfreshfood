@@ -80,7 +80,7 @@ th { color: var(--muted); font-size: 0.76rem; text-transform: uppercase; }
 
     <article class="form-card">
         <h3 class="card-title"><svg viewBox="0 0 24 24"><path d="M11 3h2v18h-2z"></path><path d="M3 11h18v2H3z"></path></svg>Create Admin With Role</h3>
-        @if(auth()->user()->adminRole() === 'super_admin')
+        @if(auth()->user()->isAdmin())
             <form method="POST" action="{{ route('admin.admins.store') }}">
                 @csrf
                 <div class="field">
@@ -111,7 +111,7 @@ th { color: var(--muted); font-size: 0.76rem; text-transform: uppercase; }
                 <button type="submit">Create Admin</button>
             </form>
         @else
-            <p style="color:var(--muted);line-height:1.6;">Only super admins can create new admin users.</p>
+            <p style="color:var(--muted);line-height:1.6;">Only admin users can create new admin users.</p>
         @endif
     </article>
 </section>
