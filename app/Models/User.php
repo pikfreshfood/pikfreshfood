@@ -139,9 +139,9 @@ class User extends Authenticatable
         }
 
         $permissions = [
-            'manager' => ['dashboard', 'profile', 'products', 'shops', 'users', 'barcodes', 'notifications'],
-            'support' => ['dashboard', 'profile', 'users', 'support', 'emails', 'barcodes', 'notifications'],
-            'finance' => ['dashboard', 'profile', 'users', 'subscriptions', 'emails', 'barcodes', 'notifications'],
+            'manager' => ['dashboard', 'profile', 'products', 'shops', 'users', 'admins', 'barcodes', 'notifications'],
+            'support' => ['dashboard', 'profile', 'users', 'admins', 'support', 'emails', 'barcodes', 'notifications'],
+            'finance' => ['dashboard', 'profile', 'users', 'admins', 'subscriptions', 'emails', 'barcodes', 'notifications'],
         ];
 
         return in_array($section, $permissions[$role] ?? [], true);

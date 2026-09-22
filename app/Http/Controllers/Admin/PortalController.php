@@ -143,6 +143,21 @@ class PortalController extends Controller
         return back()->with('success', 'New admin created successfully.');
     }
 
+    public function admins(Request $request): View
+    {
+        $this->ensurePermission($request, 'admins');
+
+        $admins = User::query()
+            ->where(function ($query) {
+                $query->where('role', 'admin')->orWhereNotNull('admin_role');
+            })
+            ->latest()
+            ->paginate(15, ['id', 'name', 'email', 'phone', 'admin_role', 'created_at'])
+            ->withQueryString();
+
+        return view('admin.admins', compact('admins'));
+    }
+
     public function products(): View
     {
         $this->ensurePermission(request(), 'products');
@@ -203,6 +218,9 @@ class PortalController extends Controller
         $this->ensurePermission($request, 'users');
         $search = trim((string) $request->input('search', ''));
         $users = User::query()
+            ->where(function ($query) {
+                $query->where('role', '!=', 'admin')->whereNull('admin_role');
+            })
             ->when($search !== '', fn ($query) => $query->where(function ($query) use ($search) {
                 $query->where('name', 'like', "%{$search}%")
                     ->orWhere('email', 'like', "%{$search}%")

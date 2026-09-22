@@ -57,6 +57,7 @@ Route::prefix('admin')->name('admin.')->middleware('no-cache')->group(function (
         Route::get('/profile', [AdminPortalController::class, 'profile'])->name('profile');
         Route::put('/profile', [AdminPortalController::class, 'updateProfile'])->name('profile.update');
         Route::post('/admins', [AdminPortalController::class, 'storeAdmin'])->name('admins.store');
+        Route::get('/admins', [AdminPortalController::class, 'admins'])->name('admins');
         Route::get('/products', [AdminPortalController::class, 'products'])->name('products');
         Route::get('/products/{product}/edit', [AdminPortalController::class, 'editProduct'])->name('products.edit');
         Route::put('/products/{product}', [AdminPortalController::class, 'updateProduct'])->name('products.update');

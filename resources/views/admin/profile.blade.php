@@ -79,39 +79,10 @@ th { color: var(--muted); font-size: 0.76rem; text-transform: uppercase; }
     </article>
 
     <article class="form-card">
-        <h3 class="card-title"><svg viewBox="0 0 24 24"><path d="M11 3h2v18h-2z"></path><path d="M3 11h18v2H3z"></path></svg>Create Admin With Role</h3>
-        @if(auth()->user()->isAdmin())
-            <form method="POST" action="{{ route('admin.admins.store') }}">
-                @csrf
-                <div class="field">
-                    <label for="admin_name">Name</label>
-                    <input id="admin_name" type="text" name="name" value="{{ old('name') }}" required>
-                </div>
-                <div class="field">
-                    <label for="admin_email">Email</label>
-                    <input id="admin_email" type="email" name="email" value="{{ old('email') }}" required>
-                </div>
-                <div class="field">
-                    <label for="admin_role">Role</label>
-                    <select id="admin_role" name="admin_role" required>
-                        <option value="super_admin">Super Admin</option>
-                        <option value="manager">Manager</option>
-                        <option value="support">Support</option>
-                        <option value="finance">Finance</option>
-                    </select>
-                </div>
-                <div class="field">
-                    <label for="password">Password</label>
-                    <input id="password" type="password" name="password" required>
-                </div>
-                <div class="field">
-                    <label for="password_confirmation">Confirm Password</label>
-                    <input id="password_confirmation" type="password" name="password_confirmation" required>
-                </div>
-                <button type="submit">Create Admin</button>
-            </form>
-        @else
-            <p style="color:var(--muted);line-height:1.6;">Only admin users can create new admin users.</p>
+        <h3 class="card-title"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"></circle><path d="M3 20a6 6 0 0 1 12 0"></path><path d="M16 11h5"></path><path d="M18.5 8.5v5"></path></svg>Administrator Accounts</h3>
+        <p style="color:var(--muted);line-height:1.6;">Create admin accounts and assign roles from the dedicated Manage Admins page.</p>
+        @if(auth()->user()->hasAdminPermission('admins'))
+            <a href="{{ route('admin.admins') }}" style="display:inline-flex;margin-top:14px;min-height:42px;align-items:center;padding:0 14px;border-radius:10px;background:var(--dark-soft);color:#fff;text-decoration:none;font-weight:800;">Open Manage Admins</a>
         @endif
     </article>
 </section>
