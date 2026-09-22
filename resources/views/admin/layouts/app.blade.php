@@ -239,6 +239,9 @@
                 @if($adminUser && $adminUser->hasAdminPermission('products'))
                     <a href="{{ route('admin.products') }}" class="{{ request()->routeIs('admin.products') ? 'active' : '' }}"><i class="menu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7 12 3l9 4-9 4-9-4Z"></path><path d="M3 12l9 4 9-4"></path><path d="M3 17l9 4 9-4"></path></svg></i><span>Products</span></a>
                 @endif
+                @if($adminUser && $adminUser->hasAdminPermission('users'))
+                    <a href="{{ route('admin.users') }}" class="{{ request()->routeIs('admin.users*') ? 'active' : '' }}"><i class="menu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"></circle><path d="M3 20a6 6 0 0 1 12 0"></path><path d="M16 11a3 3 0 1 0 0-6"></path><path d="M17 14a5 5 0 0 1 4 5"></path></svg></i><span>Users</span></a>
+                @endif
                 @if($adminUser && $adminUser->hasAdminPermission('shops'))
                     <a href="{{ route('admin.shops') }}" class="{{ request()->routeIs('admin.shops') ? 'active' : '' }}"><i class="menu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10h18"></path><path d="M5 10V5h14v5"></path><path d="M5 10v9h14v-9"></path><path d="M9 19v-5h6v5"></path></svg></i><span>Shops</span></a>
                 @endif

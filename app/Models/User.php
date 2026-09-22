@@ -139,7 +139,7 @@ class User extends Authenticatable
         }
 
         $permissions = [
-            'manager' => ['dashboard', 'profile', 'products', 'shops', 'barcodes', 'notifications'],
+            'manager' => ['dashboard', 'profile', 'products', 'shops', 'users', 'barcodes', 'notifications'],
             'support' => ['dashboard', 'profile', 'support', 'emails', 'barcodes', 'notifications'],
             'finance' => ['dashboard', 'profile', 'subscriptions', 'emails', 'barcodes', 'notifications'],
         ];

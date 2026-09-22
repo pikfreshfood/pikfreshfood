@@ -148,12 +148,112 @@ class PortalController extends Controller
     {
         $this->ensurePermission(request(), 'products');
 
+        $search = trim((string) request('search', ''));
         $products = Product::query()
             ->with('vendor:id,shop_name')
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%")
+                        ->orWhere('category', 'like', "%{$search}%")
+                        ->orWhereHas('vendor', fn ($vendor) => $vendor->where('shop_name', 'like', "%{$search}%"));
+                });
+            })
             ->latest()
-            ->paginate(15);
+            ->paginate(15)
+            ->withQueryString();
 
-        return view('admin.products', compact('products'));
+        return view('admin.products', compact('products', 'search'));
+    }
+
+    public function editProduct(Request $request, Product $product): View
+    {
+        $this->ensurePermission($request, 'products');
+
+        return view('admin.product-edit', compact('product'));
+    }
+
+    public function updateProduct(Request $request, Product $product): RedirectResponse
+    {
+        $this->ensurePermission($request, 'products');
+
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'category' => ['nullable', 'string', 'max:100'],
+            'description' => ['nullable', 'string', 'max:5000'],
+            'price' => ['required', 'numeric', 'min:0'],
+            'stock_quantity' => ['required', 'integer', 'min:0'],
+            'unit' => ['nullable', 'string', 'max:50'],
+            'is_available' => ['nullable', 'boolean'],
+        ]);
+        $validated['is_available'] = $request->boolean('is_available');
+        $product->update($validated);
+
+        return redirect()->route('admin.products')->with('success', 'Product updated successfully.');
+    }
+
+    public function destroyProduct(Request $request, Product $product): RedirectResponse
+    {
+        $this->ensurePermission($request, 'products');
+        $product->delete();
+
+        return back()->with('success', 'Product deleted successfully.');
+    }
+
+    public function users(Request $request): View
+    {
+        $this->ensurePermission($request, 'users');
+        $search = trim((string) $request->input('search', ''));
+        $users = User::query()
+            ->when($search !== '', fn ($query) => $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%");
+            }))
+            ->latest()
+            ->paginate(15, ['id', 'name', 'email', 'phone', 'address', 'role', 'admin_role', 'notifications_enabled', 'created_at'])
+            ->withQueryString();
+
+        return view('admin.users', compact('users', 'search'));
+    }
+
+    public function editUser(Request $request, User $user): View
+    {
+        $this->ensurePermission($request, 'users');
+
+        return view('admin.user-edit', compact('user'));
+    }
+
+    public function updateUser(Request $request, User $user): RedirectResponse
+    {
+        $this->ensurePermission($request, 'users');
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'phone' => ['nullable', 'string', 'max:30'],
+            'address' => ['nullable', 'string', 'max:500'],
+            'role' => ['required', 'in:buyer,vendor,admin'],
+            'admin_role' => ['nullable', 'in:super_admin,manager,support,finance'],
+            'notifications_enabled' => ['nullable', 'boolean'],
+        ]);
+        if (($user->isAdmin() || $validated['role'] === 'admin' || filled($validated['admin_role']))
+            && $request->user()->adminRole() !== 'super_admin'
+            && $user->id !== $request->user()->id) {
+            abort(403);
+        }
+        $validated['notifications_enabled'] = $request->boolean('notifications_enabled');
+        $user->update($validated);
+
+        return redirect()->route('admin.users')->with('success', 'User profile updated successfully.');
+    }
+
+    public function destroyUser(Request $request, User $user): RedirectResponse
+    {
+        $this->ensurePermission($request, 'users');
+        abort_if($user->id === $request->user()->id, 403, 'You cannot delete your own account.');
+        abort_if($user->isAdmin() && $request->user()->adminRole() !== 'super_admin', 403);
+        $user->delete();
+
+        return back()->with('success', 'User deleted successfully.');
     }
 
     public function shops(): View

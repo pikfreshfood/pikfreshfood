@@ -58,6 +58,13 @@ Route::prefix('admin')->name('admin.')->middleware('no-cache')->group(function (
         Route::put('/profile', [AdminPortalController::class, 'updateProfile'])->name('profile.update');
         Route::post('/admins', [AdminPortalController::class, 'storeAdmin'])->name('admins.store');
         Route::get('/products', [AdminPortalController::class, 'products'])->name('products');
+        Route::get('/products/{product}/edit', [AdminPortalController::class, 'editProduct'])->name('products.edit');
+        Route::put('/products/{product}', [AdminPortalController::class, 'updateProduct'])->name('products.update');
+        Route::delete('/products/{product}', [AdminPortalController::class, 'destroyProduct'])->name('products.destroy');
+        Route::get('/users', [AdminPortalController::class, 'users'])->name('users');
+        Route::get('/users/{user}/edit', [AdminPortalController::class, 'editUser'])->name('users.edit');
+        Route::put('/users/{user}', [AdminPortalController::class, 'updateUser'])->name('users.update');
+        Route::delete('/users/{user}', [AdminPortalController::class, 'destroyUser'])->name('users.destroy');
         Route::get('/shops', [AdminPortalController::class, 'shops'])->name('shops');
         Route::get('/subscriptions', [AdminPortalController::class, 'subscriptions'])->name('subscriptions');
         Route::get('/support', [AdminPortalController::class, 'support'])->name('support');
