@@ -57,3 +57,7 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## cPanel deployment
+
+After updating the application on cPanel, run `composer install --no-dev --optimize-autoloader` from the Laravel project root, then clear the Laravel application cache. If cPanel does not provide Composer or Terminal access, ask the hosting provider to run the Composer command.
