@@ -8,6 +8,8 @@
     <link rel="shortcut icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#168447">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6863593219998342"
+        crossorigin="anonymous"></script>
     <title>@yield('title', 'PikFreshFood')</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
