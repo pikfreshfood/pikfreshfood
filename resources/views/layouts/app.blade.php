@@ -8,7 +8,6 @@
     <link rel="shortcut icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#168447">
-    <meta name="google-site-verification" content="{{ env('GOOGLE_SITE_VERIFICATION', 'PASTE_YOUR_ADSENSE_VERIFICATION_CODE_HERE') }}">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6863593219998342"
         crossorigin="anonymous"></script>
     <title>@yield('title', 'PikFreshFood')</title>
